@@ -1,0 +1,490 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iOS 离屏渲染优化简单分析 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+最近在做一个小项目的时候，涉及到了 切圆角问题。联想到之前看过的 性能优化分析 相关文章，遂有了重新对 离屏渲染 的小小研究。
+
+
+
+在 iOS 的应用开发过程中，多多少少的会遇到 卡顿 的现象。
+纵然 iOS 设备的性能日益强大，但是卡..." />
+    <meta name="keywords" content="iOS" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('https://shannonmyang.github.io/post-images/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2019-06-18"><i class="fa fa-calendar"></i><span class="lately">1 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/"> </span>
+              </a>
+              <span id="/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">iOS 离屏渲染优化简单分析</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>最近在做一个小项目的时候，涉及到了 <code>切圆角问题</code>。联想到之前看过的 <code>性能优化分析</code> 相关文章，遂有了重新对 <code>离屏渲染</code> 的小小研究。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>在 iOS 的应用开发过程中，多多少少的会遇到 <code>卡顿</code> 的现象。<br>
+纵然 iOS 设备的性能日益强大，但是卡顿的现象还是有可能不可避免的出现，而离屏渲染是造成卡顿的原因之一。<br>
+本文主要分析一下离屏渲染产生的原因及避免的方法，最后介绍一下 Xcode 自带的分析离屏渲染的工具 Instruments 的使用。</p>
+</blockquote>
+<hr>
+<h4 id="1-uiview-和-calayer-关系">1. UIView 和 CALayer 关系</h4>
+<blockquote>
+<p>UIView 继承自 UIResponder，可以处理系统传递过来的事件，如：UIApplication、UIViewController、UIView，以及所有从 UIView 派生出来的 UIKit 类。每个 UIView 内部都有一个 CALayer 提供内容的绘制和显示，并且作为内部 RootLayer 的代理视图。</p>
+</blockquote>
+<blockquote>
+<p>CALayer 继承自 NSObject 类，负责显示 UIView 提供的内容 contents。CALayer 有三个视觉元素：背景色、内容和边框，其中，内容的本质是一个 CGImage。</p>
+</blockquote>
+<h5 id="下图为-calayer-的结构图"><code>下图为 CALayer 的结构图：</code></h5>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1585401272431.jpg" alt="" loading="lazy"></figure>
+<h5 id="界面渲染过程"><code>界面渲染过程</code></h5>
+<blockquote>
+<p>RunLoop 有一个 60fps 的回调，即每 16.7ms 绘制一次屏幕，所以 view 的绘制必须在这个时间内完成，view 内容的绘制是 CPU 的工作，然后把绘制的内容交给 GPU 渲染，包括多个 View 的拼接（Compositing）、纹理的渲染 (Texture) 等等，最后显示在屏幕上。但是，如果无法是 16.7ms 内完成绘制，就会出现丢帧的问题，一般情况下，如果帧率保证在 30fps 以上，界面卡顿效果不明显，那么就需要在 33.4ms 内完成 View 的绘制，而低于这个帧率，就会产生卡顿的效果，影响体验。</p>
+</blockquote>
+<h5 id="渲染的过程如下"><code>渲染的过程如下：</code></h5>
+<blockquote>
+<p>UIView 的 layer 层有一个 content，指向一块缓存，即 backing store<br>
+UIView 绘制时，会调用 drawRect 方法，通过 context 将数据写入 backing store<br>
+在 backing store 写完后，通过 render server 交给 GPU 去渲染，将 backing store 中的 bitmap 数据显示在屏幕上</p>
+</blockquote>
+<h4 id="2-离屏渲染">2. 离屏渲染</h4>
+<blockquote>
+<p>在使用圆角、阴影和遮罩等视图功能的时候，图层属性的混合体被指定为在未预合成之前不能直接在屏幕中绘制，所有就需要在屏幕外的上下文中渲染，即离屏渲染。</p>
+</blockquote>
+<h4 id="3-离屏渲染卡顿原因">3. 离屏渲染卡顿原因</h4>
+<blockquote>
+<p>离屏渲染之所以会特别消耗性能，是因为要创建一个屏幕外的缓冲区，然后从当屏缓冲区切换到屏幕外的缓冲区，然后再完成渲染；其中，创建缓冲区和切换上下文最消耗性能，而绘制其实不是性能损耗的主要原因。</p>
+</blockquote>
+<h5 id="设置了以下属性时就会触发离屏绘制"><code>设置了以下属性时，就会触发离屏绘制：</code></h5>
+<blockquote>
+<ul>
+<li>shouldRasterize（光栅化）</li>
+<li>masks（遮罩）</li>
+<li>shadows（阴影）</li>
+<li>edge antialiasing（抗锯齿）</li>
+<li>group opacity（不透明）</li>
+<li>复杂形状设置圆角等</li>
+<li>渐变π</li>
+<li>屏幕渲染类型</li>
+</ul>
+</blockquote>
+<h5 id="cpu-计算好显示内容提交到-gpugpu-渲染完成后将渲染结果放入帧缓冲区随后视频控制器会按照-vsync-信号逐行读取帧缓冲区的数据经过可能的数模转换传递给显示器显示">CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会按照 VSync 信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。</h5>
+<h5 id="屏幕渲染有如下三种"><code>屏幕渲染有如下三种：</code></h5>
+<blockquote>
+<p>1、GPU 中的屏幕渲染：On-Screen Rendering<br>
+<code>意为</code>当前屏幕渲染，指的是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区中进行</p>
+</blockquote>
+<blockquote>
+<p>2、GPU 中的屏幕渲染：Off-Screen Rendering<br>
+<code>意为</code>离屏渲染，指的是 GPU 在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作</p>
+</blockquote>
+<blockquote>
+<p>3、CPU 中的离屏渲染（特殊离屏渲染，即不在 GPU 中的渲染）<br>
+如果我们重写了 drawRect 方法，并且使用任何 Core Graphics 的技术进行了绘制操作，就涉及到了 CPU 渲染。<br>
+CoreGraphic 通常是线程安全的，所以可以进行异步绘制，显示的时候再放回主线程</p>
+</blockquote>
+<h4 id="4-切圆角优化">4. 切圆角优化</h4>
+<blockquote>
+<p>切圆角是开发 app 过程中经常会用到的功能，但是使用不同的方式，性能损耗也会不同，下面会介绍 3 种切圆角的方法；其中，方法三的性能相对最好。</p>
+</blockquote>
+<ul>
+<li>
+<h4 id="方法一">方法一</h4>
+</li>
+</ul>
+<blockquote>
+<p>使用 cornerRadius 进行切圆角，在 iOS9 之前会产生离屏渲染，比较消耗性能，而之后系统做了优化，则不会产生离屏渲染，但是操作最简单</p>
+</blockquote>
+<pre><code class="language-Objective-C">iv.layer.cornerRadius = 30;
+iv.layer.masksToBounds = YES;
+</code></pre>
+<ul>
+<li>
+<h4 id="方法二">方法二</h4>
+</li>
+</ul>
+<blockquote>
+<p>利用 mask 设置圆角，利用的是 UIBezierPath 和 CAShapeLayer 来完成</p>
+</blockquote>
+<pre><code class="language-Objective-C">CAShapeLayer *mask1 = [[CAShapeLayer alloc] init];
+mask1.opacity = 0.5;
+mask1.path = [UIBezierPath bezierPathWithOvalInRect:iv.bounds].CGPath;
+iv.layer.mask = mask1;
+</code></pre>
+<ul>
+<li>
+<h4 id="方法三">方法三</h4>
+</li>
+</ul>
+<blockquote>
+<p>利用 CoreGraphics 画一个圆形上下文，然后把图片绘制上去，得到一个圆形的图片，达到切圆角的目的。</p>
+</blockquote>
+<pre><code class="language-Objective-C">- (UIImage *)drawCircleImage:(UIImage*)image
+{
+    CGFloat side = MIN(image.size.width, image.size.height);
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(side, side), false, [UIScreen mainScreen].scale);
+    CGContextAddPath(UIGraphicsGetCurrentContext(), [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, side, side)].CGPath);
+    CGContextClip(UIGraphicsGetCurrentContext());
+    
+    CGFloat marginX = -(image.size.width - side) * 0.5;
+    CGFloat marginY = -(image.size.height - side) * 0.5;
+    [image drawInRect:CGRectMake(marginX, marginY, image.size.width, image.size.height)];
+    
+    CGContextDrawPath(UIGraphicsGetCurrentContext(), kCGPathFillStroke);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-06-26">2019-06-26</time>
+                  <h4 class="title white no-margin">iOS 打破 NSTimer 循环引用</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-06-17">2019-06-17</time>
+                  <h4 class="title white no-margin">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

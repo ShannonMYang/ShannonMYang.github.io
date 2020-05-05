@@ -1,0 +1,533 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>算法小记 · 斐波那契数列 + 青蛙跳台阶问题 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+写一个函数，输入 n ，求斐波那契数列中第 n 项的数值。
+
+
+
+
+斐波那契数列定义如下：
+
+
+f(n)={0,n=0;x,n=1;f(n−1)+f(n−2),n&gt;1;f(n)=\begin{cases}
+0,\quad n = 0..." />
+    <meta name="keywords" content="算法" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2018-11-05"><i class="fa fa-calendar"></i><span class="lately">1 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/"> </span>
+              </a>
+              <span id="/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-0 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>写一个函数，输入 <code>n</code> ，求斐波那契数列中第 <code>n</code> 项的数值。</p>
+</blockquote>
+<!-- more -->
+<ul>
+<li>
+<h6 id="斐波那契数列定义如下">斐波那契数列定义如下：</h6>
+</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>n</mi><mo>)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>0</mn><mo separator="true">,</mo><mspace width="1em"/><mi>n</mi><mo>=</mo><mn>0</mn><mo separator="true">;</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>x</mi><mo separator="true">,</mo><mspace width="1em"/><mi>n</mi><mo>=</mo><mn>1</mn><mo separator="true">;</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>f</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo>)</mo><mo separator="true">,</mo><mspace width="1em"/><mi>n</mi><mo>&gt;</mo><mn>1</mn><mo separator="true">;</mo></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">f(n)=\begin{cases}
+0,\quad n = 0; \\\\
+x,\quad n = 1;\\\\
+f(n - 1) + f(n - 2),\quad n &gt; 1;\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:7.2000399999999996em;vertical-align:-3.3500199999999998em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.8500199999999998em;"><span style="top:-0.6999900000000001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-0.6999900000000001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-0.9999899999999999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-1.29999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-1.59999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-1.89999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-3.1500100000000004em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-4.60001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-4.90001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-5.200010000000001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-5.50001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-5.80001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-6.100019999999999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.3500199999999998em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.8500000000000005em;"><span style="top:-5.850000000000001em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mpunct">;</span></span></span><span style="top:-4.410000000000001em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"></span></span><span style="top:-2.9700000000000006em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mpunct">;</span></span></span><span style="top:-1.5300000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"></span></span><span style="top:-0.08999999999999997em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mpunct">;</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h5 id="1-最基本的方法运用递归">1. 最基本的方法（运用递归）</h5>
+<blockquote>
+<p>这个解法是最基本的方法，但是存在很严重的效率问题。</p>
+<p>用树形结构图来分析的话，你会发现很多重复的结点。而重复的结点数会随着n的增大而急剧增加，这就意味着计算量会随着n的增大而急剧增大，导致时间变得巨长无比。</p>
+<p>有兴趣的可以尝试输入第86项试试，感受一下什么叫做巨慢无比。</p>
+</blockquote>
+<blockquote>
+<p>吾来打个样：</p>
+</blockquote>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+/* 最基本的方法 */
+long long Fibonacci(unsigned int n)
+{
+    if(n &lt;= 0)
+        return 0;
+    //当只有一项的时候
+    if(n == 1)
+        return 1;
+    //当不止有一项的时候
+    return Fibonacci(n - 1) + Fibonacci(n - 2);
+}
+
+int main(int argc, const char * argv[]) {
+    clock_t start, finish;
+    double  duration;
+    /* 测量一个事件持续的时间*/
+    /* 起始 */
+    start = clock();
+    /* 要执行的代码，放在此处（两个clock方法的调用中间），方便测试出要执行的代码的执行时间 */
+    printf(&quot;%lld\n&quot;, Fibonacci(11));
+    /* 结束 */
+    finish = clock();
+    /* 时间 */
+    duration = (double)(finish - start) / CLOCKS_PER_SEC;
+    printf( &quot;Use time is %f seconds.\n&quot;, duration );
+    return 0;
+}
+</code></pre>
+<h5 id="2-优化后的方法">2. 优化后的方法</h5>
+<blockquote>
+<p>其实改进的方法并不复杂，只需要避免1.最基本方法中的重复计算即可。</p>
+<p>所以，我们可以把已经得到的数列中间项保存起来，如果下次需要计算的时候，先查找一下，如果已经计算过，就不用重复计算了。</p>
+<p>当然，更简单的方法是，自下而上计算，首先根据f(0) 和f(1)算出f(2)，再根据f(1)和f(2)算出f(3)……依此类推，可以算出第n项。</p>
+<p>那么，自然的，这种时间复杂度便是O(n)。</p>
+</blockquote>
+<blockquote>
+<p>吾来打个样：</p>
+</blockquote>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+/* 优化后的方法 */
+long long Fibonacci(unsigned n)
+{
+    int result[2] = {0, 1};
+    if(n &lt; 2)
+        return result[n];
+    
+    long long  fibNMinusOne = 1;
+    long long  fibNMinusTwo = 0;
+    long long  fibN = 0;
+    for(unsigned int i = 2; i &lt;= n; ++ i)
+    {
+        fibN = fibNMinusOne + fibNMinusTwo;
+        
+        fibNMinusTwo = fibNMinusOne;
+        fibNMinusOne = fibN;
+    }
+    
+    return fibN;
+}
+
+int main(int argc, const char * argv[]) {
+    clock_t start, finish;
+    double  duration;
+    /* 测量一个事件持续的时间*/
+    /* 起始 */
+    start = clock();
+    /* 要执行的代码，放在此处（两个clock方法的调用中间），方便测试出要执行的代码的执行时间 */
+    printf(&quot;%lld\n&quot;, Fibonacci(11));
+    /* 结束 */
+    finish = clock();
+    /* 时间 */
+    duration = (double)(finish - start) / CLOCKS_PER_SEC;
+    printf( &quot;Use time is %f seconds.\n&quot;, duration );
+    return 0;
+}
+</code></pre>
+<h5 id="3-青蛙跳台阶问题">3. 青蛙跳台阶问题</h5>
+<blockquote>
+<p>假如有一只青蛙，一次可以跳上 1 级台阶，也可以跳 2 级台阶，请问青蛙上一个 n 级台阶一共有多少种跳法？<br>
+分析如下：</p>
+</blockquote>
+<ol>
+<li>假如现在台阶只有 1 级，n = 1，那么这只青蛙就在只有 1 种跳法：1（1 代表一次跳 1 级台阶）也就是 f(1) = 1 种跳法</li>
+<li>假如现在台阶只有 2 级，n = 2，那么这只青蛙可以有 2 种跳法：1 1、2（1 代表一次跳 1 级台阶，2 代表一次跳 2 级台阶），也就是 f(2) = 2 种跳法</li>
+<li>假如现在台阶有 3 级，n = 3，青蛙可以有几种跳法呢？<br>
+假如青蛙先跳了 1 级台阶，还剩下 2 级台阶，那它还有几种跳法呢？通过第 2 个情况分析知道有 2 种跳法；假如青蛙先跳了 2 级台阶，根据第 1 个情况分析知道有 1 种跳法，所以这时候得出 f(3) = 2 + 1 种方法</li>
+<li>假如现在台阶有 4 级，n = 4，我们利用上面的规律继续分析可得：f(4) = 3 + 2</li>
+</ol>
+<p>综上所述，我们得出其实这个算法就是一个（变形）斐波那契数列问题，公式如下：</p>
+<ul>
+<li>n = 1, f(1) = 1</li>
+<li>n = 2, f(2) = 2</li>
+<li>n &gt; 2, f(n) = f(n -1) + f(n -2)</li>
+</ul>
+<p>所以至此明白了，青蛙跳台阶问题就是一个（变形）斐波那契数列问题。</p>
+<blockquote>
+<p>吾来打个样：</p>
+</blockquote>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+/* 优化后的方法 */
+long long Fibonacci(unsigned n)
+{
+    int result[2] = {0, 1, 2};
+    if(n &lt;= 2)
+        return result[n];
+    
+    long long  fibNMinusOne = 2;
+    long long  fibNMinusTwo = 1;
+    long long  fibN = 0;
+    for(unsigned int i = 3; i &lt;= n; ++ i)
+    {
+        fibN = fibNMinusOne + fibNMinusTwo;
+        
+        fibNMinusTwo = fibNMinusOne;
+        fibNMinusOne = fibN;
+    }
+    
+    return fibN;
+}
+
+int main(int argc, const char * argv[]) {
+    clock_t start, finish;
+    double  duration;
+    /* 测量一个事件持续的时间*/
+    /* 起始 */
+    start = clock();
+    /* 要执行的代码，放在此处（两个clock方法的调用中间），方便测试出要执行的代码的执行时间 */
+    printf(&quot;%lld\n&quot;, Fibonacci(11));
+    /* 结束 */
+    finish = clock();
+    /* 时间 */
+    duration = (double)(finish - start) / CLOCKS_PER_SEC;
+    printf( &quot;Use time is %f seconds.\n&quot;, duration );
+    return 0;
+}
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/t5FFzq6Cn.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-11-06">2018-11-06</time>
+                  <h4 class="title white no-margin">算法小记 · 不用四则运算做加法</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-07-18">2018-07-18</time>
+                  <h4 class="title white no-margin">再写 iOS 响应者链</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

@@ -1,0 +1,545 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>算法小记 · 不用四则运算做加法 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+写一个函数，求两个整数之和，要求在函数体内不得使用 +、-、*、/ 四则运算符号。
+
+
+
+输入：
+输入可能包含多个测试样例。
+对于每个测试案例，输入为两个整数 x 和 y (1 &lt;= m, n &lt;= 1000000)。
+输出：..." />
+    <meta name="keywords" content="算法" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2018-11-06"><i class="fa fa-calendar"></i><span class="lately">1 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/"> </span>
+              </a>
+              <span id="/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-0 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">算法小记 · 不用四则运算做加法</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>写一个函数，求两个整数之和，要求在函数体内不得使用 +、-、*、/ 四则运算符号。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<h5 id="输入"><code>输入：</code></h5>
+<p>输入可能包含多个测试样例。<br>
+对于每个测试案例，输入为两个整数 x 和 y (1 &lt;= m, n &lt;= 1000000)。</p>
+<h5 id="输出"><code>输出：</code></h5>
+<p>对应每个测试案例，输出 x + y 的值。</p>
+<h5 id="样例输入"><code>样例输入：</code></h5>
+<p>1  2<br>
+11  18</p>
+<h5 id="样例输出"><code>样例输出：</code></h5>
+<p>3<br>
+29</p>
+</blockquote>
+<h5 id="首先思考的是不能用四则运算符只能从别的角度来考虑">首先，思考的是，<code>不能用四则运算符</code>，只能从别的角度来考虑。</h5>
+<h5 id="那么用过c语言的自然就得考虑到c语言的优势之一-按位运算">那么，用过C语言的，自然就得考虑到C语言的优势之一 <code>按位运算</code>。</h5>
+<blockquote>
+<p>吾来打个样：</p>
+</blockquote>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+// 主要的方法是用与来求进位，用异或来求不进位的加法
+unsigned int Add(unsigned int a, unsigned int b) 
+{
+    unsigned int sum, carry;
+    
+    do {
+        // 按位异或运算
+        sum = a ^ b;
+        // 按位与运算后，再进行按位左移运算
+        // &lt;&lt; 1 相当于 *2
+        carry = (a &amp; b) &lt;&lt; 1;
+        
+        a = sum;
+        b = carry;
+    } while (b != 0); // 对carry的值做判断，不满足条件的，则为正确的sum值
+    
+    return a;
+}
+
+int main(int argc, const char * argv[]) {
+    unsigned int x, y;
+    while (scanf(&quot;%u%u&quot;, &amp;x, &amp;y) != EOF) {
+        printf(&quot;%u\n&quot;, Add(x, y));
+    }
+    return 0;
+}
+</code></pre>
+<h4 id="关于按位运算的些许补充不了解的或遗忘了的可以看看"><code>关于按位运算的些许补充(不了解的或遗忘了的，可以看看)：</code></h4>
+<blockquote>
+<p><code>C 语言</code> 和其它高级语言不同的是，它<code>完全支持</code> <code>按位运算符</code>。这与 <code>汇编语言</code> 的 <code>位操作</code> 有些相似。<br>
+因为 <code>位运算</code> 得到了更多的底层优化，因此同样的功能它的 <code>效率更高</code>。</p>
+</blockquote>
+<blockquote>
+<p>所谓 <code>位运算</code>，就是对一个 <code>比特（Bit）位</code> 进行操作。<code>比特（Bit）</code> 是一个电子元器件，<code>8 个比特</code> 构成 <code>一个字节（Byte）</code>，它已经是 <code>粒度最小</code> 的 <code>可操作单元</code> 了。</p>
+</blockquote>
+<pre><code class="language-C">// C语言中提供的六种按位运算符
+&amp; 位逻辑与
+| 位逻辑或
+^ 位逻辑异或
+~ 位逻辑反
+&gt;&gt; 右移
+&lt;&lt; 左移
+</code></pre>
+<h6 id="标准的-c-语言其实并不支持二进制数字只不过有些编译器自己进行了扩展才支持二进制数字-换句话讲就是并非所有的编译器都支持二进制数字只有一部分编译器支持并且跟编译器的版本还有关系">标准的 C 语言其实并不支持二进制数字，只不过有些编译器自己进行了扩展，才支持二进制数字。换句话讲就是，并非所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本还有关系。</h6>
+<p>C 语言中不能直接使用 <code>二进制</code> 数字，<code>按位运算符</code> 两边的操作数可以是十进制、八进制、十六进制，因为它们在内存中最终皆是以 <code>二进制</code> 的形式存储，<code>按位运算符</code>就是对这些 <code>内存中</code> 的 <code>二进制位</code> 进行运算。其他的位运算符也是相同的道理。</p>
+<h6 id="提醒按位运算符-是根据内存中的二进制位进行运算的而不是数据的二进制形式其他位运算符也一样"><code>提醒</code>：<code>按位运算符</code> 是根据内存中的二进制位进行运算的，而不是数据的二进制形式；其他位运算符也一样。</h6>
+<blockquote>
+<p>按位与运算 (&amp;)</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 按位与运算 (&amp;)
+     * 一个比特（Bit）位只有 0 和 1 两个取值，只有参与 &amp; 运算的两个位都为 1 时，结果才为 1，否则为 0。
+     * 例如：1 &amp; 1为 1，0 &amp; 0为 0，1 &amp; 0也为 0，这和逻辑运算符 &amp;&amp; 非常类似。
+     * 
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0010  //表示十进制的 2 (在内存中的的存储)
+     * &amp; 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0000  //表示十进制的 0 (在内存中的的存储)
+     *
+     */
+    int m = 2;
+    int n = 1;
+    printf(&quot;%d \n&quot;, (m &amp; n));  //输出为 0
+</code></pre>
+<blockquote>
+<p>按位或运算 (|)</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 按位或运算 (|)
+     * 一个比特（Bit）位只有 0 和 1 两个取值，只要参与 | 运算的两个二进制位有一个为 1 时，结果就为 1，两个都为 0 时结果才为 0。
+     * 例如：1 | 1为 1，0 | 0为 0，1 | 0为 1，这和逻辑运算中的||非常类似。
+     *
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0010  //表示十进制的 2 (在内存中的的存储)
+     * | 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0011  //表示十进制的 3 (在内存中的的存储)
+     *
+     */
+    int m = 2;
+    int n = 1;
+    printf(&quot;%d\n&quot;, (m | n));  //输出为 3
+</code></pre>
+<blockquote>
+<p>按位异或运算 (^)</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 按位异或运算（^）
+     * 一个比特（Bit）位只有 0 和 1 两个取值，只要当参与 ^ 运算两个二进制位不同时，结果就为 1，相同时结果则为 0。
+     * 例如：0 ^ 1为 1，0 ^ 0为 0，1 ^ 1为 0。
+     * 
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0010  //表示十进制的 2 (在内存中的的存储)
+     * ^ 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *   0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0011  //表示十进制的 3 (在内存中的的存储)
+     *    
+     */
+    int m = 2;
+    int n = 1;
+    printf(&quot;%d\n&quot;, (m ^ n));  //输出为 3
+</code></pre>
+<blockquote>
+<p>取反运算 (~)</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 取反运算（~）
+     * 一个比特（Bit）位只有 0 和 1 两个取值，取反运算符~为单目运算符，右结合性，作用是对参与运算的二进制位取反。
+     * 例如：~1为 0，~0为 1，这和逻辑运算中的!非常类似。
+     * ~ 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *   1111 1111 -- 1111 1111 -- 1111 1111 -- 1111 1110  //表示十进制的 -2 (在内存中的的存储)
+     * 在计算机中，负数以原码的补码形式表达。
+     * 正数的补码与原码相同，负数的补码为对该数的原码(除符号位外)逐位取反，然后在最后一位加 1。
+     * 二进制中，如果有符号， 最高位表示符号, 0 为正, 1 为负,
+     * -2 的二进制原码是：1000 0000 -- 0000 0000 -- 0000 0000 - 0000 0010
+     * -2 的二进制补码是：1111 1111 -- 1111 1111 -- 1111 1111 - 1111 1101
+     * -2 的o二进制补码加1 是：1111 1111 -- 1111 1111 -- 1111 1111 -- 1111 1110
+     */
+    int n = 1;
+    printf(&quot;%d\n&quot;, (~ n));  //输出为 -2
+</code></pre>
+<blockquote>
+<p>左移运算 (&lt;&lt;)</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 左移运算 (&lt;&lt;)
+     * 一个比特（Bit）位只有 0 和 1 两个取值，左移运算符&lt;&lt; 就是把操作数的各个二进制位全部左移若干位，高位丢弃，低位补 0。
+     *
+     * &lt;&lt; 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *    0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 1000  //表示十进制的 8 (在内存中的的存储)
+     *
+     */
+    int n = 1;
+    printf(&quot;%d\n&quot;, (n &lt;&lt; 3));  //输出为 8
+</code></pre>
+<blockquote>
+<p>右移运算（&gt;&gt;）</p>
+</blockquote>
+<pre><code class="language-C">    /*
+     * 右移运算 (&gt;&gt;)
+     * 一个比特（Bit）位只有 0 和 1 两个取值，右移运算符&gt;&gt; 就是把操作数的各个二进制位全部右移若干位，低位丢弃，高位补 0 或 1。
+     * 如果数据的最高位是 0，那么就补 0；如果最高位是 1，那么就补 1。
+     *
+     * &gt;&gt; 0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0001  //表示十进制的 1 (在内存中的的存储)
+     * ---------------------------------------------------
+     *    0000 0000 -- 0000 0000 -- 0000 0000 -- 0000 0000  //表示十进制的 0 (在内存中的的存储)
+     *
+     */
+    int n = 1;
+    printf(&quot;%d\n&quot;, (n &gt;&gt; 3));  //输出为 0
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/post-images/hello-gridea.png');"></div>
+                 <a href="https://shannonmyang.github.io/post/hello-gridea/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-12-12">2018-12-12</time>
+                  <h4 class="title white no-margin">Hello Gridea</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/t5FFzq6Cn.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-11-05">2018-11-05</time>
+                  <h4 class="title white no-margin">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

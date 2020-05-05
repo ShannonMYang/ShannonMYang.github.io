@@ -1,0 +1,433 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iOS 事件响应 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？
+
+
+认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截..." />
+    <meta name="keywords" content="iOS" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2018-06-15"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-shi-jian-xiang-ying/"> </span>
+              </a>
+              <span id="/ios-shi-jian-xiang-ying/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">iOS 事件响应</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？</p>
+</blockquote>
+<blockquote>
+<p>认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截下这个事件。</p>
+</blockquote>
+<!-- more -->
+<h5 id="那么来简单分析下按照时间轴来划分事件的生命周期大概是这样">那么，来简单分析下，按照时间轴来划分，事件的生命周期大概是这样：</h5>
+<blockquote>
+<p>1、 <code>事件的产生与传递</code>（事件是怎么从父级 UI 控件传递到子级 UI 控件并找到最合适 view 的、寻找最合适的 view 的底层是如何实现的、咋进行拦截事件的处理）<br>
+2、 <code>找到最合适的 view 后事件的处理</code>（将 touches 方法重写，也就是所谓的事件的响应）</p>
+</blockquote>
+<hr>
+<h5 id="事件的传递已经被很多人讲过了有需要的可自行搜索查看在此一笔带过">事件的传递已经被很多人讲过了，有需要的可自行搜索查看，在此，一笔带过。</h5>
+<blockquote>
+<p>传递过程大致如下：<br>
+UIApplication -&gt; UIWindow -&gt; UI控件(Father) -&gt; UI控件(Son)</p>
+</blockquote>
+<h5 id="这里主要记录了如何拦截">这里主要记录了如何拦截。</h5>
+<blockquote>
+<p>子视图响应事件是有一个范围的</p>
+</blockquote>
+<blockquote>
+<p>子视图被添加到父视图以后，每次在屏幕上的点击事件都会触发一条响应链来逐层判断该由哪个视图来响应事件。当一个自视图添加到父视图以后其响应事件的范围就是父视图的 bounds，如果子视图的 bounds 超出了父视图则超出的部分就会被响应链判断为不能响应事件而被抛弃。</p>
+</blockquote>
+<blockquote>
+<p>写一个 Demo，如图所示。父视图，红色区域，是 UIView，我们下文称为大红；子视图均为兄弟视图，是 UIButton；1 号称为小蓝；2 号称为小黑；3 号称为小灰。<br>
+Ps:1、2、3 号按钮，是依次添加到父视图 大红 上的。每个 UIButton 都对应着一个点击事件响应方法，均做 NSLog 打印。</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588325457428.png" alt="view" loading="lazy"></figure>
+<h5 id="在默认情况下点击-uibutton-就会触发其对应的方法做打印">在默认情况下，点击 UIButton 就会触发其对应的方法，做打印。</h5>
+<pre><code class="language-Objective-C">//类似这样
+- (void)firstLog:(UIButton *)button
+{
+    NSLog(@&quot;111111111&quot;);
+}
+</code></pre>
+<h5 id="然而实际的情况却是分别点击三个按钮发现">然而，实际的情况却是，分别点击三个按钮发现:</h5>
+<blockquote>
+<p>内部的 1 号按钮即 小蓝 每次的按钮点击事件 都能响应 ；而接近于边上的 2 号按钮 小黑 则 有时响应 ， 有时不会 ；至于外部的 3 号按钮 小灰 ，则 完全不响应 。<br>
+这是因为，虽然三个按钮都可见，但是只要不是在父视图的 bounds 内的部分便无法响应点击，边界上的按钮只有部分在其父视图之内，所以不是每次点击都会响应，只有点击其在父视图之内的部分（即交叉部分）才能响应点击。</p>
+</blockquote>
+<h5 id="如果要实现点击-2号按钮-小黑-的任意区域均可打印点击-3号按钮-小灰-也可打印">如果要实现点击 2号按钮 小黑 的任意区域均可打印，点击 3号按钮 小灰 也可打印。</h5>
+<h5 id="则需要在-大红-也就是父视图重写-uiview-hittestcgpointpoint-witheventuievent-event-方法">则需要在 大红 也就是父视图重写 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event 方法。</h5>
+<blockquote>
+<p>因为– hitTest:withEvent: 是通过 - pointInside:withEvent: 来判断点击的点是否在视图中。然后判断这个视图是否接受当前事件，关于 - pointInside:withEvent: 这个方法在官方文档中说明了，正是通过 bounds 判断的。<br>
+所以，超出父视图的子视图响应事件，该这么做。<br>
+在父视图添加如下代码。其思路是：遍历父视图的所有子视图，并判断触发事件的点是否在子视图的 bounds 内。如果在，就返回这个子视图。</p>
+</blockquote>
+<pre><code class="language-Objective-C">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        for (UIView *subView in self.subviews) {
+            CGPoint p = [subView convertPoint:point fromView:self];
+            if (CGRectContainsPoint(subView.bounds, p)) {
+                view = subView;
+            }
+        }
+    }
+    return view;
+}
+</code></pre>
+<h5 id="如果要实现点击-3号按钮-小灰却让-2号按钮-小黑-响应打印出来">如果要实现，点击 3号按钮 小灰，却让 2号按钮 小黑 响应，打印出来。</h5>
+<blockquote>
+<p>也需要在 大红 也就是父视图重写 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event 方法，并在其中拦截，让 2 号按钮小黑响应点击事件。</p>
+</blockquote>
+<pre><code class="language-Objective-C">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        for (UIView *subView in self.subviews) {
+            if (subView == self.subviews[1]) {
+                view = subView;
+            }
+        }
+    }
+    return view;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588326781354.png" alt="log" loading="lazy"></figure>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-07-18">2018-07-18</time>
+                  <h4 class="title white no-margin">再写 iOS 响应者链</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

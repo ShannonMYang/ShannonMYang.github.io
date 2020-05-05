@@ -1,0 +1,568 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>npm 管理依赖包版本 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+近来，在做一些 vue.js 相关的练习，用到了很多 npm 管理依赖包的问题。遂，有此笔记，做一记录。
+
+
+
+
+npm 管理 node 版本
+
+
+1. 安装：
+$ sudo npm install -g n
+
+2. 查看当前已经安装的 ..." />
+    <meta name="keywords" content="Vue.js" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2019-07-17"><i class="fa fa-calendar"></i><span class="lately">10 个月前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/npm-guan-li-yi-lai-bao-ban-ben/"> </span>
+              </a>
+              <span id="/npm-guan-li-yi-lai-bao-ban-ben/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-0 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">npm 管理依赖包版本</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>近来，在做一些 vue.js 相关的练习，用到了很多 npm 管理依赖包的问题。遂，有此笔记，做一记录。</p>
+</blockquote>
+<!-- more -->
+<ul>
+<li>
+<h4 id="npm-管理-node-版本">npm 管理 node 版本</h4>
+</li>
+</ul>
+<h5 id="1-安装">1. 安装：</h5>
+<pre><code class="language-Shell">$ sudo npm install -g n
+</code></pre>
+<h5 id="2-查看当前已经安装的-node-版本以及正在使用的版本前面有一个-o">2. 查看当前已经安装的 node 版本以及正在使用的版本（前面有一个 o）</h5>
+<pre><code class="language-Shell">$ n
+</code></pre>
+<h5 id="3-安装其他的-node-版本">3. 安装其他的 node 版本</h5>
+<pre><code class="language-Shell">//安装0.11.12版本
+$ n 0.11.12
+//安装最新的版本
+$  n latest
+//安装稳定版本
+$  n stable
+// 删除某个版本
+$ n rm 0.10.1 
+</code></pre>
+<h5 id="4-以指定的版本来执行脚本">4. 以指定的版本来执行脚本</h5>
+<pre><code class="language-Shell">$ n use 0.10.21 some.js
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="使用-nrm-切换-npm-源">使用 nrm 切换 npm 源</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">// 安装nrm：
+npm install -g nrm
+// 查看已有的可以使用的源
+nrm ls
+// 测试源的速度
+nrm test
+// 切换到现有的源 如  nrm use taobao 之后使用npm就会从taobao下载
+nrm use &lt;源名称&gt;
+// 新增源
+nrm add&lt;源名称&gt; &lt;源地址&gt;
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="部分常用命令">部分常用命令</h4>
+</li>
+</ul>
+<h5 id="1-安装命令">1. 安装命令</h5>
+<pre><code class="language-Shell">// 全局安装
+npm install 模块名 -g
+// 本地安装
+npm install 模块名
+// 一次性安装多个
+npm install 模块1 模块2 模块3 
+// 安装开发时依赖包
+npm install 模块名 --save-dev
+// 安装运行时依赖包
+npm install 模块名 --save
+</code></pre>
+<h5 id="2-查看安装的目录">2. 查看安装的目录</h5>
+<pre><code class="language-Shell">// 查看项目中模块所在的目录
+npm root
+// 查看全局安装的模块所在目录
+npm root -g
+</code></pre>
+<h5 id="3-查看某个包的各种属性">3. 查看某个包的各种属性</h5>
+<pre><code class="language-Shell">// 查看某个包对于各种包的依赖关系
+npm view 模块名 dependencies
+</code></pre>
+<h5 id="4-查看包的源文件地址">4. 查看包的源文件地址</h5>
+<pre><code class="language-Shell">// 查看包的源文件地址
+npm view 模块名 repository.url
+</code></pre>
+<h5 id="5-查看-npm-的版本">5. 查看 npm 的版本</h5>
+<pre><code class="language-Shell">npm -v 
+</code></pre>
+<h5 id="6-查看某个模块的-bugs-列表界面">6. 查看某个模块的 bugs 列表界面</h5>
+<pre><code class="language-Shell">npm bugs 模块名
+// 例如运行npm bugs antd则会打开antd仓库的issue
+</code></pre>
+<h5 id="7-打开某个模块的仓库界面">7. 打开某个模块的仓库界面</h5>
+<pre><code class="language-Shell">npm repo 模块名
+// 例如运行npm repo vue则会打开vue线上仓库，效果如下图
+</code></pre>
+<h5 id="8-打开某个模块的文档">8. 打开某个模块的文档</h5>
+<pre><code class="language-Shell">npm docs 模块名
+// 例如运行npm docs vue则会打开vue的readme.md文档
+</code></pre>
+<h5 id="9-打开某个模块的主页">9. 打开某个模块的主页</h5>
+<pre><code class="language-Shell">npm home 模块名
+// 例如运行npm home vue则会打开vue模块的主页
+</code></pre>
+<h5 id="10-查看当前已经安装的模块">10. 查看当前已经安装的模块</h5>
+<pre><code class="language-Shell">npm list
+// 当然我们也可以限制输入的模块层级，例如
+npm list --depth=0
+</code></pre>
+<h5 id="11-清除未被使用到的模块">11. 清除未被使用到的模块</h5>
+<pre><code class="language-Shell">// 有时在我们使用npm list的时候，可能会碰到一些问题，就是有些模块并没有被项目引用使用，我们还是安装了这些模块，那么我们可以一键清除这些没有使用到的模块
+npm prune
+</code></pre>
+<h5 id="12-初始化">12. 初始化</h5>
+<pre><code class="language-Shell">npm init
+// 引导你创建一个package.json文件，包括名称、版本、作者这些信息
+</code></pre>
+<h5 id="13-清除-npm-的缓存">13. 清除 npm 的缓存</h5>
+<pre><code class="language-Shell">rm -rf node_modules
+npm cache clean
+// 慎重使用改命令
+npm cache clean -f
+</code></pre>
+<h5 id="14-卸载-node-模块">14. 卸载 node 模块</h5>
+<pre><code class="language-Shell">npm uninstall 模块名
+</code></pre>
+<h5 id="15-更新-node-模块">15. 更新 node 模块</h5>
+<pre><code class="language-Shell">npm update 模块名
+// 当然你也可以update 该模块到指定版本
+npm update 模块名 @版本号
+// 如果安装到最新版本可以使用以下命令
+npm install 模块名@latest 
+</code></pre>
+<h5 id="16-查看当前模块依赖的-node-最低版本号">16. 查看当前模块依赖的 node 最低版本号</h5>
+<pre><code class="language-Shell">npm view 模块名 engines
+</code></pre>
+<h5 id="17-查看模块的当前版本号">17. 查看模块的当前版本号</h5>
+<pre><code class="language-Shell">npm view 模块名 version
+// 需要注意的是查看到的模块版本是该模块再远程仓库的版本号，并不是当前项目中所依赖的版本号。
+// 查看当前项目中应用的某个模块的版本号的命令为
+npm list 模块名 version
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="语义化版本号">语义化版本号</h4>
+</li>
+<li>每个版本号都形如 1.2.3，由三个部分组成，依次叫做 “主版本号”、“次版本号” 和 “修订号”</li>
+<li>当新版本无法兼容基于前一版本的代码时，则提高主版本号</li>
+<li>当新版本新增了功能与特性，但仍兼容前一版本的代码时，则提高次版本号</li>
+<li>当新版本仅仅修正漏洞或者增强效率，仍然兼容前一版本代码，则提高修订号</li>
+<li>默认情况下，npm install --save 下载的都是最新版本，并且会在 package.json 文件里登记一个最优版本号，</li>
+</ul>
+<pre><code class="language-Shell">&quot;cluster&quot;: &quot;&gt;= 0.7.7&quot;,  
+ // cluster 版本必须大于等于 0.7.7 或者限定版本范围 npm install cluster@&quot;&gt;=0.7.7&lt;0.8.0&quot;
+&quot;commander&quot;: &quot;^2.6.0&quot;,
+/* ^会匹配最新的大版本依赖包，=大版本不变即可,其他版本随便更新。
+当我们npm install 的时候,安装到 node_modules 目录下的
+ commander开源包可能是 2.6.0 或 2.7.3 或 2.8.9 ......不包括3.0.0
+只要前面2不变即可.这种版本限制相对对宽松,还是少用为妙.*/
+&quot;commander&quot;: &quot;~1.2.3&quot;,
+/* ~会匹配最近的小版本依赖包，比如~1.2.3会匹配所有1.2.x版本，
+但是不包括1.3.0*/
+&quot;async&quot; : &quot;1.2.3&quot;,
+// 指定特定的版本号 npm install async@1.2.3
+&quot;async&quot; : &quot;*&quot;,
+// 最糟糕的一种版本控制,一点限制没有.
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="使用-npm-shrinkwrap-命令锁定项目依赖">使用 npm shrinkwrap 命令锁定项目依赖</h4>
+</li>
+</ul>
+<blockquote>
+<p>在开发某个 Node 项目时，进行到某个节点，一切都运行顺利，说明目前所有的依赖包（以及更底层的依赖包）和你的代码兼容得很好。这个时候，就可以在项目文件夹下运行上面的这个命令。它会生成一个 npm-shrinkwrap.json 文件，记录目前所有依赖包（及更底层依赖包）的版本信息。这样当以后你（或者你的同事、你的用户）运行 npm install 命令时，npm 首先会找 npm-shrinkwrap.json 文件，依照其中的信息来准确地安装每一个依赖包，只有当这个文件不存在时，npm 才会使用 package.json。<br>
+在这之后开发的过程中，如果想要更新某个依赖包，比如将 Express 从 4.13.0 更新到 4.14.1，那么就只需 npm install express@4.14.1；或者想要添加新的依赖包，比如 Helmet，也只需 npm install helmet。经过一段时间的测试与开发，当你确定这些新版本新安装的依赖包与自己的代码兼容后，就可以再次运行 npm shrinkwrap 命令来锁定依赖包的版本。</p>
+</blockquote>
+<blockquote>
+<p>如果 package-lock.json 和 npm-shrinkwrap.json 存在于包的根，package-lock.json 将被完全忽略。</p>
+</blockquote>
+<pre><code class="language-Shell">// 在（当前机器的当前用户的）所有项目禁用 package-lock.json
+npm config set package-lock false
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="查看-npm-的配置">查看 npm 的配置</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">npm config list
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="更换源">更换源</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">// 要更换国内镜像，编辑 ~/.npmrc 加入下面内容
+registry = https://registry.npm.taobao.org
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/d3FTfjZYU.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-12-21">2019-12-21</time>
+                  <h4 class="title white no-margin">Mac 系统常规指令</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-07-03">2019-07-03</time>
+                  <h4 class="title white no-margin">Xcode 10 升级后的 Error: Multiple commands produce</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

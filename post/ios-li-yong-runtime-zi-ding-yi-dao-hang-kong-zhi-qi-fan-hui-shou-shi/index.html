@@ -1,0 +1,500 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iOS 利用 Runtime 自定义导航控制器返回手势 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+自 iOS7 之后，系统的导航控制器就具备了 边缘滑动返回 的功能。
+这一改进，使得用户能够很方便的退出当前页面，大屏的用户也不用再费力的去点击导航栏上的返回按钮，很是人性化。
+
+
+
+但是，有些用户觉得这样还是不方便。只能从边缘滑动哪行？..." />
+    <meta name="keywords" content="iOS" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2019-06-15"><i class="fa fa-calendar"></i><span class="lately">1 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/"> </span>
+              </a>
+              <span id="/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">iOS 利用 Runtime 自定义导航控制器返回手势</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>自 <code>iOS7 之后</code>，系统的导航控制器就具备了 <code>边缘滑动返回</code> 的功能。<br>
+这一改进，使得用户能够很方便的退出当前页面，大屏的用户也不用再费力的去点击导航栏上的返回按钮，很是<code>人性化</code>。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>但是，有些用户觉得这样还是不方便。只能从边缘滑动哪行？我要的是全屏都能滑！<br>
+于是乎，很多应用，比如 QQ、知乎等都实现了这一功能。<br>
+想要实现这一功能，有好多种方法。</p>
+</blockquote>
+<blockquote>
+<p>本文要介绍的这种方法，是比较好玩的一种方法。<br>
+因为我们用到了<code>苹果私有的 API</code>。<br>
+虽然违反了苹果的审核政策，但我们自有办法能躲过苹果的检测。<br>
+下面，就来聊一下实现过程。</p>
+</blockquote>
+<h4 id="1-首先我们需要知道系统的侧滑手势是如何实现的">1. 首先，我们需要知道系统的侧滑手势是如何实现的；</h4>
+<blockquote>
+<p>这个手势属于 <code>UINavigationController</code>，我们就跳到它的头文件里看看能不能找到线索。这个思路是正确的，确实有一个手势叫做 <code>interactivePopGestureRecognizer</code>。属性为 <code>readonly</code>，就是说我们不能给他换成自定义的手势，但是可以设置 <code>enable=NO</code>。那，既然找到了它，就打印一下，看看它到底是一个什么手势。</p>
+</blockquote>
+<pre><code class="language-Objective-C"> &lt;
+   UIScreenEdgePanGestureRecognizer: 0x7f99d1e10ba0;
+   state = Possible;
+   delaysTouchesBegan = YES; 
+   view = &lt;UILayoutContainerView 0x7f99d1e0b7f0&gt;; 
+   target= &lt;(action=handleNavigationTransition:, 
+   target=&lt;_UINavigationInteractiveTransition 0x7f99d1e0fc10&gt;)&gt;
+   &gt;
+</code></pre>
+<blockquote>
+<p>可以看到，这个手势属于 <code>UIScreenEdgePanGestureRecognizer</code> 这个类，它<code>继承</code>自 <code>UIPanGestureRecognizer</code>，是专门处理<code>边缘手势</code>的一个类。我们可以通过打印发现它的 <code>target：_UINavigationInteractiveTransition</code>（这是一个私有的类，用于处理导航栏动画的），<code>action：handleNavigationTransition:</code> (这个就是系统实现导航栏动画的私有方法)。我们要做的，就是自己新建一个 <code>UIPanGestureRecognizer</code> 手势，让它的 <code>target</code> 和 <code>action</code> 和系统的相同。</p>
+</blockquote>
+<h4 id="2-以非常规手法获取系统手势">2. 以非常规手法获取系统手势；</h4>
+<blockquote>
+<p>我们要获取系统的侧滑手势的 <code>target</code>，用常规的手法肯定是获取不到的。<br>
+因为这是系统私有属性。<br>
+我们需要用 <code>runtime</code> 遍历它的成员变量，看一下系统是如何存储这个属性的。</p>
+</blockquote>
+<pre><code class="language-Objective-C">    unsigned int count;
+    Ivar *ivar = class_copyIvarList([UIGestureRecognizer class], &amp;count);
+    for (int i = 0; i &lt; count; i++) {
+        Ivar var = ivar[i];
+        NSLog(@&quot;type:===&gt;%s&quot;,ivar_getTypeEncoding(var));
+        NSLog(@&quot;name:===&gt;%s&quot;,ivar_getName(var));
+    }
+</code></pre>
+<h5 id="下面是打印结果此处只取了两条有用的结果"><code>下面是打印结果，此处只取了两条有用的结果：</code></h5>
+<pre><code class="language-Objective-C">2015-09-24 15:10:30.879 Nav[1897:149271] type:===&gt;@&quot;NSMutableArray&quot;
+2015-09-24 15:10:30.879 Nav[1897:149271] name:===&gt;_targets
+</code></pre>
+<h5 id="我们再来打印一下这个-_targets-数组看看里面是什么"><code>我们再来打印一下这个 _targets 数组，看看里面是什么:</code></h5>
+<pre><code class="language-Objective-C">NSMutableArray *_targets = [systemPopGes valueForKey:@&quot;_targets&quot;];
+NSLog(@&quot;%@&quot;,_targets);
+</code></pre>
+<h5 id="打印结果如下"><code>打印结果如下：</code></h5>
+<pre><code class="language-Objective-C">(&quot;(action=handleNavigationTransition:, target=&lt;_UINavigationInteractiveTransition 0x7fcd0b5195c0&gt;)&quot;)
+</code></pre>
+<h5 id="可以看到可变数组里存储的就是系统实现-导航栏动画-的-target-和-action获取这个数组的-key-就是-_targets">可以看到，可变数组里存储的，就是系统实现 <code>导航栏动画</code> 的 <code>target</code> 和 <code>action</code>，获取这个数组的 <code>key</code> 就是 <code>_targets</code>。</h5>
+<h4 id="3-以自己的手势替换系统的手势">3. 以自己的手势，替换系统的手势；</h4>
+<blockquote>
+<p>我们可以通过 <code>KVC</code> 获取系统存储这个 <code>target-action</code> 的 <code>数组</code>，然后获取系统的 <code>target-action</code>，自己创建一个滑动手势，加入到系统实现侧滑手势所在的 <code>view</code> 中，禁用系统的侧滑手势，我们自定义的手势就可以代替系统的手势，实现滑动了。</p>
+</blockquote>
+<h5 id="代码如下"><code>代码如下：</code></h5>
+<pre><code class="language-Objective-C">#import &quot;SYRNavigationController.h&quot;
+#import &lt;objc/runtime.h&gt;
+
+@interface SYRNavigationController () &lt;UIGestureRecognizerDelegate&gt;
+
+@end
+
+@implementation SYRNavigationController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+   
+//    获取系统原有侧滑手势
+    UIGestureRecognizer *systemPopGes = self.interactivePopGestureRecognizer;
+//   禁用系统侧滑手势
+    systemPopGes.enabled = NO;
+    
+//    自定义滑动手势
+    UIPanGestureRecognizer *syrPan = [[UIPanGestureRecognizer alloc] init];
+    syrPan.delegate = self;
+    syrPan.maximumNumberOfTouches = 1;
+//    向系统实现侧滑手势的view中加入自定义的滑动手势
+    [systemPopGes.view addGestureRecognizer:syrPan];
+    
+    self.navigationBarHidden = YES;  //隐藏Tabbar
+    
+//    获取系统手势的target数组
+    NSMutableArray *_targets = [systemPopGes valueForKey:@&quot;_targets&quot;];
+    
+    /**
+     *  获取它的唯一对象，我们知道它是一个叫UIGestureRecognizerTarget的私有类，它有一个属性叫_target
+     */
+    id gestureRecognizerTarget = [_targets firstObject];
+    /**
+     *  获取_target:_UINavigationInteractiveTransition，它有一个方法叫handleNavigationTransition:
+     */
+    id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@&quot;_target&quot;];
+    /**
+     *  通过前面的打印，我们从控制台获取出来它的方法签名。
+     */
+    SEL handleTransition = NSSelectorFromString(@&quot;handleNavigationTransition:&quot;);
+    /**
+     *  创建一个与系统一模一样的手势，我们只把它的类改为UIPanGestureRecognizer
+     */
+    [syrPan addTarget:navigationInteractiveTransition action:handleTransition];
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+//    这里有两个条件不允许的手势执行，1、当前控制器为根控制器；2、如果这个push、pop动画正在执行（私有属性）
+//    即在根视图或者正在滑动时禁用手势
+    return self.viewControllers.count != 0 &amp;&amp; ![[self valueForKey:@&quot;_isTransitioning&quot;] boolValue];
+}
+
+@end
+</code></pre>
+<blockquote>
+<p>以上就是简单的实现了一个自定义导航栏滑动手势的 <code>UINavigationController</code>，只要继承这个导航控制器，就可以全局实现<code>全屏侧滑手势</code>，当然系统版本一定要在 <code>iOS7.0</code> <code>以上</code> 才行。</p>
+</blockquote>
+<h4 id="4-规避被拒的风险私有api的调用的隐匿处理">4. 规避被拒的风险，私有API的调用的隐匿处理；</h4>
+<blockquote>
+<p>在刚开始的时候我说到这个方法涉及<code>苹果私有 API</code>，在发布时可能有<code>被拒</code>的<code>风险</code>，我们可以通过下面的方法简单的<code>避免</code>。</p>
+</blockquote>
+<h5 id="代码如下-2"><code>代码如下：</code></h5>
+<pre><code class="language-Objective-C">NSString *selectorStringBegin = @&quot;handleNavigation&quot;;
+NSString *selectorStringEnd = @&quot;Transition:&quot;;
+NSString *selectorString = [NSString stringWithFormat:@&quot;%@%@&quot;,selectorStringBegin,selectorStringEnd];
+SEL systemAction = NSSelectorFromString(selectorString);
+</code></pre>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-06-17">2019-06-17</time>
+                  <h4 class="title white no-margin">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/72sFOp2qr.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/zheng-hong-shao-rou/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2019-06-15">2019-06-15</time>
+                  <h4 class="title white no-margin">蒸红烧肉</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>再写 iOS 响应者链 | 木鱼小店</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
+<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
+<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
+<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+最近看到群里讨论有关响应者链的相关面试题。扪心自问，知道一部分，但是不够全。给自己一种青黄不接的感觉。
+遂，决定温故一下 iOS 响应者连。再细细看看，发现一下以前没注意的地方。
+
+
+iOS 事件传递和响应机制
+1. 按时间顺序，事件的生..." />
+    <meta name="keywords" content="iOS" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
+  </head>
+  <body>
+            <header id="header" class="grid-container">
+        <!-- start: .menu-wrapper -->
+        <div class="menu-mobile"> 
+          <i class="fa fa-reorder"></i>
+        </div>
+        <div class="menu-wrapper">
+          <div class="">
+            <div class="logo">
+              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
+            </div>
+            <!-- start: .main-nav -->
+
+            <nav class="main-nav grid-container grid-parent">
+              <ul id="menu-header" class="menu gradient-effect">
+                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
+                
+                  <li class="" >
+                    <a href="/" class="menu">
+                      首页
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/archives" class="menu">
+                      归档
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/tags" class="menu">
+                      标签
+                    </a>
+                  </li>
+                
+                  <li class="" >
+                    <a href="/post/about" class="menu">
+                      关于
+                    </a>
+                  </li>
+                
+                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
+              </ul>
+            </nav>
+            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
+            <!-- end: .main-nav -->
+            <div class="clear"></div>
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+          </div>    
+          <div class="clear"></div>
+        </div>
+        <!-- end: .menu-wrapper -->
+        <div class="clear"></div>
+      </header>
+      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
+        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
+          <div class="search-wrapper section">
+            <form id="gridea-search-form" data-update="1588645353829" action="/search/index.html" class="search-form" _lpchecked="1">
+              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
+              <button type="submit" class="submit" aria-label="Submit">
+                <i class="fa fa-search-line"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2018-07-18"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/zai-xie-ios-xiang-ying-zhe-lian/"> </span>
+              </a>
+              <span id="/zai-xie-ios-xiang-ying-zhe-lian/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
+                
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+              </div>
+              <h1 class="title ularge white bold">再写 iOS 响应者链</h1>
+            </div>
+          </div>
+        </div>  
+
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>最近看到群里讨论有关响应者链的相关面试题。扪心自问，知道一部分，但是不够全。给自己一种青黄不接的感觉。<br>
+遂，决定温故一下 iOS 响应者连。再细细看看，发现一下以前没注意的地方。</p>
+</blockquote>
+<!-- more -->
+<h4 id="ios-事件传递和响应机制">iOS 事件传递和响应机制</h4>
+<h5 id="1-按时间顺序事件的生命周期如下">1. 按时间顺序，事件的生命周期如下：</h5>
+<blockquote>
+<p>事件的产生和传递 (事件如何从父控件传递到子控件并寻找到最适合的 view、寻找最合适的 view 的底层实现、拦截事件的处理 --&gt; 找到最合适的 view 后事件的处理（touches 方法的重写，也就是事件的响应）</p>
+</blockquote>
+<h5 id="2-难点和重点">2. 难点和重点：</h5>
+<p>a. 怎样找到最合适的 view；<br>
+b. 找到最合适的 view 的底层实现（即 <code>- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event;</code> 的实现）；</p>
+<h5 id="3-ios-中的事件">3. iOS 中的事件：</h5>
+<p>a. 触摸事件<br>
+b. 加速计事件<br>
+c. 远程控制事件</p>
+<h5 id="4-响应者对象-uiresponder">4. 响应者对象 (<code>UIResponder</code>)：</h5>
+<p>iOS 中，只有继承了 <code>UIResponder</code> 的对象才能接受并处理事件。我们称之为 “响应者对象”；<br>
+比如：<br>
+a. UIApplication<br>
+b. UIViewController<br>
+c. UIView</p>
+<h5 id="5-事件的处理">5. 事件的处理：</h5>
+<blockquote>
+<p>为什么继承自 UIResponder 的类就能接收并处理事件？</p>
+</blockquote>
+<pre><code class="language-Objective-C">// 因为 UIResponder 中提供了4个对象方法来处理事件；
+
+// 以 UIView 为例来说明触摸事件的处理；
+// UIView 是 UIResponder 的子类，可以用覆盖下列4个方法处理不同的触摸事件；
+
+// 一或多根手指开始触摸 view ，系统会自动调用下面的 view 方法；
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event;
+
+// 一或多根手指离开 view ，系统会自动调用下面的方法；
+- (void)touchesEnded:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event;
+
+// 一或多根手指在 view 上移动，系统会自动调用下面的方法（并且，随着手指的持续移动，会持续调用该方法）
+- (void)touchesMoved:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event;
+
+// 触摸结束前，某个系统事件（如电话呼入）会打断触摸过程，系统会自动调用下面的方法；
+- (void)touchesCancelled:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event;
+
+// 提示：touches 中存放的是 UITouch 对象；
+</code></pre>
+<blockquote>
+<p>需要注意的是：以上四个方法是由系统自动调用的。<br>
+所以，可以通过重写以上四种方法来处理一些事件。</p>
+</blockquote>
+<ul>
+<li>当用户用一根手指触摸屏幕时，会创建一个与手指相关的 UITouch 对象；</li>
+<li>如果两根手指同时触摸一个 view，那么 view 只会调用一次 - (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event; 方法，touches 参数中装着 2 个 UITouch 对象；</li>
+<li>如果这两根手指一前一后分开触摸同一个 view，那么 view 会分别调用 2 次 - (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event; 方法，并且每次调用时的 touches 参数中只包含一个 UITouch 对象；</li>
+<li>重写以上四个方法，如果是处理 UIView 的触摸事件。必须自定义一个继承自 UIView 的子类。由于 Apple 不开源一些 Objective-C 源码。所以，只能通过子类继承父类，重写方法的方式来处理 UIView 的触摸事件；</li>
+<li>上面说的是处理 UIView 触摸事件，而不是 UIViewController 的触摸事件。要处理 UIViewController 的触摸事件，在控制器内直接重写以上四个方法即可；</li>
+</ul>
+<h5 id="6-uitouch-的作用">6. UITouch 的作用：</h5>
+<ul>
+<li>保存着跟手势相关的信息，比如触摸的位置、时间、阶段；</li>
+<li>当指针移动时，系统会更新同一个 UITouch 对象，使之能够一直保持该手指在触摸的位置；</li>
+<li>当手指离开屏幕的时候，系统会自动调用方法，销毁相应的 UITouch 对象；</li>
+<li>提示：iOS 开发中，要尽量避免使用双击事件；</li>
+</ul>
+<h5 id="7-ios-事件的产生和传递">7. iOS 事件的产生和传递：</h5>
+<h6 id="a-事件的产生">a. 事件的产生：</h6>
+<ul>
+<li>发生触摸事件后，系统会将该事件加入到一个由 UIApplication 管理的事件队列中，为什么是队列而不是栈？因为队列的特点是 FIFO，即先进先出。先产生的事件先处理才符合正常逻辑（即日常生活所见），所以把事件添加到队列。</li>
+<li>UIApplication 会从事件队列中取出最前面的事件，并将事件分发下去以便处理。通常，会先把事件发送给应用程序的主窗口（即 keyWindow）。</li>
+<li>主窗口会在视图层次结构中找到一个最合适的视图来处理触摸事件，这也是整个事件处理过程的第一步。找到合适的视图控件后，就会调用视图控件的 touches 方法来作具体的事件处理。</li>
+</ul>
+<h6 id="b-事件的传递">b. 事件的传递</h6>
+
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
+
+            <section class="related section">
+              
+              <article class="prev grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/t5FFzq6Cn.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-11-05">2018-11-05</time>
+                  <h4 class="title white no-margin">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2018-06-15">2018-06-15</time>
+                  <h4 class="title white no-margin">iOS 事件响应</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
+            
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+                
+                
+              </div>
+            
+
+            </div>
+          </div>
+      </main>
+
+          <footer id="footer" class="grid-container">
+        <div class="widgets row gradient-effect">
+            <div class="default-sidebar border-effect">
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
+                  <h4 class="widget-title title white bordered">最新文章</h4>
+                  
+                  
+                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-29">2020-04-29</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-25">2020-04-25</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
+                    <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
+                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
+                    </a>
+                    <div class="info gradient-effect">
+                      <time datetime="2020-04-16">2020-04-16</time>
+                      <h4 class="title usmall">
+                        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                      </h4>
+                    </div>
+                    <div class="clear"></div>
+                  </article>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
+                  <h4 class="widget-title title white bordered">标签云</h4>
+                  <div class="tagcloud">
+                    
+                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-0 ctag-xdet-8MvB" aria-label="">杂谈</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-1 ctag-d3FTfjZYU" aria-label="">系统设置</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-2 ctag-awQNAxTv9" aria-label="">Vue.js</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-3 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-4 ctag-72sFOp2qr" aria-label="">厨记</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-5 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
+                    
+                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-6 ctag-t5FFzq6Cn" aria-label="">算法</a>
+                    
+                  </div>
+                  <div class="clear"></div>
+                </section>
+              </div>
+
+              <div class="grid-33 tablet-grid-50 mobile-grid-100">
+                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
+                  <h4 class="widget-title title white bordered">关于我</h4>
+                  <div class="avatar">
+                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
+                  </div>
+                  <div class="info">
+                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
+                    <p class="founder">温故而知新</p>
+                    <div class="social">
+                      
+                          
+                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
+                        
+                      
+                          
+                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
+                        
+                      
+                        
+                      
+                        
+                      
+                        
+                      
+                    </div> 
+                  </div>
+                  <div class="clear"></div>
+                  </section>
+              </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="logo">
+          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
+        </div>
+        <p class="published border-effect">
+          ©2019 共 18 篇文章
+          <br/>
+          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
+        </p>
+        
+        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
+          <i class="fa fa-arrow"></i>
+        </a>
+    </footer>
+    
+    <div class="clear"></div>
+
+        
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
+
+    </div>
+    <!-- end: #wrapper -->
+  </body>
+</html>

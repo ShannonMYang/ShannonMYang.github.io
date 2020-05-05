@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://shannonmyang.github.io</id>
+    <title>木鱼小店</title>
+    <updated>2020-05-05T06:19:20.098Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://shannonmyang.github.io"/>
+    <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://shannonmyang.github.io/images/avatar.png</logo>
+    <icon>https://shannonmyang.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[《图解算法》阅读笔记]]></title>
+        <id>https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/</id>
+        <link href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">
+        </link>
+        <updated>2020-04-29T01:55:38.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>这本自买回来，就被我反反复复翻看，却总是看了一半忘了看到具体哪儿，而从头看起的算法类书籍。<br>
+现在，终于被我看完了。遂有此笔记。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>这本自买回来，就被我反反复复翻看，却总是看了一半忘了看到具体哪儿，而从头看起的算法类书籍。<br>
+现在，终于被我看完了。遂有此笔记。</p>
+</blockquote>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588125483137.png" alt="" loading="lazy"></figure>
+<ul>
+<li>
+<p>仅当列表是有序的时候，二分查找才管用</p>
+</li>
+<li>
+<p>大 O 表示法指出了算法运行时间的增速</p>
+</li>
+<li>
+<p>算法运行时间是从其增速的角度度量的</p>
+<blockquote>
+<p>Leigh Caldwell 在 Stack Overflow 上说的一句话，“如果使用循环，程序的性能可能更高；如果使用递归，程序可能更容易理解。如何选择要看什么对你来说更重要。”</p>
+</blockquote>
+</li>
+<li>
+<p>每个递归函数都有两部分，基线条件 (base case) 和 递归条件 (recursive case)。递归条件指的是函数调用自己，基线条件指的是函数不再调用自己，从而避免形成无限循环。</p>
+</li>
+<li>
+<p>优化递归的调用栈，有 2 种方法</p>
+<ul>
+<li>重新编写代码，转而使用循环</li>
+<li>使用尾递归。这是一个高级的主题，不在本书的讨论范围内，另外，并非所有的语言都支持尾递归。</li>
+</ul>
+</li>
+<li>
+<p>编写涉及数组的递归函数的时候，基线条件通常是数组为空或只包含一个元素。</p>
+<blockquote>
+<p>Haskell 等函数式编程语言就没有循环，因此你只能使用递归来编写这样的函数。如果你对递归有深入的认识，函数式编程语言学习起来将更加容易。如果你喜欢递归或者想学习一门新语言，可以研究一下 Haskell。</p>
+</blockquote>
+</li>
+<li>
+<p>散列表要避免冲突，需要有：</p>
+<ul>
+<li>较低的装填因子</li>
+<li>良好的散列函数</li>
+</ul>
+</li>
+<li>
+<p>有向图中的边为箭头，箭头的方向指定了关系的方向。无向图中的边不带箭头，其中的关系是双向的。</p>
+</li>
+<li>
+<p>广度优先搜索求最短路径，对于检查过的点，务必不要再去检查，否则会导致无限循环。</p>
+</li>
+<li>
+<p>在无向图中，每条边都是一个环。迪杰斯特拉算法只能用于有向无环图 (directed acyclic graph, DAG)，如果有负权边，就不能使用迪杰斯特拉算法。</p>
+</li>
+<li>
+<p>在有负权边的图中，要求最短路径，需要用到贝尔曼 - 福德算法 (Bellman-Ford algorithm)</p>
+</li>
+<li>
+<p>贪心算法的理念：每步都采取最优解。每步都选择局部最优解，最终得到的就是全局最优解。</p>
+</li>
+<li>
+<p>判断是否是 NP 完全问题</p>
+<ul>
+<li>元素较少时算法的运行速度非常快，但随着元素数量的增加，速度会变得非常慢。</li>
+<li>涉及 “所有组合” 的问题通常是 NP 完全问题。</li>
+<li>不能将问题分成小问题，必须考虑各种可能的情况。这可能是 NP 完全问题。</li>
+<li>如果问题涉及序列，（如旅行商问题中的城市序列）且难以解决，它可能就是 NP 完全问题。</li>
+<li>如果问题涉及集合 (如广播台集合)，且难以解决，它可能就是 NP 完全问题。</li>
+<li>如果问题可转换为集合覆盖问题或旅行商问题，那它肯定是 NP 完全问题。</li>
+</ul>
+</li>
+<li>
+<p>对于 NP 完全问题，还没有找到快速解决方案。</p>
+</li>
+<li>
+<p>面临 NP 完全问题，最佳的做法是使用近似算法。</p>
+</li>
+<li>
+<p>仅当每个子问题都是离散的，即不依赖于其他子问题时，动态规划才管用。</p>
+</li>
+<li>
+<p>每种动态规则解决方案都涉及网格。</p>
+</li>
+<li>
+<p>没有放之四海皆准的计算动态规划的公式，动态规划是一门艺术。</p>
+</li>
+<li>
+<p>git diff 命令指出两个文件的差异，使用的就是动态规划实现的。</p>
+</li>
+<li>
+<p>布隆过滤器是一个概率型数据结构，它提供的答案有可能不对，但很可能是正确的。布隆过滤器非常适合用于不要求答案绝对准确的情况。</p>
+</li>
+<li>
+<p>面临海量数据且只要求答案八九不离十时，可考虑使用概率型算法。</p>
+</li>
+<li>
+<p>当前最安全的密码散列函数是 bcrypt，但没有任何东西是万无一失的。</p>
+</li>
+<li>
+<p>SHA 散列函数是局部不敏感的，有一个字符变化，都会导致其散列值截然不同。有时候希望散列函数是局部敏感的。在这种情况下，可使用 Simhash。如果你对字符串做细微的修改，Simhash 生成的散列值也只存在细微的差别。这让你能够通过比较散列值来判断两个字符串的相似程度。需要检查两项内容的相似程序时，Simhash 很有用。</p>
+<ul>
+<li>Google 使用 Simhash 来判断网页是否已搜集。</li>
+<li>老师可以使用 Simhash 来判断学生的论文是否是从网上抄的。</li>
+<li>Scribd 允许用户上传文档或图书，以便与人分享，但不希望用户上传有版权的内容。这个网站可使用 Simhash 来检查上传的内容是否与出版的小说类似，如果类似，就自动拒绝。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[相似联想]]></title>
+        <id>https://shannonmyang.github.io/post/xiang-si-lian-xiang/</id>
+        <link href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">
+        </link>
+        <updated>2020-04-25T14:21:24.000Z</updated>
+        <summary type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
+<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
+]]></summary>
+        <content type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
+<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
+<!-- more -->
+<h5 id="高三那年吧由于每天密集式的刷试卷-作文这个让很多人头疼的东西也就在必刷之列">高三那年吧，由于每天密集式的刷试卷。作文这个让很多人头疼的东西，也就在必刷之列。</h5>
+<h5 id="当时的我为了找寻作文写作用的材料翻了不少杂志-作文指导书籍">当时的我，为了找寻作文写作用的材料，翻了不少杂志、作文指导书籍。</h5>
+<h5 id="记得有一篇杂志文章写的是关于各个公司的宣传语的其中联想的广告语最让我印象深刻-说的是如果没有联想世界将会怎样-一语双关非常妙">记得有一篇杂志文章写的是关于各个公司的宣传语的，其中，联想的广告语最让我印象深刻。说的是，「如果没有联想，世界将会怎样。」一语双关，非常妙。</h5>
+<h5 id="当然写这篇文章不是为了说联想如何如何-而是为了说相似联想这个东西的重要性">当然，写这篇文章不是为了说联想如何如何。而是为了说，相似联想，这个东西的重要性。</h5>
+<h5 id="之前部门老大亦是公司首席科学家一个拥有美国绿卡为美国地震局-某个州的监狱以及amd产线写过系统且至今仍在运行时不时要接国际长途电话远程指导并收费的长者">之前部门老大，亦是公司首席科学家，一个拥有美国绿卡，为美国地震局、某个州的监狱以及AMD产线写过系统，且至今仍在运行，时不时要接国际长途电话，远程指导并收费的长者。</h5>
+<h5 id="在一次部门会议的时候语重心长的对我们几个小伙子说道你们啊要好好看看计算机的底层原理再看看中国的易经-阴阳太极之说的书籍">在一次部门会议的时候，语重心长的对我们几个小伙子说道，「你们啊，要好好看看计算机的底层原理，再看看中国的易经、阴阳太极之说的书籍。」</h5>
+<h5 id="当时大家嘿嘿一笑没当回事">当时大家嘿嘿一笑，没当回事。</h5>
+<h5 id="19年翻阅了诸多计算机底层书籍老大的话就愈发印象深刻尤其是在翻看一本名为编码隐匿在计算机背后的语言书籍时才恍然发觉部门老大所言的东西未尝不是没道理的">19年翻阅了诸多计算机底层书籍，老大的话就愈发印象深刻，尤其是在翻看一本名为《编码·隐匿在计算机背后的语言》书籍时，才恍然发觉部门老大所言的东西，未尝不是没道理的。</h5>
+<h5 id="看着编码一书不禁感慨老祖宗们的伟大思想-计算机中最基础部分的0和1组成了现在看到的千千万万的信息流-0和1不正像极了阴与阳之说-阴阳生万物01组成计算机世界-当然0和1的本质也就是对应着电流的正负-随之会联想到原子-夸克一系列微小的单位正是这些小到不能更小的东西组成了世界万物">看着《编码》一书，不禁感慨老祖宗们的伟大思想。计算机中最基础部分的0和1，组成了现在看到的千千万万的信息流。0和1，不正像极了，阴与阳之说。阴阳生万物，01组成计算机世界。当然，0和1的本质，也就是对应着电流的正负。随之，会联想到原子、夸克一系列微小的单位，正是这些小到不能更小的东西，组成了世界万物。</h5>
+<h5 id="联想到这些不得不感慨原来我们的世界竟然是如此简单的组成却又如此纷繁复杂">联想到这些，不得不感慨，原来我们的世界，竟然是如此简单的组成，却又如此纷繁复杂。</h5>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[更换Win10系统的字体]]></title>
+        <id>https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/</id>
+        <link href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">
+        </link>
+        <updated>2020-04-16T07:31:13.000Z</updated>
+        <summary type="html"><![CDATA[<h5 id="天下苦偶尔用macos偶尔用win10的用户久已">天下苦偶尔用macOS偶尔用Win10的用户久已。</h5>
+]]></summary>
+        <content type="html"><![CDATA[<h5 id="天下苦偶尔用macos偶尔用win10的用户久已">天下苦偶尔用macOS偶尔用Win10的用户久已。</h5>
+<!-- more -->
+<blockquote>
+<p>由于我是一个工作用<code>Windows10</code>操作系统，闲暇用<code>macOS</code>操作系统的搬砖民工。<br>
+所以，每当我看到<code>Windows10</code>操作系统自带默认的<code>微软雅黑</code>，我简直无力吐槽。尤其是对于我这种搬砖民工来讲，写代码的时候，微软雅黑，简直不能更具备瞎了眼的功力。</p>
+</blockquote>
+<blockquote>
+<p>当然，这不是本文的缘由。一天写代码闲暇时光里，我看到一篇文章，是在说为什么<code>小米10</code>不能称为高端机。引出了<code>成也MIUI，败也MIUI</code>的话题。其中就说到了<code>小米兰亭Pro</code>，说这款是仅次于<code>San Francisco</code>的字体。<br>
+遂，勾起了修改系统默认字体的好奇心。于是，进行了下载和替换字体。</p>
+</blockquote>
+<h4 id="1-下载-san-francisco-字体">1. 下载 <a href="https://github.com/ShannonMYang/FontLibrary">San Francisco</a> 字体</h4>
+<blockquote>
+<p>从下载好的字体中，选择好你需要的，双击，进行安装</p>
+</blockquote>
+<h4 id="2-复制字体名称">2. 复制字体名称</h4>
+<blockquote>
+<p>找到字体库，路径是<code>C盘-&gt;Windows-&gt;Fonts</code>，找到<code>San Francisco</code>字体，右键属性，<code>复制</code>如图所示框起来的名称；</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1587027453128.jpg" alt="复制名" loading="lazy"></figure>
+<h4 id="3-修改注册表">3. 修改注册表</h4>
+<blockquote>
+<p>按下快捷键组合：Win + R ，在输入框中输入regedit</p>
+</blockquote>
+<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1587027386687.png" alt="regedit" loading="lazy"></figure>
+<blockquote>
+<p>看到弹出的窗口，输入如下路径</p>
+</blockquote>
+<pre><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts
+</code></pre>
+<blockquote>
+<p>点击鼠标右键，选择 <code>修改</code>菜单，将<code>数值数据</code> 修改为你拷贝来的名字，然后点击确定按钮。</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1587027435850.png" alt="修改名" loading="lazy"></figure>
+<h4 id="4-重启电脑">4. 重启电脑</h4>
+<blockquote>
+<p>重启电脑，你就会看到一个全新的世界。<br>
+上面的截图，即是重启后，字体全面覆盖生效的效果。<br>
+自此，你告别了Win10的微软雅黑。</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vue.js 中引入 Font Awesome 字体图标]]></title>
+        <id>https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/</id>
+        <link href="https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/">
+        </link>
+        <updated>2019-12-24T02:26:05.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>这，基本是一个被写烂了的话题，但是，我刚接触，我的博客里也没有。故而，有此记录。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>这，基本是一个被写烂了的话题，但是，我刚接触，我的博客里也没有。故而，有此记录。</p>
+</blockquote>
+<!-- more -->
+<h4 id="1-安装基础依赖">1. 安装基础依赖</h4>
+<blockquote>
+<p>进入 Vue 项目文件夹，执行如下命令安装基础依赖库。</p>
+</blockquote>
+<pre><code class="language-JavaScript">npm i --save @fortawesome/fontawesome-svg-core
+npm i --save @fortawesome/vue-fontawesome
+</code></pre>
+<h4 id="2-安装样式依赖">2. 安装样式依赖</h4>
+<blockquote>
+<p>Font Awesome 为我们提供了 Solid、Regular、Brands 这三种免费样式（日常使用完全够用），执行如下命令安装。</p>
+</blockquote>
+<pre><code class="language-JavaScript">npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-regular-svg-icons
+npm i --save @fortawesome/free-brands-svg-icons
+</code></pre>
+<h4 id="3-修改-srcmainjs">3. 修改 src/main.js</h4>
+<blockquote>
+<p>添加如下代码全局引入并配置 Font Awesome，之后我们就可以使用它了。</p>
+</blockquote>
+<pre><code class="language-JavaScript">// 引入fontawesome-icon
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+
+library.add(fas, far, fab)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-layers', FontAwesomeLayers)
+Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
+</code></pre>
+<h4 id="4-基本使用">4. 基本使用</h4>
+<h5 id="41-显示图标">4.1 显示图标</h5>
+<blockquote>
+<p>a. 我们使用 font-awesome-icon 标签来显示图标，icon 属性中可以设置样式前缀、以及图标名字。</p>
+</blockquote>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon :icon=&quot;['fas', 'square']&quot;/&gt;
+&lt;font-awesome-icon :icon=&quot;['far', 'square']&quot;/&gt;
+&lt;font-awesome-icon :icon=&quot;['fab', 'accessible-icon']&quot;/&gt;
+</code></pre>
+<blockquote>
+<p>b. 如果是 solid 样式（前缀为：fas），则前缀可以省略。比如上面第一个图标等效下面写法：</p>
+</blockquote>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;square&quot;/&gt;
+</code></pre>
+<h5 id="42-设置图标大小">4.2 设置图标大小</h5>
+<blockquote>
+<p>默认情况下图标和当前文字的大小是一样的。我们可以通过 size 属性在此基础上作调整，该属性支持多种类型的设置方式。</p>
+</blockquote>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot;/&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;xs&quot;/&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;lg&quot;/&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;2x&quot;/&gt;
+</code></pre>
+<h5 id="43-固定图标宽度">4.3 固定图标宽度</h5>
+<blockquote>
+<p>使用 fixed-width 可以固定图标宽度。</p>
+</blockquote>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;home&quot; fixed-width /&gt; home &lt;br&gt;
+&lt;font-awesome-icon icon=&quot;child&quot; fixed-width /&gt; help &lt;br&gt;
+&lt;font-awesome-icon icon=&quot;cog&quot; fixed-width /&gt; settings &lt;br&gt;
+</code></pre>
+<h5 id="44-旋转图标">4.4 旋转图标</h5>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;0&quot; /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;90&quot; /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;180&quot; /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;270&quot; /&gt;
+</code></pre>
+<h5 id="45-翻转图标">4.5 翻转图标</h5>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot;  /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;horizontal&quot; /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;vertical&quot; /&gt;
+&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;both&quot; /&gt;
+</code></pre>
+<h5 id="46-旋转动画效果">4.6 旋转动画效果</h5>
+<h6 id="461-添加-spin-属性可以让图标不停地顺时针旋转">4.6.1 添加 spin 属性可以让图标不停地顺时针旋转；</h6>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;arrow-circle-down&quot; spin /&gt;
+</code></pre>
+<h6 id="462-添加-pulse-属性同样可以让图标旋转但它不像-spin-那样是均匀地变化角度而是-0-度-45-度-90-度-这样跳跃地变化">4.6.2 添加 pulse 属性同样可以让图标旋转，但它不像 spin 那样是均匀地变化角度，而是 0 度、45 度、90 度... 这样跳跃地变化</h6>
+<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;arrow-circle-down&quot; pulse /&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mac 系统常规指令]]></title>
+        <id>https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/</id>
+        <link href="https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/">
+        </link>
+        <updated>2019-12-21T01:39:36.000Z</updated>
+        <summary type="html"><![CDATA[<h5 id="工欲善其事必先利其器">工欲善其事，必先利其器。</h5>
+<h5 id="对于开发者来讲常用指令就是如此">对于开发者来讲，常用指令就是如此。</h5>
+]]></summary>
+        <content type="html"><![CDATA[<h5 id="工欲善其事必先利其器">工欲善其事，必先利其器。</h5>
+<h5 id="对于开发者来讲常用指令就是如此">对于开发者来讲，常用指令就是如此。</h5>
+<!-- more -->
+<pre><code class="language-Shell">// 查看当前所在位置
+pwd
+</code></pre>
+<pre><code class="language-Shell">// 查看当前文件夹中的内容
+ls
+</code></pre>
+<pre><code class="language-Shell">// 进入指定目录
+cd
+</code></pre>
+<pre><code class="language-Shell">// 创建一个文件夹
+mkdir 文件夹名称
+</code></pre>
+<pre><code class="language-Shell">// 删除一个文件夹
+rmdir 文件夹名称
+</code></pre>
+<pre><code class="language-Shell">// 返回上一级
+cd ../
+</code></pre>
+<pre><code class="language-Shell">// 清空终端当前一屏（效果类似于你大学课堂上那种上下推拉的黑板，写满一版，往上一推）
+clear
+</code></pre>
+<pre><code class="language-Shell">// 打开一个文件
+open 文件名称
+</code></pre>
+<pre><code class="language-Shell">// 创建一个文件
+touch 文件名称
+</code></pre>
+<pre><code class="language-Shell">// 查看一个文件
+cat 文件名称
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[npm 管理依赖包版本]]></title>
+        <id>https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/</id>
+        <link href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/">
+        </link>
+        <updated>2019-07-17T03:41:52.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>近来，在做一些 vue.js 相关的练习，用到了很多 npm 管理依赖包的问题。遂，有此笔记，做一记录。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>近来，在做一些 vue.js 相关的练习，用到了很多 npm 管理依赖包的问题。遂，有此笔记，做一记录。</p>
+</blockquote>
+<!-- more -->
+<ul>
+<li>
+<h4 id="npm-管理-node-版本">npm 管理 node 版本</h4>
+</li>
+</ul>
+<h5 id="1-安装">1. 安装：</h5>
+<pre><code class="language-Shell">$ sudo npm install -g n
+</code></pre>
+<h5 id="2-查看当前已经安装的-node-版本以及正在使用的版本前面有一个-o">2. 查看当前已经安装的 node 版本以及正在使用的版本（前面有一个 o）</h5>
+<pre><code class="language-Shell">$ n
+</code></pre>
+<h5 id="3-安装其他的-node-版本">3. 安装其他的 node 版本</h5>
+<pre><code class="language-Shell">//安装0.11.12版本
+$ n 0.11.12
+//安装最新的版本
+$  n latest
+//安装稳定版本
+$  n stable
+// 删除某个版本
+$ n rm 0.10.1 
+</code></pre>
+<h5 id="4-以指定的版本来执行脚本">4. 以指定的版本来执行脚本</h5>
+<pre><code class="language-Shell">$ n use 0.10.21 some.js
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="使用-nrm-切换-npm-源">使用 nrm 切换 npm 源</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">// 安装nrm：
+npm install -g nrm
+// 查看已有的可以使用的源
+nrm ls
+// 测试源的速度
+nrm test
+// 切换到现有的源 如  nrm use taobao 之后使用npm就会从taobao下载
+nrm use &lt;源名称&gt;
+// 新增源
+nrm add&lt;源名称&gt; &lt;源地址&gt;
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="部分常用命令">部分常用命令</h4>
+</li>
+</ul>
+<h5 id="1-安装命令">1. 安装命令</h5>
+<pre><code class="language-Shell">// 全局安装
+npm install 模块名 -g
+// 本地安装
+npm install 模块名
+// 一次性安装多个
+npm install 模块1 模块2 模块3 
+// 安装开发时依赖包
+npm install 模块名 --save-dev
+// 安装运行时依赖包
+npm install 模块名 --save
+</code></pre>
+<h5 id="2-查看安装的目录">2. 查看安装的目录</h5>
+<pre><code class="language-Shell">// 查看项目中模块所在的目录
+npm root
+// 查看全局安装的模块所在目录
+npm root -g
+</code></pre>
+<h5 id="3-查看某个包的各种属性">3. 查看某个包的各种属性</h5>
+<pre><code class="language-Shell">// 查看某个包对于各种包的依赖关系
+npm view 模块名 dependencies
+</code></pre>
+<h5 id="4-查看包的源文件地址">4. 查看包的源文件地址</h5>
+<pre><code class="language-Shell">// 查看包的源文件地址
+npm view 模块名 repository.url
+</code></pre>
+<h5 id="5-查看-npm-的版本">5. 查看 npm 的版本</h5>
+<pre><code class="language-Shell">npm -v 
+</code></pre>
+<h5 id="6-查看某个模块的-bugs-列表界面">6. 查看某个模块的 bugs 列表界面</h5>
+<pre><code class="language-Shell">npm bugs 模块名
+// 例如运行npm bugs antd则会打开antd仓库的issue
+</code></pre>
+<h5 id="7-打开某个模块的仓库界面">7. 打开某个模块的仓库界面</h5>
+<pre><code class="language-Shell">npm repo 模块名
+// 例如运行npm repo vue则会打开vue线上仓库，效果如下图
+</code></pre>
+<h5 id="8-打开某个模块的文档">8. 打开某个模块的文档</h5>
+<pre><code class="language-Shell">npm docs 模块名
+// 例如运行npm docs vue则会打开vue的readme.md文档
+</code></pre>
+<h5 id="9-打开某个模块的主页">9. 打开某个模块的主页</h5>
+<pre><code class="language-Shell">npm home 模块名
+// 例如运行npm home vue则会打开vue模块的主页
+</code></pre>
+<h5 id="10-查看当前已经安装的模块">10. 查看当前已经安装的模块</h5>
+<pre><code class="language-Shell">npm list
+// 当然我们也可以限制输入的模块层级，例如
+npm list --depth=0
+</code></pre>
+<h5 id="11-清除未被使用到的模块">11. 清除未被使用到的模块</h5>
+<pre><code class="language-Shell">// 有时在我们使用npm list的时候，可能会碰到一些问题，就是有些模块并没有被项目引用使用，我们还是安装了这些模块，那么我们可以一键清除这些没有使用到的模块
+npm prune
+</code></pre>
+<h5 id="12-初始化">12. 初始化</h5>
+<pre><code class="language-Shell">npm init
+// 引导你创建一个package.json文件，包括名称、版本、作者这些信息
+</code></pre>
+<h5 id="13-清除-npm-的缓存">13. 清除 npm 的缓存</h5>
+<pre><code class="language-Shell">rm -rf node_modules
+npm cache clean
+// 慎重使用改命令
+npm cache clean -f
+</code></pre>
+<h5 id="14-卸载-node-模块">14. 卸载 node 模块</h5>
+<pre><code class="language-Shell">npm uninstall 模块名
+</code></pre>
+<h5 id="15-更新-node-模块">15. 更新 node 模块</h5>
+<pre><code class="language-Shell">npm update 模块名
+// 当然你也可以update 该模块到指定版本
+npm update 模块名 @版本号
+// 如果安装到最新版本可以使用以下命令
+npm install 模块名@latest 
+</code></pre>
+<h5 id="16-查看当前模块依赖的-node-最低版本号">16. 查看当前模块依赖的 node 最低版本号</h5>
+<pre><code class="language-Shell">npm view 模块名 engines
+</code></pre>
+<h5 id="17-查看模块的当前版本号">17. 查看模块的当前版本号</h5>
+<pre><code class="language-Shell">npm view 模块名 version
+// 需要注意的是查看到的模块版本是该模块再远程仓库的版本号，并不是当前项目中所依赖的版本号。
+// 查看当前项目中应用的某个模块的版本号的命令为
+npm list 模块名 version
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="语义化版本号">语义化版本号</h4>
+</li>
+<li>每个版本号都形如 1.2.3，由三个部分组成，依次叫做 “主版本号”、“次版本号” 和 “修订号”</li>
+<li>当新版本无法兼容基于前一版本的代码时，则提高主版本号</li>
+<li>当新版本新增了功能与特性，但仍兼容前一版本的代码时，则提高次版本号</li>
+<li>当新版本仅仅修正漏洞或者增强效率，仍然兼容前一版本代码，则提高修订号</li>
+<li>默认情况下，npm install --save 下载的都是最新版本，并且会在 package.json 文件里登记一个最优版本号，</li>
+</ul>
+<pre><code class="language-Shell">&quot;cluster&quot;: &quot;&gt;= 0.7.7&quot;,  
+ // cluster 版本必须大于等于 0.7.7 或者限定版本范围 npm install cluster@&quot;&gt;=0.7.7&lt;0.8.0&quot;
+&quot;commander&quot;: &quot;^2.6.0&quot;,
+/* ^会匹配最新的大版本依赖包，=大版本不变即可,其他版本随便更新。
+当我们npm install 的时候,安装到 node_modules 目录下的
+ commander开源包可能是 2.6.0 或 2.7.3 或 2.8.9 ......不包括3.0.0
+只要前面2不变即可.这种版本限制相对对宽松,还是少用为妙.*/
+&quot;commander&quot;: &quot;~1.2.3&quot;,
+/* ~会匹配最近的小版本依赖包，比如~1.2.3会匹配所有1.2.x版本，
+但是不包括1.3.0*/
+&quot;async&quot; : &quot;1.2.3&quot;,
+// 指定特定的版本号 npm install async@1.2.3
+&quot;async&quot; : &quot;*&quot;,
+// 最糟糕的一种版本控制,一点限制没有.
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="使用-npm-shrinkwrap-命令锁定项目依赖">使用 npm shrinkwrap 命令锁定项目依赖</h4>
+</li>
+</ul>
+<blockquote>
+<p>在开发某个 Node 项目时，进行到某个节点，一切都运行顺利，说明目前所有的依赖包（以及更底层的依赖包）和你的代码兼容得很好。这个时候，就可以在项目文件夹下运行上面的这个命令。它会生成一个 npm-shrinkwrap.json 文件，记录目前所有依赖包（及更底层依赖包）的版本信息。这样当以后你（或者你的同事、你的用户）运行 npm install 命令时，npm 首先会找 npm-shrinkwrap.json 文件，依照其中的信息来准确地安装每一个依赖包，只有当这个文件不存在时，npm 才会使用 package.json。<br>
+在这之后开发的过程中，如果想要更新某个依赖包，比如将 Express 从 4.13.0 更新到 4.14.1，那么就只需 npm install express@4.14.1；或者想要添加新的依赖包，比如 Helmet，也只需 npm install helmet。经过一段时间的测试与开发，当你确定这些新版本新安装的依赖包与自己的代码兼容后，就可以再次运行 npm shrinkwrap 命令来锁定依赖包的版本。</p>
+</blockquote>
+<blockquote>
+<p>如果 package-lock.json 和 npm-shrinkwrap.json 存在于包的根，package-lock.json 将被完全忽略。</p>
+</blockquote>
+<pre><code class="language-Shell">// 在（当前机器的当前用户的）所有项目禁用 package-lock.json
+npm config set package-lock false
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="查看-npm-的配置">查看 npm 的配置</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">npm config list
+</code></pre>
+<hr>
+<ul>
+<li>
+<h4 id="更换源">更换源</h4>
+</li>
+</ul>
+<pre><code class="language-Shell">// 要更换国内镜像，编辑 ~/.npmrc 加入下面内容
+registry = https://registry.npm.taobao.org
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Xcode 10 升级后的 Error: Multiple commands produce]]></title>
+        <id>https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/</id>
+        <link href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">
+        </link>
+        <updated>2019-07-03T03:05:02.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
+遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
+于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
+遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
+于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
+</blockquote>
+<!-- more -->
+<h4 id="error如下">Error如下</h4>
+<pre><code>Multiple commands produce '.../.../.../.../.../info.plist'
+//或者是
+Multiple commands produce '.../.../.../.../.../xxx.app'
+</code></pre>
+<h4 id="原因如下">原因如下</h4>
+<blockquote>
+<p>Apple 在 Xcode 10 默认使用的 Build system 是 New Build System，与 Xcode9 使用的 Legacy Build System 不同而导致的。</p>
+</blockquote>
+<h4 id="解决办法">解决办法</h4>
+<h5 id="1-不修改-build-system">1. 不修改 Build System</h5>
+<blockquote>
+<p>Solution -&gt; Open target -&gt; Build phases &gt; Copy Bundle Resources and remove info.plist from there.</p>
+</blockquote>
+<h5 id="xxxapp-类型错误"><code>.../.../xxx.app 类型错误</code></h5>
+<blockquote>
+<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi>T</mi><mi>A</mi><mi>R</mi><mi>G</mi><mi>E</mi><msub><mi>T</mi><mi>B</mi></msub><mi>U</mi><mi>I</mi><mi>L</mi><msub><mi>D</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi></mrow><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">{TARGET_BUILD_DIR}/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">G</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span><span class="mord">/</span></span></span></span>{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy"></figure>
+<h6 id="infoplist-类型错误"><code>'.../.../info.plist' 类型错误</code></h6>
+<blockquote>
+<p>target -&gt; 'Build phases' -&gt; 'Copy Bundle Resources' -&gt; 移除 info.plist -&gt; clean -&gt; 重新编译</p>
+</blockquote>
+<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy"></figure>
+<h5 id="2-修改-build-system">2. 修改 `Build System'</h5>
+<blockquote>
+<p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[iOS 打破 NSTimer 循环引用]]></title>
+        <id>https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/</id>
+        <link href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/">
+        </link>
+        <updated>2019-06-26T15:15:06.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>在做 <code>iOS 项目</code>，多多少少都会有不留意时候，碰到一些 <code>NSTimer</code> 的 <code>循环引用问题</code>。<br>
+本篇笔记意在记录解决 NSTimer 循环引用问题的方法。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>在做 <code>iOS 项目</code>，多多少少都会有不留意时候，碰到一些 <code>NSTimer</code> 的 <code>循环引用问题</code>。<br>
+本篇笔记意在记录解决 NSTimer 循环引用问题的方法。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>本篇笔记将逐一列出解决方法，并附上具体代码实现。</p>
+</blockquote>
+<h4 id="1-一种方式-打断循环引用-通过若引用-但必须是在-block-中">1. 一种方式 打断循环引用 通过若引用 但必须是在 block 中。</h4>
+<h5 id="代码调用及实现如下"><code>代码调用及实现，如下：</code></h5>
+<pre><code class="language-Objective-C">__weak typeof(self) weakSelf = self;
+self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
+    [weakSelf timerLog];
+}];
+</code></pre>
+<h4 id="2-自己实现一个-block-打破循环引用-个人感觉略复杂">2. 自己实现一个 block 打破循环引用 （个人感觉，略复杂）。</h4>
+<h5 id="代码调用如下"><code>代码调用如下：</code></h5>
+<pre><code class="language-Objective-C">self.timer = [NSTimer dix_timerWithTimeInterval:1 repeats:YES block:nil];
+</code></pre>
+<h5 id="代码实现如下"><code>代码实现如下：</code></h5>
+<pre><code class="language-Objective-C">+ (NSTimer *)dix_timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *))block
+{
+     return [self scheduledTimerWithTimeInterval:interval target:self selector:@selector(timerAction:) userInfo:[block copy] repeats:repeats];
+}
+
+//通过 Block 打破循环引用，解决 Timer 无法释放的问题
++ (void)timerAction:(NSTimer *)timer
+{
+//    void (^block)(NSTimer *tiemr) = timer.userInfo;
+//    声明Block
+    void (^ block)(NSTimer *) = ^(NSTimer *timer) {
+        timer = timer.userInfo;
+    };
+    NSLog(@&quot;%s&quot;, __func__);
+    if (block) {
+        block(timer);
+    }
+}
+</code></pre>
+<h4 id="3-创建中间对象-打破循环引用">3. 创建中间对象 打破循环引用</h4>
+<h5 id="代码调用如下-2"><code>代码调用如下：</code></h5>
+<pre><code class="language-Objective-C">self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:[dixProxy1 dixProxyWithTarget:self] selector:@selector(timerLog) userInfo:nil repeats:YES];
+</code></pre>
+<h5 id="代码实现如下-2"><code>代码实现如下：</code></h5>
+<pre><code class="language-Objective-C">+ (instancetype)dixProxyWithTarget:(id)target
+{
+    dixProxy1 *proxy = [[dixProxy1 alloc] init];
+    proxy.target = target;
+    return proxy;
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    return self.target;
+}
+</code></pre>
+<h4 id="4-效率更高-nsproxy-专门用来做转发的">4. 效率更高 NSProxy , 专门用来做转发的</h4>
+<h5 id="代码调用如下-3"><code>代码调用如下：</code></h5>
+<pre><code class="language-Objective-C">/**
+ * 因为在调用 timeLog 方法的时候，发现自身没有，就会自动进入消息转发，进而调用方法
+ * 而不是像继承自 NSObject，还要在自身没有方法之后，去查找superClass 内是否有方法
+ * 故而 效率更高
+ */
+self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:[dixProxy2 dixProxyWithTarget:self] selector:@selector(timerLog) userInfo:nil repeats:YES];
+</code></pre>
+<h5 id="代码实现如下-3"><code>代码实现如下：</code></h5>
+<pre><code class="language-Objective-C">+ (instancetype)dixProxyWithTarget:(id)target
+{
+    // NSProxy 对象不需要调用init方法， 因为 NSProxy本来就没有 init 方法
+    dixProxy2 *proxy = [dixProxy2 alloc];
+    proxy.target = target;
+    return proxy;
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
+    return [self.target methodSignatureForSelector:sel];
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    [invocation invokeWithTarget:self.target];
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[iOS 离屏渲染优化简单分析]]></title>
+        <id>https://shannonmyang.github.io/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/</id>
+        <link href="https://shannonmyang.github.io/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/">
+        </link>
+        <updated>2019-06-18T13:09:58.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>最近在做一个小项目的时候，涉及到了 <code>切圆角问题</code>。联想到之前看过的 <code>性能优化分析</code> 相关文章，遂有了重新对 <code>离屏渲染</code> 的小小研究。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>最近在做一个小项目的时候，涉及到了 <code>切圆角问题</code>。联想到之前看过的 <code>性能优化分析</code> 相关文章，遂有了重新对 <code>离屏渲染</code> 的小小研究。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>在 iOS 的应用开发过程中，多多少少的会遇到 <code>卡顿</code> 的现象。<br>
+纵然 iOS 设备的性能日益强大，但是卡顿的现象还是有可能不可避免的出现，而离屏渲染是造成卡顿的原因之一。<br>
+本文主要分析一下离屏渲染产生的原因及避免的方法，最后介绍一下 Xcode 自带的分析离屏渲染的工具 Instruments 的使用。</p>
+</blockquote>
+<hr>
+<h4 id="1-uiview-和-calayer-关系">1. UIView 和 CALayer 关系</h4>
+<blockquote>
+<p>UIView 继承自 UIResponder，可以处理系统传递过来的事件，如：UIApplication、UIViewController、UIView，以及所有从 UIView 派生出来的 UIKit 类。每个 UIView 内部都有一个 CALayer 提供内容的绘制和显示，并且作为内部 RootLayer 的代理视图。</p>
+</blockquote>
+<blockquote>
+<p>CALayer 继承自 NSObject 类，负责显示 UIView 提供的内容 contents。CALayer 有三个视觉元素：背景色、内容和边框，其中，内容的本质是一个 CGImage。</p>
+</blockquote>
+<h5 id="下图为-calayer-的结构图"><code>下图为 CALayer 的结构图：</code></h5>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1585401272431.jpg" alt="" loading="lazy"></figure>
+<h5 id="界面渲染过程"><code>界面渲染过程</code></h5>
+<blockquote>
+<p>RunLoop 有一个 60fps 的回调，即每 16.7ms 绘制一次屏幕，所以 view 的绘制必须在这个时间内完成，view 内容的绘制是 CPU 的工作，然后把绘制的内容交给 GPU 渲染，包括多个 View 的拼接（Compositing）、纹理的渲染 (Texture) 等等，最后显示在屏幕上。但是，如果无法是 16.7ms 内完成绘制，就会出现丢帧的问题，一般情况下，如果帧率保证在 30fps 以上，界面卡顿效果不明显，那么就需要在 33.4ms 内完成 View 的绘制，而低于这个帧率，就会产生卡顿的效果，影响体验。</p>
+</blockquote>
+<h5 id="渲染的过程如下"><code>渲染的过程如下：</code></h5>
+<blockquote>
+<p>UIView 的 layer 层有一个 content，指向一块缓存，即 backing store<br>
+UIView 绘制时，会调用 drawRect 方法，通过 context 将数据写入 backing store<br>
+在 backing store 写完后，通过 render server 交给 GPU 去渲染，将 backing store 中的 bitmap 数据显示在屏幕上</p>
+</blockquote>
+<h4 id="2-离屏渲染">2. 离屏渲染</h4>
+<blockquote>
+<p>在使用圆角、阴影和遮罩等视图功能的时候，图层属性的混合体被指定为在未预合成之前不能直接在屏幕中绘制，所有就需要在屏幕外的上下文中渲染，即离屏渲染。</p>
+</blockquote>
+<h4 id="3-离屏渲染卡顿原因">3. 离屏渲染卡顿原因</h4>
+<blockquote>
+<p>离屏渲染之所以会特别消耗性能，是因为要创建一个屏幕外的缓冲区，然后从当屏缓冲区切换到屏幕外的缓冲区，然后再完成渲染；其中，创建缓冲区和切换上下文最消耗性能，而绘制其实不是性能损耗的主要原因。</p>
+</blockquote>
+<h5 id="设置了以下属性时就会触发离屏绘制"><code>设置了以下属性时，就会触发离屏绘制：</code></h5>
+<blockquote>
+<ul>
+<li>shouldRasterize（光栅化）</li>
+<li>masks（遮罩）</li>
+<li>shadows（阴影）</li>
+<li>edge antialiasing（抗锯齿）</li>
+<li>group opacity（不透明）</li>
+<li>复杂形状设置圆角等</li>
+<li>渐变π</li>
+<li>屏幕渲染类型</li>
+</ul>
+</blockquote>
+<h5 id="cpu-计算好显示内容提交到-gpugpu-渲染完成后将渲染结果放入帧缓冲区随后视频控制器会按照-vsync-信号逐行读取帧缓冲区的数据经过可能的数模转换传递给显示器显示">CPU 计算好显示内容提交到 GPU，GPU 渲染完成后将渲染结果放入帧缓冲区，随后视频控制器会按照 VSync 信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器显示。</h5>
+<h5 id="屏幕渲染有如下三种"><code>屏幕渲染有如下三种：</code></h5>
+<blockquote>
+<p>1、GPU 中的屏幕渲染：On-Screen Rendering<br>
+<code>意为</code>当前屏幕渲染，指的是 GPU 的渲染操作是在当前用于显示的屏幕缓冲区中进行</p>
+</blockquote>
+<blockquote>
+<p>2、GPU 中的屏幕渲染：Off-Screen Rendering<br>
+<code>意为</code>离屏渲染，指的是 GPU 在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作</p>
+</blockquote>
+<blockquote>
+<p>3、CPU 中的离屏渲染（特殊离屏渲染，即不在 GPU 中的渲染）<br>
+如果我们重写了 drawRect 方法，并且使用任何 Core Graphics 的技术进行了绘制操作，就涉及到了 CPU 渲染。<br>
+CoreGraphic 通常是线程安全的，所以可以进行异步绘制，显示的时候再放回主线程</p>
+</blockquote>
+<h4 id="4-切圆角优化">4. 切圆角优化</h4>
+<blockquote>
+<p>切圆角是开发 app 过程中经常会用到的功能，但是使用不同的方式，性能损耗也会不同，下面会介绍 3 种切圆角的方法；其中，方法三的性能相对最好。</p>
+</blockquote>
+<ul>
+<li>
+<h4 id="方法一">方法一</h4>
+</li>
+</ul>
+<blockquote>
+<p>使用 cornerRadius 进行切圆角，在 iOS9 之前会产生离屏渲染，比较消耗性能，而之后系统做了优化，则不会产生离屏渲染，但是操作最简单</p>
+</blockquote>
+<pre><code class="language-Objective-C">iv.layer.cornerRadius = 30;
+iv.layer.masksToBounds = YES;
+</code></pre>
+<ul>
+<li>
+<h4 id="方法二">方法二</h4>
+</li>
+</ul>
+<blockquote>
+<p>利用 mask 设置圆角，利用的是 UIBezierPath 和 CAShapeLayer 来完成</p>
+</blockquote>
+<pre><code class="language-Objective-C">CAShapeLayer *mask1 = [[CAShapeLayer alloc] init];
+mask1.opacity = 0.5;
+mask1.path = [UIBezierPath bezierPathWithOvalInRect:iv.bounds].CGPath;
+iv.layer.mask = mask1;
+</code></pre>
+<ul>
+<li>
+<h4 id="方法三">方法三</h4>
+</li>
+</ul>
+<blockquote>
+<p>利用 CoreGraphics 画一个圆形上下文，然后把图片绘制上去，得到一个圆形的图片，达到切圆角的目的。</p>
+</blockquote>
+<pre><code class="language-Objective-C">- (UIImage *)drawCircleImage:(UIImage*)image
+{
+    CGFloat side = MIN(image.size.width, image.size.height);
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(side, side), false, [UIScreen mainScreen].scale);
+    CGContextAddPath(UIGraphicsGetCurrentContext(), [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, side, side)].CGPath);
+    CGContextClip(UIGraphicsGetCurrentContext());
+    
+    CGFloat marginX = -(image.size.width - side) * 0.5;
+    CGFloat marginY = -(image.size.height - side) * 0.5;
+    [image drawInRect:CGRectMake(marginX, marginY, image.size.width, image.size.height)];
+    
+    CGContextDrawPath(UIGraphicsGetCurrentContext(), kCGPathFillStroke);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题]]></title>
+        <id>https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/</id>
+        <link href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">
+        </link>
+        <updated>2019-06-17T12:52:22.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>最近升级了 <code>Xcode 10</code> 版本，运行起之前的项目，各种问题一并爆发。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>最近升级了 <code>Xcode 10</code> 版本，运行起之前的项目，各种问题一并爆发。</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>查了下，是 <code>Xcode</code> <code>升级导致</code>的 ，Apple早在 <code>Xcode 8</code> 中就<code>废弃</code>了 <code>libstdc++</code>, 给了开发者两年时间过渡，如今在 <code>Xcode 10</code> 中已<code>不再支持</code>。在 <code>Build Phases &gt; Link Binary With Libraries</code> 中已经搜不到 <code>libstdc++</code> 的<code>库</code>了，Apple给出的<code>原因</code>是 <code>std 库</code>比较<code>旧</code>了，<code>建议</code>使用<code>新版本替换</code>，比如用 <code>libc++.tbd</code> 替换 <code>libstdc++6.0.9.tbd</code>。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>没错，上述就是问题报错的所在。<br>
+导致之前依赖 libstdc++6.0.9.tbd 的工程，在升级到 Xcode10 后出现编译错误。</p>
+</blockquote>
+<h5 id="错误的具体信息如图所示"><code>错误的具体信息如图所示：</code></h5>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1585400193793.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>出现这个问题的原因之一，是因为在开发中使用了第三方库，并且第三方库的 podspec 中 libraries 指定了 stdc++6.0.9，Cocoapods 在安装依赖过程中，会在指定 target 下的 other link flag 中加入 -l &quot;stdc++6.0.9&quot; 导致编译不能通过。<br>
+由于每个人出现问题的不同，所以此处列举出三种方式。</p>
+<h5 id="笔者用的第二种方式解决的自己遇到的编译不通过的问题">笔者用的第二种方式解决的自己遇到的编译不通过的问题。</h5>
+</blockquote>
+<hr>
+<h4 id="1-解决方式-1⃣️处理-pod-的依赖">1. 解决方式 1⃣️：处理 pod 的依赖</h4>
+<blockquote>
+<p>可以通过使用 Cocoapods 的 post_install hooks 来解决，解决的方法是在 podfile 中加入下面的代码，去掉所有 pod 对 stdc++6.0.9 的依赖：</p>
+</blockquote>
+<pre><code class="language-Objective-C">#该方法会移除 所有pod 对stdc++.6.0.9库的依赖，建议仅在Xcode10上使用
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            puts config.build_settings
+            xcconfig_path = config.base_configuration_reference.real_path
+            build_settings = Hash[*File.read(xcconfig_path).lines.map{|x| x.split(/\s*=\s*/, 2)}.flatten]
+            build_settings['OTHER_LDFLAGS'][' -l&quot;stdc++.6.0.9&quot;'] = ''
+            File.open(xcconfig_path, &quot;w&quot;) do |file|
+                build_settings.each do |key,value|
+                    file.puts &quot;#{key} = #{value}&quot;
+                end
+            end
+        end
+    end
+end
+</code></pre>
+<blockquote>
+<p>Ps:<br>
+这段 hooks 的原理是：找到所有的 target 的 Pods-TargetName.debug.xcconfig 和 Pods-TargetName.release.xcconfig 这两个文件（在 Pod/Targets Support Files/TargetName 目录下），然后将其中的 OTHER_LDFLAGS 字段中的 - l &quot;stdc++.6.0.9&quot; 去掉。</p>
+</blockquote>
+<hr>
+<h4 id="2-解决方式-2⃣️删除-libstdclibstdc6-libstdc609-库然后添加-libc-库">2. 解决方式 2⃣️：删除 libstdc++(libstdc++.6、libstdc++6.0.9) 库，然后添加 libc++ 库</h4>
+<blockquote>
+<p>步骤：TARGETS—&gt;Build Phases—&gt;Link Binary With Libraries，删除 libstdc++(libstdc++.6、libstdc++6.0.9) ，添加 libc++；</p>
+</blockquote>
+<hr>
+<h4 id="3-解决方式-3⃣️删除掉第三方库中对-libstdc-的依赖">3. 解决方式 3⃣️：删除掉第三方库中对 libstdc++ 的依赖</h4>
+<blockquote>
+<p>a. Pods —&gt; Targets Support Files —&gt; Pods-XXXX.debug.xcconfig，查找 libstdc++(libstdc++.6、libstdc++6.0.9)，将其删除；<br>
+b. Pods —&gt; Targets Support Files —&gt; Pods-XXXX.release.xcconfig，查找 libstdc++(libstdc++.6、libstdc++6.0.9)，将其删除；</p>
+</blockquote>
+<h5 id="如图所示"><code>如图所示</code>:</h5>
+<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1585400491177.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+</feed>
