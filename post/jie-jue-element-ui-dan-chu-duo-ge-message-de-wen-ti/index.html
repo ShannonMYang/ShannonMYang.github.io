@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>iOS 利用 Runtime 自定义导航控制器返回手势 | 木鱼小店</title>
+<title>解决 element-ui 弹出多个 message 的问题 | 木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -17,13 +17,11 @@
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
     <meta name="description" content="
-自 iOS7 之后，系统的导航控制器就具备了 边缘滑动返回 的功能。
-这一改进，使得用户能够很方便的退出当前页面，大屏的用户也不用再费力的去点击导航栏上的返回按钮，很是人性化。
+在当前版本的 element 中，message 消息提示 的一个请求对应一个浮窗提示，这就会导致多条消息提示共存的问题，更多的时候，甚至可以占满一屏。而很多情况下，这多条消息提示的内容是一样的，从用户的体验来说，并不友好。
 
 
-
-但是，有些用户觉得这样还是不方便。只能从边缘滑动哪行？..." />
-    <meta name="keywords" content="iOS" />
+类似于这..." />
+    <meta name="keywords" content="Vue.js" />
     <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
     <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
   </head>
@@ -97,23 +95,23 @@
       <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
         <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+          <div class="featured-image cover" style="background-image: url('https://shannonmyang.github.io/post-images/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti.png');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2019-06-15"><i class="fa fa-calendar"></i><span class="lately">1 年前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-05-11"><i class="fa fa-calendar"></i><span class="lately">3 分钟前</span></time>
               
-              <a href="https://shannonmyang.github.io/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/"> </span>
+              <a href="https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/"> </span>
               </a>
-              <span id="/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-0 ctag-awQNAxTv9" aria-label="">Vue.js</a>
                     
               </div>
-              <h1 class="title ularge white bold">iOS 利用 Runtime 自定义导航控制器返回手势</h1>
+              <h1 class="title ularge white bold">解决 element-ui 弹出多个 message 的问题</h1>
             </div>
           </div>
         </div>  
@@ -124,136 +122,62 @@
               <section class="post-content">
                 <div class="text">
                   <blockquote>
-<p>自 <code>iOS7 之后</code>，系统的导航控制器就具备了 <code>边缘滑动返回</code> 的功能。<br>
-这一改进，使得用户能够很方便的退出当前页面，大屏的用户也不用再费力的去点击导航栏上的返回按钮，很是<code>人性化</code>。</p>
+<p>在当前版本的 element 中，<strong>message 消息提示</strong> 的一个请求对应一个浮窗提示，这就会导致多条消息提示共存的问题，更多的时候，甚至可以占满一屏。而很多情况下，这多条消息提示的内容是一样的，从用户的体验来说，并不友好。</p>
 </blockquote>
 <!-- more -->
+<p><strong>类似于这样：</strong><br>
+<img src="https://shannonmyang.github.io/post-images/1589184463049.png" alt="" loading="lazy"></p>
+<h4 id="如何解决">如何解决？</h4>
 <blockquote>
-<p>但是，有些用户觉得这样还是不方便。只能从边缘滑动哪行？我要的是全屏都能滑！<br>
-于是乎，很多应用，比如 QQ、知乎等都实现了这一功能。<br>
-想要实现这一功能，有好多种方法。</p>
+<p>在 <code>src</code> 目录下，创建一个文件夹 <code>common</code>，在 <code>common</code> 文件夹内创建一个  <code>resetMessage.js</code> 。</p>
 </blockquote>
-<blockquote>
-<p>本文要介绍的这种方法，是比较好玩的一种方法。<br>
-因为我们用到了<code>苹果私有的 API</code>。<br>
-虽然违反了苹果的审核政策，但我们自有办法能躲过苹果的检测。<br>
-下面，就来聊一下实现过程。</p>
-</blockquote>
-<h4 id="1-首先我们需要知道系统的侧滑手势是如何实现的">1. 首先，我们需要知道系统的侧滑手势是如何实现的；</h4>
-<blockquote>
-<p>这个手势属于 <code>UINavigationController</code>，我们就跳到它的头文件里看看能不能找到线索。这个思路是正确的，确实有一个手势叫做 <code>interactivePopGestureRecognizer</code>。属性为 <code>readonly</code>，就是说我们不能给他换成自定义的手势，但是可以设置 <code>enable=NO</code>。那，既然找到了它，就打印一下，看看它到底是一个什么手势。</p>
-</blockquote>
-<pre><code class="language-Objective-C"> &lt;
-   UIScreenEdgePanGestureRecognizer: 0x7f99d1e10ba0;
-   state = Possible;
-   delaysTouchesBegan = YES; 
-   view = &lt;UILayoutContainerView 0x7f99d1e0b7f0&gt;; 
-   target= &lt;(action=handleNavigationTransition:, 
-   target=&lt;_UINavigationInteractiveTransition 0x7f99d1e0fc10&gt;)&gt;
-   &gt;
-</code></pre>
-<blockquote>
-<p>可以看到，这个手势属于 <code>UIScreenEdgePanGestureRecognizer</code> 这个类，它<code>继承</code>自 <code>UIPanGestureRecognizer</code>，是专门处理<code>边缘手势</code>的一个类。我们可以通过打印发现它的 <code>target：_UINavigationInteractiveTransition</code>（这是一个私有的类，用于处理导航栏动画的），<code>action：handleNavigationTransition:</code> (这个就是系统实现导航栏动画的私有方法)。我们要做的，就是自己新建一个 <code>UIPanGestureRecognizer</code> 手势，让它的 <code>target</code> 和 <code>action</code> 和系统的相同。</p>
-</blockquote>
-<h4 id="2-以非常规手法获取系统手势">2. 以非常规手法获取系统手势；</h4>
-<blockquote>
-<p>我们要获取系统的侧滑手势的 <code>target</code>，用常规的手法肯定是获取不到的。<br>
-因为这是系统私有属性。<br>
-我们需要用 <code>runtime</code> 遍历它的成员变量，看一下系统是如何存储这个属性的。</p>
-</blockquote>
-<pre><code class="language-Objective-C">    unsigned int count;
-    Ivar *ivar = class_copyIvarList([UIGestureRecognizer class], &amp;count);
-    for (int i = 0; i &lt; count; i++) {
-        Ivar var = ivar[i];
-        NSLog(@&quot;type:===&gt;%s&quot;,ivar_getTypeEncoding(var));
-        NSLog(@&quot;name:===&gt;%s&quot;,ivar_getName(var));
+<h6 id="代码如下">代码如下：</h6>
+<pre><code class="language-JavaScript">import {
+    Message
+} from 'element-ui';
+let messageInstance = null;
+const resetMessage = (options) =&gt; {
+    if(messageInstance) {
+        messageInstance.close()
     }
+    messageInstance = Message(options)
+};
+['error','success','info','warning'].forEach(type =&gt; {
+    resetMessage[type] = options =&gt; {
+        if(typeof options === 'string') {
+            options = {
+                message:options
+            }
+        }
+        options.type = type
+        return resetMessage(options)
+    }
+})
+export const message = resetMessage
 </code></pre>
-<h5 id="下面是打印结果此处只取了两条有用的结果"><code>下面是打印结果，此处只取了两条有用的结果：</code></h5>
-<pre><code class="language-Objective-C">2015-09-24 15:10:30.879 Nav[1897:149271] type:===&gt;@&quot;NSMutableArray&quot;
-2015-09-24 15:10:30.879 Nav[1897:149271] name:===&gt;_targets
+<h6 id="在-mainjs-中引用">在 <code>main.js</code> 中引用</h6>
+<pre><code class="language-javascript">// 务必要放在Vue.use(ElementUI)之后，因为重写的是element-ui的提示框
+import {
+  message
+} from '@/common/resetMessage.js';
+Vue.prototype.$message = message; //重写message提示框
 </code></pre>
-<h5 id="我们再来打印一下这个-_targets-数组看看里面是什么"><code>我们再来打印一下这个 _targets 数组，看看里面是什么:</code></h5>
-<pre><code class="language-Objective-C">NSMutableArray *_targets = [systemPopGes valueForKey:@&quot;_targets&quot;];
-NSLog(@&quot;%@&quot;,_targets);
-</code></pre>
-<h5 id="打印结果如下"><code>打印结果如下：</code></h5>
-<pre><code class="language-Objective-C">(&quot;(action=handleNavigationTransition:, target=&lt;_UINavigationInteractiveTransition 0x7fcd0b5195c0&gt;)&quot;)
-</code></pre>
-<h5 id="可以看到可变数组里存储的就是系统实现-导航栏动画-的-target-和-action获取这个数组的-key-就是-_targets">可以看到，可变数组里存储的，就是系统实现 <code>导航栏动画</code> 的 <code>target</code> 和 <code>action</code>，获取这个数组的 <code>key</code> 就是 <code>_targets</code>。</h5>
-<h4 id="3-以自己的手势替换系统的手势">3. 以自己的手势，替换系统的手势；</h4>
-<blockquote>
-<p>我们可以通过 <code>KVC</code> 获取系统存储这个 <code>target-action</code> 的 <code>数组</code>，然后获取系统的 <code>target-action</code>，自己创建一个滑动手势，加入到系统实现侧滑手势所在的 <code>view</code> 中，禁用系统的侧滑手势，我们自定义的手势就可以代替系统的手势，实现滑动了。</p>
-</blockquote>
-<h5 id="代码如下"><code>代码如下：</code></h5>
-<pre><code class="language-Objective-C">#import &quot;SYRNavigationController.h&quot;
-#import &lt;objc/runtime.h&gt;
-
-@interface SYRNavigationController () &lt;UIGestureRecognizerDelegate&gt;
-
-@end
-
-@implementation SYRNavigationController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-   
-//    获取系统原有侧滑手势
-    UIGestureRecognizer *systemPopGes = self.interactivePopGestureRecognizer;
-//   禁用系统侧滑手势
-    systemPopGes.enabled = NO;
-    
-//    自定义滑动手势
-    UIPanGestureRecognizer *syrPan = [[UIPanGestureRecognizer alloc] init];
-    syrPan.delegate = self;
-    syrPan.maximumNumberOfTouches = 1;
-//    向系统实现侧滑手势的view中加入自定义的滑动手势
-    [systemPopGes.view addGestureRecognizer:syrPan];
-    
-    self.navigationBarHidden = YES;  //隐藏Tabbar
-    
-//    获取系统手势的target数组
-    NSMutableArray *_targets = [systemPopGes valueForKey:@&quot;_targets&quot;];
-    
-    /**
-     *  获取它的唯一对象，我们知道它是一个叫UIGestureRecognizerTarget的私有类，它有一个属性叫_target
-     */
-    id gestureRecognizerTarget = [_targets firstObject];
-    /**
-     *  获取_target:_UINavigationInteractiveTransition，它有一个方法叫handleNavigationTransition:
-     */
-    id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@&quot;_target&quot;];
-    /**
-     *  通过前面的打印，我们从控制台获取出来它的方法签名。
-     */
-    SEL handleTransition = NSSelectorFromString(@&quot;handleNavigationTransition:&quot;);
-    /**
-     *  创建一个与系统一模一样的手势，我们只把它的类改为UIPanGestureRecognizer
-     */
-    [syrPan addTarget:navigationInteractiveTransition action:handleTransition];
+<h6 id="vue组件中代码的调用">Vue组件中代码的调用</h6>
+<pre><code class="language-javascript">methods: {
+    click() {
+      this.$message({
+        message: &quot;保存成功！&quot;,
+        type: &quot;success&quot;,
+      });
+    },
 }
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-//    这里有两个条件不允许的手势执行，1、当前控制器为根控制器；2、如果这个push、pop动画正在执行（私有属性）
-//    即在根视图或者正在滑动时禁用手势
-    return self.viewControllers.count != 0 &amp;&amp; ![[self valueForKey:@&quot;_isTransitioning&quot;] boolValue];
-}
-
-@end
 </code></pre>
+<h6 id="此刻再点击-组件内-之前的-提示框调用效果如图">此刻，再点击 <code>组件内</code> 之前的 <code>提示框调用</code>，效果如图：</h6>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1589184448604.png" alt="" loading="lazy"></figure>
+<h6 id="尾声">尾声</h6>
 <blockquote>
-<p>以上就是简单的实现了一个自定义导航栏滑动手势的 <code>UINavigationController</code>，只要继承这个导航控制器，就可以全局实现<code>全屏侧滑手势</code>，当然系统版本一定要在 <code>iOS7.0</code> <code>以上</code> 才行。</p>
+<p>至此，多条消息提示共同存在的问题，得以解决，页面只会显示和存在一个消息提示</p>
 </blockquote>
-<h4 id="4-规避被拒的风险私有api的调用的隐匿处理">4. 规避被拒的风险，私有API的调用的隐匿处理；</h4>
-<blockquote>
-<p>在刚开始的时候我说到这个方法涉及<code>苹果私有 API</code>，在发布时可能有<code>被拒</code>的<code>风险</code>，我们可以通过下面的方法简单的<code>避免</code>。</p>
-</blockquote>
-<h5 id="代码如下-2"><code>代码如下：</code></h5>
-<pre><code class="language-Objective-C">NSString *selectorStringBegin = @&quot;handleNavigation&quot;;
-NSString *selectorStringEnd = @&quot;Transition:&quot;;
-NSString *selectorString = [NSString stringWithFormat:@&quot;%@%@&quot;,selectorStringBegin,selectorStringEnd];
-SEL systemAction = NSSelectorFromString(selectorString);
-</code></pre>
 
                 </div>
                 <div class="clear"></div>
@@ -263,26 +187,13 @@ SEL systemAction = NSSelectorFromString(selectorString);
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-06-17">2019-06-17</time>
-                  <h4 class="title white no-margin">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
               
               <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/72sFOp2qr.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/zheng-hong-shao-rou/" class="full-link"></a>
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/post-images/bu-bai-lai-yi-zao.png');"></div>
+                 <a href="https://shannonmyang.github.io/post/bu-bai-lai-yi-zao/" class="full-link"></a>
                  <div class="info">
-                  <time datetime="2019-06-15">2019-06-15</time>
-                  <h4 class="title white no-margin">蒸红烧肉</h4>
+                  <time datetime="2020-05-10">2020-05-10</time>
+                  <h4 class="title white no-margin">不白来一遭</h4>
                 </div>
                  <span class="epcl-button red">
                   <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">

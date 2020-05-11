@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2020-05-10T14:53:30.949Z</updated>
+    <updated>2020-05-11T08:07:56.903Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,75 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[解决 element-ui 弹出多个 message 的问题]]></title>
+        <id>https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/</id>
+        <link href="https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/">
+        </link>
+        <updated>2020-05-11T08:04:56.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>在当前版本的 element 中，<strong>message 消息提示</strong> 的一个请求对应一个浮窗提示，这就会导致多条消息提示共存的问题，更多的时候，甚至可以占满一屏。而很多情况下，这多条消息提示的内容是一样的，从用户的体验来说，并不友好。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>在当前版本的 element 中，<strong>message 消息提示</strong> 的一个请求对应一个浮窗提示，这就会导致多条消息提示共存的问题，更多的时候，甚至可以占满一屏。而很多情况下，这多条消息提示的内容是一样的，从用户的体验来说，并不友好。</p>
+</blockquote>
+<!-- more -->
+<p><strong>类似于这样：</strong><br>
+<img src="https://shannonmyang.github.io/post-images/1589184463049.png" alt="" loading="lazy"></p>
+<h4 id="如何解决">如何解决？</h4>
+<blockquote>
+<p>在 <code>src</code> 目录下，创建一个文件夹 <code>common</code>，在 <code>common</code> 文件夹内创建一个  <code>resetMessage.js</code> 。</p>
+</blockquote>
+<h6 id="代码如下">代码如下：</h6>
+<pre><code class="language-JavaScript">import {
+    Message
+} from 'element-ui';
+let messageInstance = null;
+const resetMessage = (options) =&gt; {
+    if(messageInstance) {
+        messageInstance.close()
+    }
+    messageInstance = Message(options)
+};
+['error','success','info','warning'].forEach(type =&gt; {
+    resetMessage[type] = options =&gt; {
+        if(typeof options === 'string') {
+            options = {
+                message:options
+            }
+        }
+        options.type = type
+        return resetMessage(options)
+    }
+})
+export const message = resetMessage
+</code></pre>
+<h6 id="在-mainjs-中引用">在 <code>main.js</code> 中引用</h6>
+<pre><code class="language-javascript">// 务必要放在Vue.use(ElementUI)之后，因为重写的是element-ui的提示框
+import {
+  message
+} from '@/common/resetMessage.js';
+Vue.prototype.$message = message; //重写message提示框
+</code></pre>
+<h6 id="vue组件中代码的调用">Vue组件中代码的调用</h6>
+<pre><code class="language-javascript">methods: {
+    click() {
+      this.$message({
+        message: &quot;保存成功！&quot;,
+        type: &quot;success&quot;,
+      });
+    },
+}
+</code></pre>
+<h6 id="此刻再点击-组件内-之前的-提示框调用效果如图">此刻，再点击 <code>组件内</code> 之前的 <code>提示框调用</code>，效果如图：</h6>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1589184448604.png" alt="" loading="lazy"></figure>
+<h6 id="尾声">尾声</h6>
+<blockquote>
+<p>至此，多条消息提示共同存在的问题，得以解决，页面只会显示和存在一个消息提示</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[不白来一遭]]></title>
         <id>https://shannonmyang.github.io/post/bu-bai-lai-yi-zao/</id>
@@ -786,76 +855,6 @@ iv.layer.mask = mask1;
     return newImage;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题]]></title>
-        <id>https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/</id>
-        <link href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">
-        </link>
-        <updated>2019-06-17T12:52:22.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>最近升级了 <code>Xcode 10</code> 版本，运行起之前的项目，各种问题一并爆发。</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>最近升级了 <code>Xcode 10</code> 版本，运行起之前的项目，各种问题一并爆发。</p>
-</blockquote>
-<!-- more -->
-<blockquote>
-<p>查了下，是 <code>Xcode</code> <code>升级导致</code>的 ，Apple早在 <code>Xcode 8</code> 中就<code>废弃</code>了 <code>libstdc++</code>, 给了开发者两年时间过渡，如今在 <code>Xcode 10</code> 中已<code>不再支持</code>。在 <code>Build Phases &gt; Link Binary With Libraries</code> 中已经搜不到 <code>libstdc++</code> 的<code>库</code>了，Apple给出的<code>原因</code>是 <code>std 库</code>比较<code>旧</code>了，<code>建议</code>使用<code>新版本替换</code>，比如用 <code>libc++.tbd</code> 替换 <code>libstdc++6.0.9.tbd</code>。</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>没错，上述就是问题报错的所在。<br>
-导致之前依赖 libstdc++6.0.9.tbd 的工程，在升级到 Xcode10 后出现编译错误。</p>
-</blockquote>
-<h5 id="错误的具体信息如图所示"><code>错误的具体信息如图所示：</code></h5>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1585400193793.png" alt="" loading="lazy"></figure>
-<blockquote>
-<p>出现这个问题的原因之一，是因为在开发中使用了第三方库，并且第三方库的 podspec 中 libraries 指定了 stdc++6.0.9，Cocoapods 在安装依赖过程中，会在指定 target 下的 other link flag 中加入 -l &quot;stdc++6.0.9&quot; 导致编译不能通过。<br>
-由于每个人出现问题的不同，所以此处列举出三种方式。</p>
-<h5 id="笔者用的第二种方式解决的自己遇到的编译不通过的问题">笔者用的第二种方式解决的自己遇到的编译不通过的问题。</h5>
-</blockquote>
-<hr>
-<h4 id="1-解决方式-1⃣️处理-pod-的依赖">1. 解决方式 1⃣️：处理 pod 的依赖</h4>
-<blockquote>
-<p>可以通过使用 Cocoapods 的 post_install hooks 来解决，解决的方法是在 podfile 中加入下面的代码，去掉所有 pod 对 stdc++6.0.9 的依赖：</p>
-</blockquote>
-<pre><code class="language-Objective-C">#该方法会移除 所有pod 对stdc++.6.0.9库的依赖，建议仅在Xcode10上使用
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            puts config.build_settings
-            xcconfig_path = config.base_configuration_reference.real_path
-            build_settings = Hash[*File.read(xcconfig_path).lines.map{|x| x.split(/\s*=\s*/, 2)}.flatten]
-            build_settings['OTHER_LDFLAGS'][' -l&quot;stdc++.6.0.9&quot;'] = ''
-            File.open(xcconfig_path, &quot;w&quot;) do |file|
-                build_settings.each do |key,value|
-                    file.puts &quot;#{key} = #{value}&quot;
-                end
-            end
-        end
-    end
-end
-</code></pre>
-<blockquote>
-<p>Ps:<br>
-这段 hooks 的原理是：找到所有的 target 的 Pods-TargetName.debug.xcconfig 和 Pods-TargetName.release.xcconfig 这两个文件（在 Pod/Targets Support Files/TargetName 目录下），然后将其中的 OTHER_LDFLAGS 字段中的 - l &quot;stdc++.6.0.9&quot; 去掉。</p>
-</blockquote>
-<hr>
-<h4 id="2-解决方式-2⃣️删除-libstdclibstdc6-libstdc609-库然后添加-libc-库">2. 解决方式 2⃣️：删除 libstdc++(libstdc++.6、libstdc++6.0.9) 库，然后添加 libc++ 库</h4>
-<blockquote>
-<p>步骤：TARGETS—&gt;Build Phases—&gt;Link Binary With Libraries，删除 libstdc++(libstdc++.6、libstdc++6.0.9) ，添加 libc++；</p>
-</blockquote>
-<hr>
-<h4 id="3-解决方式-3⃣️删除掉第三方库中对-libstdc-的依赖">3. 解决方式 3⃣️：删除掉第三方库中对 libstdc++ 的依赖</h4>
-<blockquote>
-<p>a. Pods —&gt; Targets Support Files —&gt; Pods-XXXX.debug.xcconfig，查找 libstdc++(libstdc++.6、libstdc++6.0.9)，将其删除；<br>
-b. Pods —&gt; Targets Support Files —&gt; Pods-XXXX.release.xcconfig，查找 libstdc++(libstdc++.6、libstdc++6.0.9)，将其删除；</p>
-</blockquote>
-<h5 id="如图所示"><code>如图所示</code>:</h5>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1585400491177.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
