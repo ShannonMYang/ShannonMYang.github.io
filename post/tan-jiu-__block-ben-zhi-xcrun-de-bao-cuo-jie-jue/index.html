@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>oh-my-zsh 提示不安全信息解决方案 | 木鱼小店</title>
+<title>探究__block本质，xcrun的报错解决 | 木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -17,12 +17,12 @@
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
     <meta name="description" content="
-在安装完 oh-my-zsh 之后，打开 iTerm 会冒出如下的一堆提示信息：
+近期在研究 block，探究底层的一些东西，遂用到了 xcrun 命令，但是莫名报错，于是就有了如下记录。
 
 
-[oh-my-zsh] Insecure completion-dependent directories detected:
-drwxr-xr-x  ..." />
-    <meta name="keywords" content="mac" />
+在 main.m 所在的文件目录下，输入如下命令行
+xcrun -sdk iphoneos clang -arch arm64..." />
+    <meta name="keywords" content="" />
     <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
     <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
   </head>
@@ -96,23 +96,21 @@ drwxr-xr-x  ..." />
       <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
         <div class="center content">
-          <div class="featured-image cover" style="background-image: url('https://shannonmyang.github.io/post-images/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an.jpg');">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2020-05-28"><i class="fa fa-calendar"></i><span class="lately">2 个月前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2020-07-28"><i class="fa fa-calendar"></i><span class="lately">38 分钟前</span></time>
               
-              <a href="https://shannonmyang.github.io/post/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/"> </span>
+              <a href="https://shannonmyang.github.io/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/"> </span>
               </a>
-              <span id="/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="https://shannonmyang.github.io/tag/5ybvI6wsF/" class="ctag ctag-0 ctag-5ybvI6wsF" aria-label="">mac</a>
-                    
               </div>
-              <h1 class="title ularge white bold">oh-my-zsh 提示不安全信息解决方案</h1>
+              <h1 class="title ularge white bold">探究__block本质，xcrun的报错解决</h1>
             </div>
           </div>
         </div>  
@@ -123,58 +121,51 @@ drwxr-xr-x  ..." />
               <section class="post-content">
                 <div class="text">
                   <blockquote>
-<p>在安装完 <code>oh-my-zsh</code> 之后，打开 <code>iTerm</code> 会冒出如下的一堆提示信息：</p>
+<p>近期在研究 <code>block</code>，探究底层的一些东西，遂用到了 <code>xcrun</code> 命令，但是莫名报错，于是就有了如下记录。</p>
 </blockquote>
 <!-- more -->
-<pre><code>[oh-my-zsh] Insecure completion-dependent directories detected:
-drwxr-xr-x    3 myu  admin    96  4   1   11:33  /usr/local/share/zsh
-drwxr-xr-x    4 myu  admin   128  4   2  10:04  /usr/local/share/zsh/site-functions
-
-[oh-my-zsh] For safety, we will not load completions from these directories until
-[oh-my-zsh] you fix their permissions and ownership and restart zsh.
-[oh-my-zsh] See the above list for directories with group or other writability.
-
-[oh-my-zsh] To fix your permissions you can do so by disabling
-[oh-my-zsh] the write permission of &quot;group&quot; and &quot;others&quot; and making sure that the
-[oh-my-zsh] owner of these directories is either root or your current user.
-[oh-my-zsh] The following command may help:
-[oh-my-zsh]     compaudit | xargs chmod g-w,o-w
-
-[oh-my-zsh] If the above didn't help or you want to skip the verification of
-[oh-my-zsh] insecure directories you can set the variable ZSH_DISABLE_COMPFIX to
-[oh-my-zsh] &quot;true&quot; before oh-my-zsh is sourced in your zshrc file.
+<h4 id="在-mainm-所在的文件目录下输入如下命令行">在 <code>main.m</code> 所在的文件目录下，输入如下命令行</h4>
+<pre><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc main.m
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1590632858807.png" alt="警告信息" loading="lazy"></figure>
-<h4 id="解决问题">解决问题：</h4>
+<h4 id="报错如下">报错如下：</h4>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1595925545373.png" alt="xcrun error" loading="lazy"></figure>
+<h4 id="分析">分析：</h4>
 <blockquote>
-<p>我们可以看到下面的提示信息，都是可以帮助我们去解决的。<br>
-有两种解决方案。笔者采用的方案是第二种。</p>
+<p>由报错可知，在当前路径下，找不到文件。那应该是 <code>Xcode</code> 的路径的问题，输入如下命令，</p>
 </blockquote>
-<h5 id="1-按照所有的提示去修改权限即可">1. 按照所有的提示去修改权限即可</h5>
-<pre><code>chmod 755 /Users/myu/.oh-my-zsh
-chmod 755 /Users/myu/.oh-my-zsh/plugins
-chmod 755 /Users/myu/.oh-my-zsh/plugins/git
-chmod 755 /usr/local/share/zsh
-chmod 755 /usr/local/share/zsh/site-functions
+<pre><code>xcode-select --print-path
 </code></pre>
-<h5 id="2-设置变量-zsh_disable_compfixtrue">2. 设置变量 <code>ZSH_DISABLE_COMPFIX=&quot;true&quot;</code></h5>
 <blockquote>
-<p>运行命令 <code>vi ~/.zshrc</code> ，点击 <code>i</code> 键，进行编辑。<br>
-在 <code>.zshrc</code> 文件的第一行添加 <code>ZSH_DISABLE_COMPFIX=&quot;true&quot;</code>。</p>
+<p>见打印。<br>
+<img src="https://shannonmyang.github.io/post-images/1595925783330.png" alt="xcode路径" loading="lazy"></p>
 </blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1590634875117.png" alt="增加" loading="lazy"></figure>
 <blockquote>
-<p>运行 <code>source</code> 命令，重新加载 <code>.zshrc</code> 文件。</p>
+<p>输入如下命令，验证路径是否正确</p>
 </blockquote>
-<pre><code>source ~/.zshrc
+<pre><code>xcodebuild -showsdks
 </code></pre>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1590634909532.png" alt="解决" loading="lazy"></figure>
-<h4 id="尾声">尾声：</h4>
 <blockquote>
-<p>按下组合键 <code>command + q</code>，退出 <code>iTerm</code> ，重新打开，发现，清清爽爽，提示信息不见了。<br>
-问题解决。</p>
+<p>果然错误<br>
+<img src="https://shannonmyang.github.io/post-images/1595926393128.png" alt="xcode路径验证" loading="lazy"></p>
 </blockquote>
-<figure data-type="image" tabindex="4"><img src="https://shannonmyang.github.io/post-images/1590635166156.png" alt="正常了" loading="lazy"></figure>
+<blockquote>
+<p>输入命令，更改错误路径</p>
+</blockquote>
+<pre><code>sudo xcode-select --switch /Applications/Xcode.app/
+</code></pre>
+<blockquote>
+<p>再做路径正确与否的验证，输入命令</p>
+</blockquote>
+<pre><code>xcodebuild -showsdks
+</code></pre>
+<blockquote>
+<p>验证结果<br>
+<img src="https://shannonmyang.github.io/post-images/1595927223546.png" alt="更换路径后验证" loading="lazy"></p>
+</blockquote>
+<blockquote>
+<p>再运行 <code>xcrun</code> 命令，成功无错误<br>
+<img src="https://shannonmyang.github.io/post-images/1595927425547.png" alt="xcrun成功运行" loading="lazy"></p>
+</blockquote>
 
                 </div>
                 <div class="clear"></div>
@@ -184,26 +175,13 @@ chmod 755 /usr/local/share/zsh/site-functions
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
                 <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/gridea.jpg');"></div>
                  <a href="https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/" class="full-link"></a>
                  <div class="info">
                   <time datetime="2020-05-28">2020-05-28</time>
                   <h4 class="title white no-margin">肆水流年总结</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-              
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/post-images/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti.png');"></div>
-                 <a href="https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2020-05-11">2020-05-11</time>
-                  <h4 class="title white no-margin">解决 element-ui 弹出多个 message 的问题</h4>
                 </div>
                  <span class="epcl-button red">
                   <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">

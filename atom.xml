@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2020-07-28T06:47:40.621Z</updated>
+    <updated>2020-07-28T09:13:23.321Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,64 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[探究__block本质，xcrun的报错解决]]></title>
+        <id>https://shannonmyang.github.io/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/</id>
+        <link href="https://shannonmyang.github.io/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/">
+        </link>
+        <updated>2020-07-28T08:35:26.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>近期在研究 <code>block</code>，探究底层的一些东西，遂用到了 <code>xcrun</code> 命令，但是莫名报错，于是就有了如下记录。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>近期在研究 <code>block</code>，探究底层的一些东西，遂用到了 <code>xcrun</code> 命令，但是莫名报错，于是就有了如下记录。</p>
+</blockquote>
+<!-- more -->
+<h4 id="在-mainm-所在的文件目录下输入如下命令行">在 <code>main.m</code> 所在的文件目录下，输入如下命令行</h4>
+<pre><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc main.m
+</code></pre>
+<h4 id="报错如下">报错如下：</h4>
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1595925545373.png" alt="xcrun error" loading="lazy"></figure>
+<h4 id="分析">分析：</h4>
+<blockquote>
+<p>由报错可知，在当前路径下，找不到文件。那应该是 <code>Xcode</code> 的路径的问题，输入如下命令，</p>
+</blockquote>
+<pre><code>xcode-select --print-path
+</code></pre>
+<blockquote>
+<p>见打印。<br>
+<img src="https://shannonmyang.github.io/post-images/1595925783330.png" alt="xcode路径" loading="lazy"></p>
+</blockquote>
+<blockquote>
+<p>输入如下命令，验证路径是否正确</p>
+</blockquote>
+<pre><code>xcodebuild -showsdks
+</code></pre>
+<blockquote>
+<p>果然错误<br>
+<img src="https://shannonmyang.github.io/post-images/1595926393128.png" alt="xcode路径验证" loading="lazy"></p>
+</blockquote>
+<blockquote>
+<p>输入命令，更改错误路径</p>
+</blockquote>
+<pre><code>sudo xcode-select --switch /Applications/Xcode.app/
+</code></pre>
+<blockquote>
+<p>再做路径正确与否的验证，输入命令</p>
+</blockquote>
+<pre><code>xcodebuild -showsdks
+</code></pre>
+<blockquote>
+<p>验证结果<br>
+<img src="https://shannonmyang.github.io/post-images/1595927223546.png" alt="更换路径后验证" loading="lazy"></p>
+</blockquote>
+<blockquote>
+<p>再运行 <code>xcrun</code> 命令，成功无错误<br>
+<img src="https://shannonmyang.github.io/post-images/1595927425547.png" alt="xcrun成功运行" loading="lazy"></p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[肆水流年总结]]></title>
         <id>https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/</id>
@@ -655,55 +713,6 @@ npm config set package-lock false
 <pre><code class="language-Shell">// 要更换国内镜像，编辑 ~/.npmrc 加入下面内容
 registry = https://registry.npm.taobao.org
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Xcode 10 升级后的 Error: Multiple commands produce]]></title>
-        <id>https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/</id>
-        <link href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">
-        </link>
-        <updated>2019-07-03T03:05:02.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
-于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
-于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
-</blockquote>
-<!-- more -->
-<h4 id="error如下">Error如下</h4>
-<pre><code>Multiple commands produce '.../.../.../.../.../info.plist'
-//或者是
-Multiple commands produce '.../.../.../.../.../xxx.app'
-</code></pre>
-<h4 id="原因如下">原因如下</h4>
-<blockquote>
-<p>Apple 在 Xcode 10 默认使用的 Build system 是 New Build System，与 Xcode9 使用的 Legacy Build System 不同而导致的。</p>
-</blockquote>
-<h4 id="解决办法">解决办法</h4>
-<h5 id="1-不修改-build-system">1. 不修改 Build System</h5>
-<blockquote>
-<p>Solution -&gt; Open target -&gt; Build phases &gt; Copy Bundle Resources and remove info.plist from there.</p>
-</blockquote>
-<h5 id="xxxapp-类型错误"><code>.../.../xxx.app 类型错误</code></h5>
-<blockquote>
-<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi>T</mi><mi>A</mi><mi>R</mi><mi>G</mi><mi>E</mi><msub><mi>T</mi><mi>B</mi></msub><mi>U</mi><mi>I</mi><mi>L</mi><msub><mi>D</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi></mrow><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">{TARGET_BUILD_DIR}/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">G</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span><span class="mord">/</span></span></span></span>{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy"></figure>
-<h6 id="infoplist-类型错误"><code>'.../.../info.plist' 类型错误</code></h6>
-<blockquote>
-<p>target -&gt; 'Build phases' -&gt; 'Copy Bundle Resources' -&gt; 移除 info.plist -&gt; clean -&gt; 重新编译</p>
-</blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy"></figure>
-<h5 id="2-修改-build-system">2. 修改 `Build System'</h5>
-<blockquote>
-<p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
-</blockquote>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
