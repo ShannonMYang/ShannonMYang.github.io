@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2020-05-28T03:09:10.402Z</updated>
+    <updated>2020-07-28T06:45:14.927Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[肆水流年总结]]></title>
+        <id>https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/</id>
+        <link href="https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/">
+        </link>
+        <updated>2020-05-28T04:20:15.000Z</updated>
+        <content type="html"><![CDATA[<p>由于上一家公司待得时间久，中间又换过部门，所以前端、移动端、后端，均有涉猎。<br>
+技术方面，机器学习Tensorflow、区块链、iOS端、Web端，后端，都有做过，有的多有的少。<br>
+通过这么多方面的涉猎，以前没注意过。在某个睡不着的夜晚，开始思考起，写一份总结，以后应该会经常写吧。要不然，总以为自己什么也不会。其实，不知不觉之间，已经会了很多东西。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[oh-my-zsh 提示不安全信息解决方案]]></title>
         <id>https://shannonmyang.github.io/post/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/</id>
@@ -693,100 +704,6 @@ Multiple commands produce '.../.../.../.../.../xxx.app'
 <p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
 </blockquote>
 <figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[iOS 打破 NSTimer 循环引用]]></title>
-        <id>https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/</id>
-        <link href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/">
-        </link>
-        <updated>2019-06-26T15:15:06.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>在做 <code>iOS 项目</code>，多多少少都会有不留意时候，碰到一些 <code>NSTimer</code> 的 <code>循环引用问题</code>。<br>
-本篇笔记意在记录解决 NSTimer 循环引用问题的方法。</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>在做 <code>iOS 项目</code>，多多少少都会有不留意时候，碰到一些 <code>NSTimer</code> 的 <code>循环引用问题</code>。<br>
-本篇笔记意在记录解决 NSTimer 循环引用问题的方法。</p>
-</blockquote>
-<!-- more -->
-<blockquote>
-<p>本篇笔记将逐一列出解决方法，并附上具体代码实现。</p>
-</blockquote>
-<h4 id="1-一种方式-打断循环引用-通过若引用-但必须是在-block-中">1. 一种方式 打断循环引用 通过若引用 但必须是在 block 中。</h4>
-<h5 id="代码调用及实现如下"><code>代码调用及实现，如下：</code></h5>
-<pre><code class="language-Objective-C">__weak typeof(self) weakSelf = self;
-self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
-    [weakSelf timerLog];
-}];
-</code></pre>
-<h4 id="2-自己实现一个-block-打破循环引用-个人感觉略复杂">2. 自己实现一个 block 打破循环引用 （个人感觉，略复杂）。</h4>
-<h5 id="代码调用如下"><code>代码调用如下：</code></h5>
-<pre><code class="language-Objective-C">self.timer = [NSTimer dix_timerWithTimeInterval:1 repeats:YES block:nil];
-</code></pre>
-<h5 id="代码实现如下"><code>代码实现如下：</code></h5>
-<pre><code class="language-Objective-C">+ (NSTimer *)dix_timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *))block
-{
-     return [self scheduledTimerWithTimeInterval:interval target:self selector:@selector(timerAction:) userInfo:[block copy] repeats:repeats];
-}
-
-//通过 Block 打破循环引用，解决 Timer 无法释放的问题
-+ (void)timerAction:(NSTimer *)timer
-{
-//    void (^block)(NSTimer *tiemr) = timer.userInfo;
-//    声明Block
-    void (^ block)(NSTimer *) = ^(NSTimer *timer) {
-        timer = timer.userInfo;
-    };
-    NSLog(@&quot;%s&quot;, __func__);
-    if (block) {
-        block(timer);
-    }
-}
-</code></pre>
-<h4 id="3-创建中间对象-打破循环引用">3. 创建中间对象 打破循环引用</h4>
-<h5 id="代码调用如下-2"><code>代码调用如下：</code></h5>
-<pre><code class="language-Objective-C">self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:[dixProxy1 dixProxyWithTarget:self] selector:@selector(timerLog) userInfo:nil repeats:YES];
-</code></pre>
-<h5 id="代码实现如下-2"><code>代码实现如下：</code></h5>
-<pre><code class="language-Objective-C">+ (instancetype)dixProxyWithTarget:(id)target
-{
-    dixProxy1 *proxy = [[dixProxy1 alloc] init];
-    proxy.target = target;
-    return proxy;
-}
-
-- (id)forwardingTargetForSelector:(SEL)aSelector {
-    return self.target;
-}
-</code></pre>
-<h4 id="4-效率更高-nsproxy-专门用来做转发的">4. 效率更高 NSProxy , 专门用来做转发的</h4>
-<h5 id="代码调用如下-3"><code>代码调用如下：</code></h5>
-<pre><code class="language-Objective-C">/**
- * 因为在调用 timeLog 方法的时候，发现自身没有，就会自动进入消息转发，进而调用方法
- * 而不是像继承自 NSObject，还要在自身没有方法之后，去查找superClass 内是否有方法
- * 故而 效率更高
- */
-self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:[dixProxy2 dixProxyWithTarget:self] selector:@selector(timerLog) userInfo:nil repeats:YES];
-</code></pre>
-<h5 id="代码实现如下-3"><code>代码实现如下：</code></h5>
-<pre><code class="language-Objective-C">+ (instancetype)dixProxyWithTarget:(id)target
-{
-    // NSProxy 对象不需要调用init方法， 因为 NSProxy本来就没有 init 方法
-    dixProxy2 *proxy = [dixProxy2 alloc];
-    proxy.target = target;
-    return proxy;
-}
-
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
-    return [self.target methodSignatureForSelector:sel];
-}
-
-- (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation invokeWithTarget:self.target];
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
