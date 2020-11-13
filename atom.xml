@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2020-10-27T03:58:23.514Z</updated>
+    <updated>2020-11-13T11:45:14.100Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,73 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[零碎笔记]]></title>
+        <id>https://shannonmyang.github.io/post/ling-sui-bi-ji/</id>
+        <link href="https://shannonmyang.github.io/post/ling-sui-bi-ji/">
+        </link>
+        <updated>2020-11-13T11:15:28.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>这些笔记比较零碎，又不够单独开一篇文章的必要，所以就集中在此处了。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>这些笔记比较零碎，又不够单独开一篇文章的必要，所以就集中在此处了。</p>
+</blockquote>
+<!-- more -->
+<h4 id="uml类图-线与箭头">UML类图 ｜ 线与箭头</h4>
+<h6 id="1-在uml类图中实线空心三角箭头代表继承关系由子类指向其父类">1. 在UML类图中：实线空心三角箭头代表继承关系，由子类指向其父类</h6>
+<h6 id="2-在uml类图中虚线箭头表示依赖关系常用在方法参数等由依赖方指向被依赖方">2. 在UML类图中：虚线箭头表示依赖关系，常用在方法参数等，由依赖方指向被依赖方</h6>
+<h6 id="3-在uml类图中虚线三角箭头表示接口实现由实现方指向接口">3. 在UML类图中：虚线三角箭头表示接口实现，由实现方指向接口</h6>
+<hr>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[macos 升级 big sur 显示安装所选更新时发生错误]]></title>
+        <id>https://shannonmyang.github.io/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/</id>
+        <link href="https://shannonmyang.github.io/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/">
+        </link>
+        <updated>2020-11-13T01:13:52.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>盼星星盼月亮，终于等到了Big Sur的正式更新，结果，发生错误，于是，查询、解决、记录如下。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>盼星星盼月亮，终于等到了Big Sur的正式更新，结果，发生错误，于是，查询、解决、记录如下。</p>
+</blockquote>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1605232456046.png" alt="报错" loading="lazy"></figure>
+<hr>
+<p><u>网上搜罗了一圈，发现都在说 <code>csrutil enable</code> 这个命令。</u></p>
+<blockquote>
+<p>注意！若是 <code>融合磁盘</code> 的 Mac 请不要使用此方法，因为 csrutil enable 命令会格式化融合磁盘。届时，电脑上的资料会全部被清空，无法恢复。<br>
+若是 <code>闪存</code> 的 Mac 则可以使用以下方法。</p>
+</blockquote>
+<p><u>遂试了下，但依旧如大多数网友反映的那样，没有什么用处。</u><br>
+<u>后来，无奈之下，就想着会不会是苹果服务器访问量太大，导致的网络波段？</u><br>
+<u>于是，疯狂点击了几次立即升级，切换了几次WI-FI，居然就开始稳定更新下载了。而后，就顺风顺水的更新成功了。</u></p>
+<hr>
+<h5 id="疑问来了">疑问来了</h5>
+<blockquote>
+<p><code>csrutil enable</code> 这个命令，干嘛用的？</p>
+</blockquote>
+<h6 id="经过一番查询发现这个命令是mac开启和关闭-系统完整性保护-权限-用的">经过一番查询，发现这个命令，是Mac开启和关闭 系统完整性保护 权限 用的。</h6>
+<hr>
+<h4 id="mac-开启关闭-sip系统完整性保护">Mac 开启关闭 SIP（系统完整性保护）</h4>
+<blockquote>
+<p>在我们开发过程中，有时候我们安装一些工具软件需要将文件拷贝到系统限制更改的文件夹中，甚至有时需要更改系统限制的文件，而这时 Mac 会提示系统文件不能修改之类的内容，而这时我们想要继续操作必须关闭 Mac 电脑的 “系统完整性保护” 机制（SIP）</p>
+</blockquote>
+<h5 id="1-查看-sip-状态">1. 查看 SIP 状态</h5>
+<p>在终端中输入 csrutil status，就可以看到是 enabled 还是 disabled。</p>
+<h5 id="2-关闭-sip">2. 关闭 SIP</h5>
+<h6 id="-重启-mac按住-cmdr-直到屏幕上出现苹果的标志和进度条进入-recovery-模式">- 重启 Mac，按住 cmd+R 直到屏幕上出现苹果的标志和进度条，进入 Recovery 模式；</h6>
+<h6 id="-在屏幕最上方的工具栏找到实用工具左数第-3-个打开终端输入csrutil-disable">- 在屏幕最上方的工具栏找到实用工具（左数第 3 个），打开终端，输入：csrutil disable；</h6>
+<h6 id="-关掉终端重启-mac">- 关掉终端，重启 Mac；</h6>
+<h6 id="-重启以后可以在终端中查看状态确认">- 重启以后可以在终端中查看状态确认。</h6>
+<h5 id="3-开启-sip">3. 开启 SIP</h5>
+<p>与关闭的步骤类似，只是在 第二步中的第二小步 终端中 输入 <code>csrutil enable</code> 即可。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[变成穷人的18中方法]]></title>
         <id>https://shannonmyang.github.io/post/bian-cheng-qiong-ren-de-18-zhong-fang-fa/</id>
@@ -400,148 +467,6 @@ Vue.prototype.$message = message; //重写message提示框
 上面的截图，即是重启后，字体全面覆盖生效的效果。<br>
 自此，你告别了Win10的微软雅黑。</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vue.js 中引入 Font Awesome 字体图标]]></title>
-        <id>https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/</id>
-        <link href="https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/">
-        </link>
-        <updated>2019-12-24T02:26:05.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>这，基本是一个被写烂了的话题，但是，我刚接触，我的博客里也没有。故而，有此记录。</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>这，基本是一个被写烂了的话题，但是，我刚接触，我的博客里也没有。故而，有此记录。</p>
-</blockquote>
-<!-- more -->
-<h4 id="1-安装基础依赖">1. 安装基础依赖</h4>
-<blockquote>
-<p>进入 Vue 项目文件夹，执行如下命令安装基础依赖库。</p>
-</blockquote>
-<pre><code class="language-JavaScript">npm i --save @fortawesome/fontawesome-svg-core
-npm i --save @fortawesome/vue-fontawesome
-</code></pre>
-<h4 id="2-安装样式依赖">2. 安装样式依赖</h4>
-<blockquote>
-<p>Font Awesome 为我们提供了 Solid、Regular、Brands 这三种免费样式（日常使用完全够用），执行如下命令安装。</p>
-</blockquote>
-<pre><code class="language-JavaScript">npm i --save @fortawesome/free-solid-svg-icons
-npm i --save @fortawesome/free-regular-svg-icons
-npm i --save @fortawesome/free-brands-svg-icons
-</code></pre>
-<h4 id="3-修改-srcmainjs">3. 修改 src/main.js</h4>
-<blockquote>
-<p>添加如下代码全局引入并配置 Font Awesome，之后我们就可以使用它了。</p>
-</blockquote>
-<pre><code class="language-JavaScript">// 引入fontawesome-icon
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
-
-library.add(fas, far, fab)
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('font-awesome-layers', FontAwesomeLayers)
-Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
-</code></pre>
-<h4 id="4-基本使用">4. 基本使用</h4>
-<h5 id="41-显示图标">4.1 显示图标</h5>
-<blockquote>
-<p>a. 我们使用 font-awesome-icon 标签来显示图标，icon 属性中可以设置样式前缀、以及图标名字。</p>
-</blockquote>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon :icon=&quot;['fas', 'square']&quot;/&gt;
-&lt;font-awesome-icon :icon=&quot;['far', 'square']&quot;/&gt;
-&lt;font-awesome-icon :icon=&quot;['fab', 'accessible-icon']&quot;/&gt;
-</code></pre>
-<blockquote>
-<p>b. 如果是 solid 样式（前缀为：fas），则前缀可以省略。比如上面第一个图标等效下面写法：</p>
-</blockquote>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;square&quot;/&gt;
-</code></pre>
-<h5 id="42-设置图标大小">4.2 设置图标大小</h5>
-<blockquote>
-<p>默认情况下图标和当前文字的大小是一样的。我们可以通过 size 属性在此基础上作调整，该属性支持多种类型的设置方式。</p>
-</blockquote>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot;/&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;xs&quot;/&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;lg&quot;/&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; size=&quot;2x&quot;/&gt;
-</code></pre>
-<h5 id="43-固定图标宽度">4.3 固定图标宽度</h5>
-<blockquote>
-<p>使用 fixed-width 可以固定图标宽度。</p>
-</blockquote>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;home&quot; fixed-width /&gt; home &lt;br&gt;
-&lt;font-awesome-icon icon=&quot;child&quot; fixed-width /&gt; help &lt;br&gt;
-&lt;font-awesome-icon icon=&quot;cog&quot; fixed-width /&gt; settings &lt;br&gt;
-</code></pre>
-<h5 id="44-旋转图标">4.4 旋转图标</h5>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;0&quot; /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;90&quot; /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;180&quot; /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; rotation=&quot;270&quot; /&gt;
-</code></pre>
-<h5 id="45-翻转图标">4.5 翻转图标</h5>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;chess-knight&quot;  /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;horizontal&quot; /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;vertical&quot; /&gt;
-&lt;font-awesome-icon icon=&quot;chess-knight&quot; flip=&quot;both&quot; /&gt;
-</code></pre>
-<h5 id="46-旋转动画效果">4.6 旋转动画效果</h5>
-<h6 id="461-添加-spin-属性可以让图标不停地顺时针旋转">4.6.1 添加 spin 属性可以让图标不停地顺时针旋转；</h6>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;arrow-circle-down&quot; spin /&gt;
-</code></pre>
-<h6 id="462-添加-pulse-属性同样可以让图标旋转但它不像-spin-那样是均匀地变化角度而是-0-度-45-度-90-度-这样跳跃地变化">4.6.2 添加 pulse 属性同样可以让图标旋转，但它不像 spin 那样是均匀地变化角度，而是 0 度、45 度、90 度... 这样跳跃地变化</h6>
-<pre><code class="language-JavaScript">&lt;font-awesome-icon icon=&quot;arrow-circle-down&quot; pulse /&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Mac 系统常规指令]]></title>
-        <id>https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/</id>
-        <link href="https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/">
-        </link>
-        <updated>2019-12-21T01:39:36.000Z</updated>
-        <summary type="html"><![CDATA[<h5 id="工欲善其事必先利其器">工欲善其事，必先利其器。</h5>
-<h5 id="对于开发者来讲常用指令就是如此">对于开发者来讲，常用指令就是如此。</h5>
-]]></summary>
-        <content type="html"><![CDATA[<h5 id="工欲善其事必先利其器">工欲善其事，必先利其器。</h5>
-<h5 id="对于开发者来讲常用指令就是如此">对于开发者来讲，常用指令就是如此。</h5>
-<!-- more -->
-<pre><code class="language-Shell">// 查看当前所在位置
-pwd
-</code></pre>
-<pre><code class="language-Shell">// 查看当前文件夹中的内容
-ls
-</code></pre>
-<pre><code class="language-Shell">// 进入指定目录
-cd
-</code></pre>
-<pre><code class="language-Shell">// 创建一个文件夹
-mkdir 文件夹名称
-</code></pre>
-<pre><code class="language-Shell">// 删除一个文件夹
-rmdir 文件夹名称
-</code></pre>
-<pre><code class="language-Shell">// 返回上一级
-cd ../
-</code></pre>
-<pre><code class="language-Shell">// 清空终端当前一屏（效果类似于你大学课堂上那种上下推拉的黑板，写满一版，往上一推）
-clear
-</code></pre>
-<pre><code class="language-Shell">// 打开一个文件
-open 文件名称
-</code></pre>
-<pre><code class="language-Shell">// 创建一个文件
-touch 文件名称
-</code></pre>
-<pre><code class="language-Shell">// 查看一个文件
-cat 文件名称
-</code></pre>
 ]]></content>
     </entry>
 </feed>

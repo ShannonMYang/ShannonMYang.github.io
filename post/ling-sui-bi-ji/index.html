@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>算法 | 木鱼小店</title>
+<title>零碎笔记 | 木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -15,11 +15,19 @@
 <script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
 <script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
+    <meta name="referrer" content="never">
+    <meta name="description" content="
+这些笔记比较零碎，又不够单独开一篇文章的必要，所以就集中在此处了。
+
+
+UML类图 ｜ 线与箭头
+1. 在UML类图中：实线空心三角箭头代表继承关系，由子类指向其父类
+2. 在UML类图中：虚线箭头表示依赖关系，常用在方法参数等，由依赖方..." />
+    <meta name="keywords" content="" />
+    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
+    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
   </head>
   <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -86,71 +94,104 @@
         </div>
       </div>
 
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
+      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
+
+        <div class="center content">
+          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+            <div class="meta top"> 
+              <time class="meta-info" style="float:left;" datetime="2020-11-13"><i class="fa fa-calendar"></i><span class="lately">30 分钟前</span></time>
+              
+              <a href="https://shannonmyang.github.io/post/ling-sui-bi-ji/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ling-sui-bi-ji/"> </span>
+              </a>
+              <span id="/ling-sui-bi-ji/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              
+            </div>
+            <div class="info">
+              <div class="tags ">
                 
-            <!-- start: .articles -->
-            <div class="main-article post">
-  <h2 class="year"># 算法</h2>
-    
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display: block;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-04-29">2019-04-29</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
-          </h4>
-        </div>
-      </article>
+              </div>
+              <h1 class="title ularge white bold">零碎笔记</h1>
+            </div>
+          </div>
+        </div>  
 
-    
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display: block;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-11-06">2018-11-06</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/">算法小记 · 不用四则运算做加法</a>
-          </h4>
-        </div>
-      </article>
+        <div class="epcl-page-wrapper">
+          <div class="left-content grid-70 np-mobile">
+            <article class="main-article post">
+              <section class="post-content">
+                <div class="text">
+                  <blockquote>
+<p>这些笔记比较零碎，又不够单独开一篇文章的必要，所以就集中在此处了。</p>
+</blockquote>
+<!-- more -->
+<h4 id="uml类图-线与箭头">UML类图 ｜ 线与箭头</h4>
+<h6 id="1-在uml类图中实线空心三角箭头代表继承关系由子类指向其父类">1. 在UML类图中：实线空心三角箭头代表继承关系，由子类指向其父类</h6>
+<h6 id="2-在uml类图中虚线箭头表示依赖关系常用在方法参数等由依赖方指向被依赖方">2. 在UML类图中：虚线箭头表示依赖关系，常用在方法参数等，由依赖方指向被依赖方</h6>
+<h6 id="3-在uml类图中虚线三角箭头表示接口实现由实现方指向接口">3. 在UML类图中：虚线三角箭头表示接口实现，由实现方指向接口</h6>
+<hr>
 
-    
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display: block;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-11-05">2018-11-05</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</a>
-          </h4>
-        </div>
-      </article>
+                </div>
+                <div class="clear"></div>
+              </section>
+            </article>
+            <div class="clear"></div>
 
-    
-    <div class="clear"></div>
-</div>
-            <!-- end: .articles -->
+            <section class="related section">
+              
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/5ybvI6wsF.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/" class="full-link"></a>
+                 <div class="info">
+                  <time datetime="2020-11-13">2020-11-13</time>
+                  <h4 class="title white no-margin">macos 升级 big sur 显示安装所选更新时发生错误</h4>
+                </div>
+                 <span class="epcl-button red">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
+                </span>
+                <div class="overlay"></div>
+              </article>
+              
+
+                <div class="clear"></div>
+            </section>
+
+              <div class="clear"></div>
+              
             
-                        <div class="epcl-pagination section">
-              <div class="nav">
+              <div id="comments" class="bg-white hosted ">
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+<div class="clear"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '66f5ac971492c259ae1e',
+    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
+    repo: 'shannonmyang.github.io',
+    owner: 'ShannonMYang',
+    admin: ['ShannonMYang'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
                 
                 
               </div>
-            </div>
             
+
+            </div>
           </div>
-          </div>
-        </div>
       </main>
 
-        <footer id="footer" class="grid-container">
+          <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -332,6 +373,9 @@
     <div class="clear"></div>
 
         
+
+      
+    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->
