@@ -86,7 +86,7 @@
       <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
         <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
           <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1605268574703" action="/search/index.html" class="search-form" _lpchecked="1">
+            <form id="gridea-search-form" data-update="1605862436916" action="/search/index.html" class="search-form" _lpchecked="1">
               <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
               <button type="submit" class="submit" aria-label="Submit">
                 <i class="fa fa-search-line"></i>
@@ -133,7 +133,7 @@
 <blockquote>
 <p>本篇笔记将逐一列出解决方法，并附上具体代码实现。</p>
 </blockquote>
-<h4 id="1-一种方式-打断循环引用-通过若引用-但必须是在-block-中">1. 一种方式 打断循环引用 通过若引用 但必须是在 block 中。</h4>
+<h4 id="1-一种方式-打断循环引用-通过弱引用-但必须是在-block-中">1. 一种方式 打断循环引用 通过弱引用 但必须是在 block 中。</h4>
 <h5 id="代码调用及实现如下"><code>代码调用及实现，如下：</code></h5>
 <pre><code class="language-Objective-C">__weak typeof(self) weakSelf = self;
 self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
@@ -169,13 +169,14 @@ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NST
 <pre><code class="language-Objective-C">self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:[dixProxy1 dixProxyWithTarget:self] selector:@selector(timerLog) userInfo:nil repeats:YES];
 </code></pre>
 <h5 id="代码实现如下-2"><code>代码实现如下：</code></h5>
-<pre><code class="language-Objective-C">+ (instancetype)dixProxyWithTarget:(id)target
+<pre><code class="language-Objective-C">// disProxy1.m
++ (instancetype)dixProxyWithTarget:(id)target
 {
     dixProxy1 *proxy = [[dixProxy1 alloc] init];
     proxy.target = target;
     return proxy;
 }
-
+// 利用runtime的消息转发机制
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     return self.target;
 }
