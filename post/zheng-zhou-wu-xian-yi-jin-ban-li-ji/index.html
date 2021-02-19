@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>iOS 事件响应 | 木鱼小店</title>
+<title>郑州五险一金办理记 | 木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -17,11 +17,18 @@
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
     <meta name="description" content="
-写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？
+由于，最近在郑州办理一些关于五险一金的手续，跑腿过程中遇到了一丢丢波折。
+所以，决定记录一下，希望帮到有需要的人。
 
 
-认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截..." />
-    <meta name="keywords" content="iOS" />
+由于笔者是从北京回郑州这种跨地区的情况。
+所以，别的地方跨地区办理所需东西，不太清楚。
+
+
+社保
+
+从北京回到郑州，社..." />
+    <meta name="keywords" content="" />
     <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
     <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
   </head>
@@ -97,21 +104,19 @@
         <div class="center content">
           <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2018-06-15"><i class="fa fa-calendar"></i><span class="lately">3 年前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2021-01-29"><i class="fa fa-calendar"></i><span class="lately">21 天前</span></time>
               
-              <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-shi-jian-xiang-ying/"> </span>
+              <a href="https://shannonmyang.github.io/post/zheng-zhou-wu-xian-yi-jin-ban-li-ji/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/zheng-zhou-wu-xian-yi-jin-ban-li-ji/"> </span>
               </a>
-              <span id="/ios-shi-jian-xiang-ying/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/zheng-zhou-wu-xian-yi-jin-ban-li-ji/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
-                    
               </div>
-              <h1 class="title ularge white bold">iOS 事件响应</h1>
+              <h1 class="title ularge white bold">郑州五险一金办理记</h1>
             </div>
           </div>
         </div>  
@@ -122,84 +127,44 @@
               <section class="post-content">
                 <div class="text">
                   <blockquote>
-<p>写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？</p>
+<p>由于，最近在郑州办理一些关于五险一金的手续，跑腿过程中遇到了一丢丢波折。<br>
+所以，决定记录一下，希望帮到有需要的人。</p>
 </blockquote>
 <blockquote>
-<p>认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截下这个事件。</p>
+<p>由于笔者是从北京回郑州这种跨地区的情况。<br>
+所以，别的地方跨地区办理所需东西，不太清楚。</p>
 </blockquote>
 <!-- more -->
-<h5 id="那么来简单分析下按照时间轴来划分事件的生命周期大概是这样">那么，来简单分析下，按照时间轴来划分，事件的生命周期大概是这样：</h5>
+<h4 id="社保">社保</h4>
 <blockquote>
-<p>1、 <code>事件的产生与传递</code>（事件是怎么从父级 UI 控件传递到子级 UI 控件并找到最合适 view 的、寻找最合适的 view 的底层是如何实现的、咋进行拦截事件的处理）<br>
-2、 <code>找到最合适的 view 后事件的处理</code>（将 touches 方法重写，也就是所谓的事件的响应）</p>
+<p>从北京回到郑州，社保能不能转移和衔接上，是很多人关心的问题，笔者亦如是。<br>
+下面列举一些笔者问到的问题和工作人员的相关解答。</p>
 </blockquote>
+<h6 id="1-无工作人员能否开个人社保账户">1. 无工作人员能否开个人社保账户？</h6>
+<h6 id="可以开个人社保账户选择灵活就业进行社保缴纳-需要-注意-的是灵活就业仅仅有医疗和养老两险">可以开个人社保账户，选择灵活就业进行社保缴纳。需要 <code>注意</code> 的是，灵活就业，仅仅有医疗和养老，两险。</h6>
+<h6 id="2-在入职某家公司后能否将个人缴纳转到公司缴纳">2. 在入职某家公司后，能否将个人缴纳，转到公司缴纳？</h6>
+<h6 id="社保的个人转公司公司转个人都是可以进行操作的需要去社保办事处的柜台进行办理业务">社保的个人转公司，公司转个人，都是可以进行操作的，需要去社保办事处的柜台进行办理业务。</h6>
+<h6 id="3-社保可否转移">3. 社保可否转移？</h6>
+<h6 id="在异地社保进行停保操作后可进行转移-网上即可操作下载-掌上12333-app网上即可办理-无论是公司转个人还是个人转公司均可操作进行转移">在异地社保进行停保操作后，可进行转移。网上即可操作，下载 掌上12333 App，网上即可办理。无论是公司转个人，还是个人转公司，均可操作进行转移。</h6>
+<h6 id="4-在停保之前能否开始在本地进行开户缴纳社保">4. 在停保之前，能否开始在本地进行开户缴纳社保？</h6>
+<h6 id="能开户但不能缴纳-比如本月停保你需要开户的时候选定从下月开始缴纳社保">能开户，但不能缴纳。比如，本月停保，你需要开户的时候，选定从下月开始缴纳社保。</h6>
+<h6 id="5-如何个人缴纳社保">5. 如何个人缴纳社保？</h6>
+<h6 id="社保官网查询便民网点进行开户-缴费操作">社保官网查询便民网点，进行开户、缴费操作。</h6>
+<h6 id="6-开户后如何办理社保卡">6. 开户后，如何办理社保卡？</h6>
+<h6 id="开户后会拿到一张一式两份的表格-在支付宝市民中心的社保一栏找到社保预约进行社保卡相关业务预约而后在指定时间携带身份证-表格前往柜台工作人员对你的开户信息进行核实后去往自助机进行办理社保卡-如不会操作可坚持柜台办理-柜台办理一般需要10个工作日自助机是现场出卡">开户后，会拿到一张一式两份的表格。在支付宝市民中心的社保一栏，找到社保预约，进行社保卡相关业务预约，而后在指定时间，携带身份证、表格，前往柜台，工作人员对你的开户信息进行核实后，去往自助机进行办理社保卡。如不会操作，可坚持柜台办理。柜台办理一般需要10个工作日，自助机是现场出卡。</h6>
+<h6 id="7-如果以前在河南境内有办理过城镇居民医疗-农村合作医疗此类业务如何办理社保卡">7. 如果以前在河南境内有办理过城镇居民医疗、农村合作医疗此类业务，如何办理社保卡？</h6>
+<h6 id="需要预约社保卡业务后去往柜台由工作人员挂失掉旧卡才能办理新卡">需要预约社保卡业务后，去往柜台，由工作人员挂失掉旧卡，才能办理新卡。</h6>
+<h6 id="具体参照第6条">具体参照第6条。</h6>
+<h6 id="8-避坑指北">8. 避坑指北</h6>
+<h6 id="如果可以的话尽可能去市政综合服务大厅那里部门更齐全工作人员更专业-之前去往区办事处工作人员回复的模棱两可让人头晕">如果可以的话，尽可能去市政综合服务大厅，那里部门更齐全，工作人员更专业。之前去往区办事处，工作人员回复的模棱两可，让人头晕。</h6>
 <hr>
-<h5 id="事件的传递已经被很多人讲过了有需要的可自行搜索查看在此一笔带过">事件的传递已经被很多人讲过了，有需要的可自行搜索查看，在此，一笔带过。</h5>
+<h4 id="公积金">公积金</h4>
 <blockquote>
-<p>传递过程大致如下：<br>
-UIApplication -&gt; UIWindow -&gt; UI控件(Father) -&gt; UI控件(Son)</p>
+<p>从北京回到郑州，公积金能不能转移和衔接上，也是很多人关心的问题，笔者亦如是。<br>
+下面列举一些笔者问到的问题和工作人员的相关解答。</p>
 </blockquote>
-<h5 id="这里主要记录了如何拦截">这里主要记录了如何拦截。</h5>
-<blockquote>
-<p>子视图响应事件是有一个范围的</p>
-</blockquote>
-<blockquote>
-<p>子视图被添加到父视图以后，每次在屏幕上的点击事件都会触发一条响应链来逐层判断该由哪个视图来响应事件。当一个自视图添加到父视图以后其响应事件的范围就是父视图的 bounds，如果子视图的 bounds 超出了父视图则超出的部分就会被响应链判断为不能响应事件而被抛弃。</p>
-</blockquote>
-<blockquote>
-<p>写一个 Demo，如图所示。父视图，红色区域，是 UIView，我们下文称为大红；子视图均为兄弟视图，是 UIButton；1 号称为小蓝；2 号称为小黑；3 号称为小灰。<br>
-Ps:1、2、3 号按钮，是依次添加到父视图 大红 上的。每个 UIButton 都对应着一个点击事件响应方法，均做 NSLog 打印。</p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588325457428.png" alt="view" loading="lazy"></figure>
-<h5 id="在默认情况下点击-uibutton-就会触发其对应的方法做打印">在默认情况下，点击 UIButton 就会触发其对应的方法，做打印。</h5>
-<pre><code class="language-Objective-C">//类似这样
-- (void)firstLog:(UIButton *)button
-{
-    NSLog(@&quot;111111111&quot;);
-}
-</code></pre>
-<h5 id="然而实际的情况却是分别点击三个按钮发现">然而，实际的情况却是，分别点击三个按钮发现:</h5>
-<blockquote>
-<p>内部的 1 号按钮即 小蓝 每次的按钮点击事件 都能响应 ；而接近于边上的 2 号按钮 小黑 则 有时响应 ， 有时不会 ；至于外部的 3 号按钮 小灰 ，则 完全不响应 。<br>
-这是因为，虽然三个按钮都可见，但是只要不是在父视图的 bounds 内的部分便无法响应点击，边界上的按钮只有部分在其父视图之内，所以不是每次点击都会响应，只有点击其在父视图之内的部分（即交叉部分）才能响应点击。</p>
-</blockquote>
-<h5 id="如果要实现点击-2号按钮-小黑-的任意区域均可打印点击-3号按钮-小灰-也可打印">如果要实现点击 2号按钮 小黑 的任意区域均可打印，点击 3号按钮 小灰 也可打印。</h5>
-<h5 id="则需要在-大红-也就是父视图重写-uiview-hittestcgpointpoint-witheventuievent-event-方法">则需要在 大红 也就是父视图重写 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event 方法。</h5>
-<blockquote>
-<p>因为– hitTest:withEvent: 是通过 - pointInside:withEvent: 来判断点击的点是否在视图中。然后判断这个视图是否接受当前事件，关于 - pointInside:withEvent: 这个方法在官方文档中说明了，正是通过 bounds 判断的。<br>
-所以，超出父视图的子视图响应事件，该这么做。<br>
-在父视图添加如下代码。其思路是：遍历父视图的所有子视图，并判断触发事件的点是否在子视图的 bounds 内。如果在，就返回这个子视图。</p>
-</blockquote>
-<pre><code class="language-Objective-C">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    UIView *view = [super hitTest:point withEvent:event];
-    if (view == nil) {
-        for (UIView *subView in self.subviews) {
-            CGPoint p = [subView convertPoint:point fromView:self];
-            if (CGRectContainsPoint(subView.bounds, p)) {
-                view = subView;
-            }
-        }
-    }
-    return view;
-}
-</code></pre>
-<h5 id="如果要实现点击-3号按钮-小灰却让-2号按钮-小黑-响应打印出来">如果要实现，点击 3号按钮 小灰，却让 2号按钮 小黑 响应，打印出来。</h5>
-<blockquote>
-<p>也需要在 大红 也就是父视图重写 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event 方法，并在其中拦截，让 2 号按钮小黑响应点击事件。</p>
-</blockquote>
-<pre><code class="language-Objective-C">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    UIView *view = [super hitTest:point withEvent:event];
-    if (view == nil) {
-        for (UIView *subView in self.subviews) {
-            if (subView == self.subviews[1]) {
-                view = subView;
-            }
-        }
-    }
-    return view;
-}
-</code></pre>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588326781354.png" alt="log" loading="lazy"></figure>
+<h6 id="1-无工作人员能否开个人公积金账户">1. 无工作人员能否开个人公积金账户？</h6>
+<h6 id="可以开个人公积金账户选择灵活就业进行公积金缴纳">可以开个人公积金账户，选择灵活就业进行公积金缴纳。</h6>
 
                 </div>
                 <div class="clear"></div>
@@ -209,19 +174,19 @@ Ps:1、2、3 号按钮，是依次添加到父视图 大红 上的。每个 UIBu
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/" class="full-link"></a>
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/gridea.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/ling-sui-bi-ji/" class="full-link"></a>
                  <div class="info">
-                  <time datetime="2018-07-18">2018-07-18</time>
-                  <h4 class="title white no-margin">再写 iOS 响应者链</h4>
+                  <time datetime="2020-11-13">2020-11-13</time>
+                  <h4 class="title white no-margin">零碎笔记</h4>
                 </div>
                  <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
                 </span>
                 <div class="overlay"></div>
               </article>
-              
               
 
                 <div class="clear"></div>
