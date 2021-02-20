@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xcode 10 升级后的 Error: Multiple commands produce | 木鱼小店</title>
+<title>iOS常见测试题 | 木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -16,10 +16,19 @@
 <script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
-    <meta name="description" content="
-之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。
-于是，Google 搜索一番，解决了问题，顺..." />
+    <meta name="description" content="iOS常见测试题
+
+编写于2021年02月20日
+更新于2021年0X月0X日
+
+
+
+
+iOS中weak关键字的底层实现原理
+
+
+
+runtime会维护一张weak表，用于维护指向对象的所有weak指针。weak表是一个哈希表，其key为所..." />
     <meta name="keywords" content="iOS" />
     <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
     <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
@@ -94,14 +103,14 @@
       <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
         <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
+          <div class="featured-image cover" style="background-image: url('https://shannonmyang.github.io/post-images/ios-chang-jian-ce-shi-ti.png');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2019-07-03"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2021-02-20"><i class="fa fa-calendar"></i><span class="lately">1 分钟前</span></time>
               
-              <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/"> </span>
+              <a href="https://shannonmyang.github.io/post/ios-chang-jian-ce-shi-ti/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ios-chang-jian-ce-shi-ti/"> </span>
               </a>
-              <span id="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/ios-chang-jian-ce-shi-ti/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
@@ -110,7 +119,7 @@
                       <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
                     
               </div>
-              <h1 class="title ularge white bold">Xcode 10 升级后的 Error: Multiple commands produce</h1>
+              <h1 class="title ularge white bold">iOS常见测试题</h1>
             </div>
           </div>
         </div>  
@@ -120,41 +129,89 @@
             <article class="main-article post">
               <section class="post-content">
                 <div class="text">
-                  <blockquote>
-<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
-于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
+                  <h3 id="ios常见测试题">iOS常见测试题</h3>
+<blockquote>
+<p>编写于2021年02月20日<br>
+更新于2021年0X月0X日</p>
 </blockquote>
 <!-- more -->
-<h4 id="error如下">Error如下</h4>
-<pre><code>Multiple commands produce '.../.../.../.../.../info.plist'
-//或者是
-Multiple commands produce '.../.../.../.../.../xxx.app'
-</code></pre>
-<h4 id="原因如下">原因如下</h4>
+<ul>
+<li>
+<h5 id="ios中weak关键字的底层实现原理">iOS中<code>weak</code>关键字的底层实现原理</h5>
+</li>
+</ul>
 <blockquote>
-<p>Apple 在 Xcode 10 默认使用的 Build system 是 New Build System，与 Xcode9 使用的 Legacy Build System 不同而导致的。</p>
+<p><code>runtime</code>会维护一张<code>weak表</code>，用于维护指向对象的所有<code>weak指针</code>。<code>weak表</code>是一个<code>哈希表</code>，其key为所指对象的指针，value为weak指针的地址数组。</p>
+<p>具体过程如下：<br>
+1、初始化时：<code>runtime</code>会调用<code>objc_initWeak()函数</code>，初始化一个新的<code>weak指针</code>指向对象的地址。<br>
+2、添加引用时：<code>objc_initWeak()函数</code>会调用<code>objc_storeWeak()函数</code>，更新指针的指向，创建对应的<code>弱引用表</code>。<br>
+3、释放时，调用<code>clearDeallocating()函数</code>。<code>clearDeallocating()函数</code>首先根据对象地址获取所有<code>weak指针</code>地址的数组，然后遍历这个数组把其中的数据设为<code>nil</code>，最后把这个<code>entry</code>从<code>weak表</code>中删除，最后清理对象的记录。</p>
 </blockquote>
-<h4 id="解决办法">解决办法</h4>
-<h5 id="1-不修改-build-system">1. 不修改 Build System</h5>
+<ul>
+<li>
+<h5 id="怎么监控卡顿你的指标是什么">怎么监控卡顿？你的指标是什么？</h5>
+</li>
+</ul>
 <blockquote>
-<p>Solution -&gt; Open target -&gt; Build phases &gt; Copy Bundle Resources and remove info.plist from there.</p>
+<p>监控卡顿主要是监听主线程的运行循环，也就是所说的<code>runloop</code>。<br>
+监控卡顿也就是统计<code>runloop</code>进入事件循环和退出事件循环的<code>时间差</code>。<br>
+如果时间差大于屏幕每帧的时间间隔<code>1/60</code>，则视为卡顿。<br>
+还有一种情况也视为卡顿就是时间间隔小于1/60，比如：在1/60和1/30之间的情况，这种情况需要时间差和次数的双重统计。达到次数定义的阀值也视为卡顿。</p>
 </blockquote>
-<h5 id="xxxapp-类型错误"><code>.../.../xxx.app 类型错误</code></h5>
+<ul>
+<li>
+<h5 id="ios类方法和对象方法有什么本质的区别">iOS类方法和对象方法有什么本质的区别？</h5>
+</li>
+</ul>
 <blockquote>
-<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi>T</mi><mi>A</mi><mi>R</mi><mi>G</mi><mi>E</mi><msub><mi>T</mi><mi>B</mi></msub><mi>U</mi><mi>I</mi><mi>L</mi><msub><mi>D</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi></mrow><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">{TARGET_BUILD_DIR}/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">G</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span><span class="mord">/</span></span></span></span>{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
+<p>OC中一共有三种对象，实例对象、类对象、元类对象。这三种对象中都会维护一个isa指针，其中实力对象的isa指针指向类对象，类对象的isa指针指向元类对象，元类对象的isa指针指向基类，其中类对象和元类对象在内存中都只会存在一份位于内存的代码段。<br>
+回到问题本身，OC中对象方法使用<code>-</code>定义，类方法使用<code>+</code>定义，编译器会根据定义在编译期放入不同的区域。<br>
+结合运行时了解一下原理，runtime调用方法其实就是个消息发送，入口函数<code>msgSend(id, SEL, ...)</code>内部会调用<code>objc_getclass()</code>，这个方法返回isa指针，所以如果此时id是个实例那么就返回类对象，如果id是个类对象，就返回元类，之后会根据SEL这个方法名去匹配相应的方法实现。<br>
+如果本类中没有就会向父类中去查找，直至找到基类。<br>
+特别提一下，假设调用对象方法，如果没有找到对应的实现，同时又存在一个同名的类方法，此时也会调用类方法。从本质上讲，方法的调用就是消息发送机制，只管发送与是否有方法存在，不管是什么方法。所以，其实没什么区别。</p>
 </blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy"></figure>
-<h6 id="infoplist-类型错误"><code>'.../.../info.plist' 类型错误</code></h6>
+<ul>
+<li>
+<h5 id="uiview和calayer的主要区别和联系是什么">UIView和CALayer的主要区别和联系是什么？</h5>
+</li>
+</ul>
 <blockquote>
-<p>target -&gt; 'Build phases' -&gt; 'Copy Bundle Resources' -&gt; 移除 info.plist -&gt; clean -&gt; 重新编译</p>
+<p>UIView基于UIKit框架，CALayer基于quartzCore框架，虽然都是对象，但是CALayer直接继承了NSObject，UIView继承<code>IResponder</code>也就是说，UIView可以进行事件的传递。<br>
+所以，简单理解为：UIView是一个骨架，CALayer给他化妆粉饰。<br>
+其次，UIView的创建会自带一个layer属性，所以UIView也可以理解为一个calayer的访问器，内部访问calayer的相关属性。<br>
+最后，<code>view</code>显示在界面，<code>view</code>作为<code>layer</code>的<code>delegate</code>，<code>view</code>展示的内容是调用的<code>layer</code>方法返回。</p>
 </blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy"></figure>
-<h5 id="2-修改-build-system">2. 修改 `Build System'</h5>
+<ul>
+<li>
+<h5 id="讲一下oc的消息机制">讲一下OC的消息机制</h5>
+</li>
+</ul>
 <blockquote>
-<p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
+<p>OC中的方法调用其实都是转成了<code>bjc_msgSend</code>数的调用，给<code>eceiver（方法调用者）</code>送了一条消息<code>selector方法名）</code><br>
+<code>objc_msgSend</code>底层有<code>3大阶段</code><br>
+<code>消息发送（当前类、父类中查找）</code>、<code>动态方法解析</code>、<code>消息转发</code></p>
 </blockquote>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
+<ul>
+<li>
+<h5 id="什么是runtime平时项目中有用过么">什么是runtime？平时项目中有用过么？</h5>
+</li>
+</ul>
+<blockquote>
+<p>OC是一门动态性比较强的编程语言，允许很多操作推迟到程序运行时再进行<br>
+OC的动态性就是由Runtime来支撑和实现的，Runtime是一套C语言的API，封装了很多动态性相关的函数<br>
+平时编写的OC代码，底层都是转换成了Runtime API进行调用</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="runtime的具体应用">runtime的具体应用</h5>
+</li>
+</ul>
+<blockquote>
+<p>利用<code>关联对象</code>（AssociatedObject）给分类添加属性<br>
+遍历类的所有成员变量（修改textfield的占位文字颜色、字典转模型、自动归档解档）<br>
+交换方法实现（交换系统的方法）<br>
+利用<code>消息转发机制</code>解决<code>方法找不到</code>的异常问题</p>
+</blockquote>
 
                 </div>
                 <div class="clear"></div>
@@ -164,26 +221,13 @@ Multiple commands produce '.../.../.../.../.../xxx.app'
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/awQNAxTv9.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-07-17">2019-07-17</time>
-                  <h4 class="title white no-margin">npm 管理依赖包版本</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
               
               <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/" class="full-link"></a>
+                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/post-images/ling-sui-yu-ji.jpg');"></div>
+                 <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/" class="full-link"></a>
                  <div class="info">
-                  <time datetime="2019-06-26">2019-06-26</time>
-                  <h4 class="title white no-margin">iOS 打破 NSTimer 循环引用</h4>
+                  <time datetime="2021-02-20">2021-02-20</time>
+                  <h4 class="title white no-margin">零碎语记</h4>
                 </div>
                  <span class="epcl-button red">
                   <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">

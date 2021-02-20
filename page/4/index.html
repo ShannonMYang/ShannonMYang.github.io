@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xcode 10 升级后的 Error: Multiple commands produce | 木鱼小店</title>
+<title>木鱼小店</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
 <link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
@@ -15,16 +15,11 @@
 <script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
 <script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
 <script src="https://shannonmyang.github.io/media/js/functions.js"></script>
-    <meta name="referrer" content="never">
-    <meta name="description" content="
-之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。
-于是，Google 搜索一番，解决了问题，顺..." />
-    <meta name="keywords" content="iOS" />
-    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
-    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
   </head>
   <body>
+    <!-- start: #wrapper -->
+    <div class="wrapper">
+      
             <header id="header" class="grid-container">
         <!-- start: .menu-wrapper -->
         <div class="menu-mobile"> 
@@ -91,145 +86,91 @@
         </div>
       </div>
 
-      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
-
-        <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
-            <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2019-07-03"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
-              
-              <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/"> </span>
-              </a>
-              <span id="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
-              
-            </div>
-            <div class="info">
-              <div class="tags ">
+      <main id="home" class="main">
+        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
+        <div class="row">
+          <div class="content-wrapper grid-posts content">
                 
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
+            <!-- start: .articles -->
+            
+              
+              
+              <div class="articles columns-3">
+                
+              <article class="default grid-33 tablet-grid-50 mobile-grid-100 np-mobile post type-post status-publish format-standard has-post-thumbnail hentry">
+                <div class="article-wrapper">
+                  <header>
+                    <div class="post-format-image post-format-wrapper">
+                      <div class="featured-image">
+                        <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/" class="thumb hover-effect">
+                          <span class="fullimage cover" role="img" aria-label="" style="background-image: url('/media/images/custom-featureImage.jpg');"></span>
+                        </a>
+                        
+                        <div class="tags absolute">
+                          <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw">iOS</a>
+                        </div>
+                        
+                      </div>
+                    </div>                    
+                    <div class="meta">
+                      <time datetime="2018-06-15"><i class="fa fa-calendar"></i><span class="lately">3 年前</span></time>
+                      <div class="clear"></div>
+                    </div>
+
+                    <h1 class="title main-title gradient-effect"><a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/">iOS 事件响应</a></h1>
+                  </header>
+
+                  <div class="post-excerpt">
+                      <blockquote>
+<p>写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？</p>
+</blockquote>
+<blockquote>
+<p>认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截下这个事件。</p>
+</blockquote>
+
+                    <div class="clear"></div>
+                  </div>
+
+                  <footer class="author-meta">
+                    <a href="" class="author" title="">
+                      <span class="author-image cover" style="background-image: url('https://shannonmyang.github.io/images/avatar.png');"></span>
+                      <span class="author-name">木鱼小店</span>
+                    </a>
                     
-              </div>
-              <h1 class="title ularge white bold">Xcode 10 升级后的 Error: Multiple commands produce</h1>
-            </div>
-          </div>
-        </div>  
-
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile">
-            <article class="main-article post">
-              <section class="post-content">
-                <div class="text">
-                  <blockquote>
-<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
-于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
-</blockquote>
-<!-- more -->
-<h4 id="error如下">Error如下</h4>
-<pre><code>Multiple commands produce '.../.../.../.../.../info.plist'
-//或者是
-Multiple commands produce '.../.../.../.../.../xxx.app'
-</code></pre>
-<h4 id="原因如下">原因如下</h4>
-<blockquote>
-<p>Apple 在 Xcode 10 默认使用的 Build system 是 New Build System，与 Xcode9 使用的 Legacy Build System 不同而导致的。</p>
-</blockquote>
-<h4 id="解决办法">解决办法</h4>
-<h5 id="1-不修改-build-system">1. 不修改 Build System</h5>
-<blockquote>
-<p>Solution -&gt; Open target -&gt; Build phases &gt; Copy Bundle Resources and remove info.plist from there.</p>
-</blockquote>
-<h5 id="xxxapp-类型错误"><code>.../.../xxx.app 类型错误</code></h5>
-<blockquote>
-<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi>T</mi><mi>A</mi><mi>R</mi><mi>G</mi><mi>E</mi><msub><mi>T</mi><mi>B</mi></msub><mi>U</mi><mi>I</mi><mi>L</mi><msub><mi>D</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi></mrow><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">{TARGET_BUILD_DIR}/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">G</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span><span class="mord">/</span></span></span></span>{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy"></figure>
-<h6 id="infoplist-类型错误"><code>'.../.../info.plist' 类型错误</code></h6>
-<blockquote>
-<p>target -&gt; 'Build phases' -&gt; 'Copy Bundle Resources' -&gt; 移除 info.plist -&gt; clean -&gt; 重新编译</p>
-</blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy"></figure>
-<h5 id="2-修改-build-system">2. 修改 `Build System'</h5>
-<blockquote>
-<p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
-</blockquote>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
-
+                    <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/#comments" class="comments meta-info alignright" title="">
+                      <span class="comment-count valine-comment-count" data-xid="/ios-shi-jian-xiang-ying/"> </span><i class="fa fa-comment"></i>
+                    </a>
+                    <div id="/ios-shi-jian-xiang-ying/" class="leancloud_visitors views-counter meta-info alignright" title=""><span class="leancloud-visitors-count" style="vertical-align: middle;"></span><i class="fa fa-leancloud"></i></div>
+                    
+                    <div class="clear"></div>
+                  </footer>
+                  <div class="border"></div>       
                 </div>
-                <div class="clear"></div>
-              </section>
-            </article>
-            <div class="clear"></div>
-
-            <section class="related section">
-              
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/awQNAxTv9.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-07-17">2019-07-17</time>
-                  <h4 class="title white no-margin">npm 管理依赖包版本</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
               </article>
+                
               
               
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-06-26">2019-06-26</time>
-                  <h4 class="title white no-margin">iOS 打破 NSTimer 循环引用</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-
-                <div class="clear"></div>
-            </section>
-
               <div class="clear"></div>
-              
+              <div class="separator last hide-on-tablet hide-on-mobile"></div>
+            </div>
+            <!-- end: .articles -->
             
-              <div id="comments" class="bg-white hosted ">
+                        <div class="epcl-pagination section">
+              <div class="nav">
                 
-                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-<div id="gitalk-container"></div>
-<div class="clear"></div>
-
-<script>
-  var gitalk = new Gitalk({
-    clientID: '66f5ac971492c259ae1e',
-    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
-    repo: 'shannonmyang.github.io',
-    owner: 'ShannonMYang',
-    admin: ['ShannonMYang'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
-
-  gitalk.render('gitalk-container')
-</script>
-
+                  <a href="https://shannonmyang.github.io/page/3/" class="prev button red">上一页</a>
                 
                 
               </div>
-            
-
             </div>
+
+            
           </div>
+          </div>
+        </div>
       </main>
 
-          <footer id="footer" class="grid-container">
+        <footer id="footer" class="grid-container">
         <div class="widgets row gradient-effect">
             <div class="default-sidebar border-effect">
               <div class="grid-33 tablet-grid-50 mobile-grid-100">
@@ -425,9 +366,6 @@ Multiple commands produce '.../.../.../.../.../xxx.app'
     <div class="clear"></div>
 
         
-
-      
-    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
 
     </div>
     <!-- end: #wrapper -->

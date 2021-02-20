@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2021-02-20T08:29:17.632Z</updated>
+    <updated>2021-02-20T15:46:42.792Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,103 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[iOS常见测试题]]></title>
+        <id>https://shannonmyang.github.io/post/ios-chang-jian-ce-shi-ti/</id>
+        <link href="https://shannonmyang.github.io/post/ios-chang-jian-ce-shi-ti/">
+        </link>
+        <updated>2021-02-20T15:45:55.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="ios常见测试题">iOS常见测试题</h3>
+<blockquote>
+<p>编写于2021年02月20日<br>
+更新于2021年0X月0X日</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="ios常见测试题">iOS常见测试题</h3>
+<blockquote>
+<p>编写于2021年02月20日<br>
+更新于2021年0X月0X日</p>
+</blockquote>
+<!-- more -->
+<ul>
+<li>
+<h5 id="ios中weak关键字的底层实现原理">iOS中<code>weak</code>关键字的底层实现原理</h5>
+</li>
+</ul>
+<blockquote>
+<p><code>runtime</code>会维护一张<code>weak表</code>，用于维护指向对象的所有<code>weak指针</code>。<code>weak表</code>是一个<code>哈希表</code>，其key为所指对象的指针，value为weak指针的地址数组。</p>
+<p>具体过程如下：<br>
+1、初始化时：<code>runtime</code>会调用<code>objc_initWeak()函数</code>，初始化一个新的<code>weak指针</code>指向对象的地址。<br>
+2、添加引用时：<code>objc_initWeak()函数</code>会调用<code>objc_storeWeak()函数</code>，更新指针的指向，创建对应的<code>弱引用表</code>。<br>
+3、释放时，调用<code>clearDeallocating()函数</code>。<code>clearDeallocating()函数</code>首先根据对象地址获取所有<code>weak指针</code>地址的数组，然后遍历这个数组把其中的数据设为<code>nil</code>，最后把这个<code>entry</code>从<code>weak表</code>中删除，最后清理对象的记录。</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="怎么监控卡顿你的指标是什么">怎么监控卡顿？你的指标是什么？</h5>
+</li>
+</ul>
+<blockquote>
+<p>监控卡顿主要是监听主线程的运行循环，也就是所说的<code>runloop</code>。<br>
+监控卡顿也就是统计<code>runloop</code>进入事件循环和退出事件循环的<code>时间差</code>。<br>
+如果时间差大于屏幕每帧的时间间隔<code>1/60</code>，则视为卡顿。<br>
+还有一种情况也视为卡顿就是时间间隔小于1/60，比如：在1/60和1/30之间的情况，这种情况需要时间差和次数的双重统计。达到次数定义的阀值也视为卡顿。</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="ios类方法和对象方法有什么本质的区别">iOS类方法和对象方法有什么本质的区别？</h5>
+</li>
+</ul>
+<blockquote>
+<p>OC中一共有三种对象，实例对象、类对象、元类对象。这三种对象中都会维护一个isa指针，其中实力对象的isa指针指向类对象，类对象的isa指针指向元类对象，元类对象的isa指针指向基类，其中类对象和元类对象在内存中都只会存在一份位于内存的代码段。<br>
+回到问题本身，OC中对象方法使用<code>-</code>定义，类方法使用<code>+</code>定义，编译器会根据定义在编译期放入不同的区域。<br>
+结合运行时了解一下原理，runtime调用方法其实就是个消息发送，入口函数<code>msgSend(id, SEL, ...)</code>内部会调用<code>objc_getclass()</code>，这个方法返回isa指针，所以如果此时id是个实例那么就返回类对象，如果id是个类对象，就返回元类，之后会根据SEL这个方法名去匹配相应的方法实现。<br>
+如果本类中没有就会向父类中去查找，直至找到基类。<br>
+特别提一下，假设调用对象方法，如果没有找到对应的实现，同时又存在一个同名的类方法，此时也会调用类方法。从本质上讲，方法的调用就是消息发送机制，只管发送与是否有方法存在，不管是什么方法。所以，其实没什么区别。</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="uiview和calayer的主要区别和联系是什么">UIView和CALayer的主要区别和联系是什么？</h5>
+</li>
+</ul>
+<blockquote>
+<p>UIView基于UIKit框架，CALayer基于quartzCore框架，虽然都是对象，但是CALayer直接继承了NSObject，UIView继承<code>IResponder</code>也就是说，UIView可以进行事件的传递。<br>
+所以，简单理解为：UIView是一个骨架，CALayer给他化妆粉饰。<br>
+其次，UIView的创建会自带一个layer属性，所以UIView也可以理解为一个calayer的访问器，内部访问calayer的相关属性。<br>
+最后，<code>view</code>显示在界面，<code>view</code>作为<code>layer</code>的<code>delegate</code>，<code>view</code>展示的内容是调用的<code>layer</code>方法返回。</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="讲一下oc的消息机制">讲一下OC的消息机制</h5>
+</li>
+</ul>
+<blockquote>
+<p>OC中的方法调用其实都是转成了<code>bjc_msgSend</code>数的调用，给<code>eceiver（方法调用者）</code>送了一条消息<code>selector方法名）</code><br>
+<code>objc_msgSend</code>底层有<code>3大阶段</code><br>
+<code>消息发送（当前类、父类中查找）</code>、<code>动态方法解析</code>、<code>消息转发</code></p>
+</blockquote>
+<ul>
+<li>
+<h5 id="什么是runtime平时项目中有用过么">什么是runtime？平时项目中有用过么？</h5>
+</li>
+</ul>
+<blockquote>
+<p>OC是一门动态性比较强的编程语言，允许很多操作推迟到程序运行时再进行<br>
+OC的动态性就是由Runtime来支撑和实现的，Runtime是一套C语言的API，封装了很多动态性相关的函数<br>
+平时编写的OC代码，底层都是转换成了Runtime API进行调用</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="runtime的具体应用">runtime的具体应用</h5>
+</li>
+</ul>
+<blockquote>
+<p>利用<code>关联对象</code>（AssociatedObject）给分类添加属性<br>
+遍历类的所有成员变量（修改textfield的占位文字颜色、字典转模型、自动归档解档）<br>
+交换方法实现（交换系统的方法）<br>
+利用<code>消息转发机制</code>解决<code>方法找不到</code>的异常问题</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[零碎语记]]></title>
         <id>https://shannonmyang.github.io/post/ling-sui-yu-ji/</id>
@@ -476,30 +573,6 @@ Vue.prototype.$message = message; //重写message提示框
 <h5 id="克己不单单是自律">克己，不单单是自律。</h5>
 <h5 id="是要拒绝千般诱惑是要明白自己想要的东西剥去斑杂为之努力经营">是要拒绝千般诱惑，是要明白自己想要的东西，剥去斑杂，为之努力经营。</h5>
 <h5 id="只要你心诚志坚念念回首处必是灵山">只要你心诚志坚，念念回首处，必是灵山。</h5>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[相似联想]]></title>
-        <id>https://shannonmyang.github.io/post/xiang-si-lian-xiang/</id>
-        <link href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">
-        </link>
-        <updated>2020-04-25T14:21:24.000Z</updated>
-        <summary type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
-<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
-]]></summary>
-        <content type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
-<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
-<!-- more -->
-<h5 id="高三那年吧由于每天密集式的刷试卷-作文这个让很多人头疼的东西也就在必刷之列">高三那年吧，由于每天密集式的刷试卷。作文这个让很多人头疼的东西，也就在必刷之列。</h5>
-<h5 id="当时的我为了找寻作文写作用的材料翻了不少杂志-作文指导书籍">当时的我，为了找寻作文写作用的材料，翻了不少杂志、作文指导书籍。</h5>
-<h5 id="记得有一篇杂志文章写的是关于各个公司的宣传语的其中联想的广告语最让我印象深刻-说的是如果没有联想世界将会怎样-一语双关非常妙">记得有一篇杂志文章写的是关于各个公司的宣传语的，其中，联想的广告语最让我印象深刻。说的是，「如果没有联想，世界将会怎样。」一语双关，非常妙。</h5>
-<h5 id="当然写这篇文章不是为了说联想如何如何-而是为了说相似联想这个东西的重要性">当然，写这篇文章不是为了说联想如何如何。而是为了说，相似联想，这个东西的重要性。</h5>
-<h5 id="之前部门老大亦是公司首席科学家一个拥有美国绿卡为美国地震局-某个州的监狱以及amd产线写过系统且至今仍在运行时不时要接国际长途电话远程指导并收费的长者">之前部门老大，亦是公司首席科学家，一个拥有美国绿卡，为美国地震局、某个州的监狱以及AMD产线写过系统，且至今仍在运行，时不时要接国际长途电话，远程指导并收费的长者。</h5>
-<h5 id="在一次部门会议的时候语重心长的对我们几个小伙子说道你们啊要好好看看计算机的底层原理再看看中国的易经-阴阳太极之说的书籍">在一次部门会议的时候，语重心长的对我们几个小伙子说道，「你们啊，要好好看看计算机的底层原理，再看看中国的易经、阴阳太极之说的书籍。」</h5>
-<h5 id="当时大家嘿嘿一笑没当回事">当时大家嘿嘿一笑，没当回事。</h5>
-<h5 id="19年翻阅了诸多计算机底层书籍老大的话就愈发印象深刻尤其是在翻看一本名为编码隐匿在计算机背后的语言书籍时才恍然发觉部门老大所言的东西未尝不是没道理的">19年翻阅了诸多计算机底层书籍，老大的话就愈发印象深刻，尤其是在翻看一本名为《编码·隐匿在计算机背后的语言》书籍时，才恍然发觉部门老大所言的东西，未尝不是没道理的。</h5>
-<h5 id="看着编码一书不禁感慨老祖宗们的伟大思想-计算机中最基础部分的0和1组成了现在看到的千千万万的信息流-0和1不正像极了阴与阳之说-阴阳生万物01组成计算机世界-当然0和1的本质也就是对应着电流的正负-随之会联想到原子-夸克一系列微小的单位正是这些小到不能更小的东西组成了世界万物">看着《编码》一书，不禁感慨老祖宗们的伟大思想。计算机中最基础部分的0和1，组成了现在看到的千千万万的信息流。0和1，不正像极了，阴与阳之说。阴阳生万物，01组成计算机世界。当然，0和1的本质，也就是对应着电流的正负。随之，会联想到原子、夸克一系列微小的单位，正是这些小到不能更小的东西，组成了世界万物。</h5>
-<h5 id="联想到这些不得不感慨原来我们的世界竟然是如此简单的组成却又如此纷繁复杂">联想到这些，不得不感慨，原来我们的世界，竟然是如此简单的组成，却又如此纷繁复杂。</h5>
 ]]></content>
     </entry>
 </feed>
