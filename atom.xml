@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2021-02-19T14:38:30.041Z</updated>
+    <updated>2021-02-20T03:59:34.363Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[零碎语记]]></title>
+        <id>https://shannonmyang.github.io/post/ling-sui-yu-ji/</id>
+        <link href="https://shannonmyang.github.io/post/ling-sui-yu-ji/">
+        </link>
+        <updated>2021-02-20T03:42:36.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>一个人最大的敌人是自己。<br>
+一个人最大的困难是自控。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>一个人最大的敌人是自己。<br>
+一个人最大的困难是自控。</p>
+</blockquote>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[郑州五险一金办理记]]></title>
         <id>https://shannonmyang.github.io/post/zheng-zhou-wu-xian-yi-jin-ban-li-ji/</id>
@@ -40,22 +58,38 @@
 下面列举一些笔者问到的问题和工作人员的相关解答。</p>
 </blockquote>
 <h6 id="1-无工作人员能否开个人社保账户">1. 无工作人员能否开个人社保账户？</h6>
-<h6 id="可以开个人社保账户选择灵活就业进行社保缴纳-需要-注意-的是灵活就业仅仅有医疗和养老两险">可以开个人社保账户，选择灵活就业进行社保缴纳。需要 <code>注意</code> 的是，灵活就业，仅仅有医疗和养老，两险。</h6>
+<blockquote>
+<p>可以开个人社保账户，选择灵活就业进行社保缴纳。需要 <code>注意</code> 的是，灵活就业，仅仅有医疗和养老，两险。</p>
+</blockquote>
 <h6 id="2-在入职某家公司后能否将个人缴纳转到公司缴纳">2. 在入职某家公司后，能否将个人缴纳，转到公司缴纳？</h6>
-<h6 id="社保的个人转公司公司转个人都是可以进行操作的需要去社保办事处的柜台进行办理业务">社保的个人转公司，公司转个人，都是可以进行操作的，需要去社保办事处的柜台进行办理业务。</h6>
+<blockquote>
+<p>社保的个人转公司，公司转个人，都是可以进行操作的，需要去社保办事处的柜台进行办理业务。</p>
+</blockquote>
 <h6 id="3-社保可否转移">3. 社保可否转移？</h6>
-<h6 id="在异地社保进行停保操作后可进行转移-网上即可操作下载-掌上12333-app网上即可办理-无论是公司转个人还是个人转公司均可操作进行转移">在异地社保进行停保操作后，可进行转移。网上即可操作，下载 掌上12333 App，网上即可办理。无论是公司转个人，还是个人转公司，均可操作进行转移。</h6>
+<blockquote>
+<p>在异地社保进行停保操作后，可进行转移。网上即可操作，下载 掌上12333 App，网上即可办理。无论是公司转个人，还是个人转公司，均可操作进行转移。</p>
+</blockquote>
 <h6 id="4-在停保之前能否开始在本地进行开户缴纳社保">4. 在停保之前，能否开始在本地进行开户缴纳社保？</h6>
-<h6 id="能开户但不能缴纳-比如本月停保你需要开户的时候选定从下月开始缴纳社保">能开户，但不能缴纳。比如，本月停保，你需要开户的时候，选定从下月开始缴纳社保。</h6>
+<blockquote>
+<p>能开户，但不能缴纳。比如，本月停保，你需要开户的时候，选定从下月开始缴纳社保。</p>
+</blockquote>
 <h6 id="5-如何个人缴纳社保">5. 如何个人缴纳社保？</h6>
-<h6 id="社保官网查询便民网点进行开户-缴费操作">社保官网查询便民网点，进行开户、缴费操作。</h6>
+<blockquote>
+<p>社保官网查询便民网点，进行开户、缴费操作。</p>
+</blockquote>
 <h6 id="6-开户后如何办理社保卡">6. 开户后，如何办理社保卡？</h6>
-<h6 id="开户后会拿到一张一式两份的表格-在支付宝市民中心的社保一栏找到社保预约进行社保卡相关业务预约而后在指定时间携带身份证-表格前往柜台工作人员对你的开户信息进行核实后去往自助机进行办理社保卡-如不会操作可坚持柜台办理-柜台办理一般需要10个工作日自助机是现场出卡">开户后，会拿到一张一式两份的表格。在支付宝市民中心的社保一栏，找到社保预约，进行社保卡相关业务预约，而后在指定时间，携带身份证、表格，前往柜台，工作人员对你的开户信息进行核实后，去往自助机进行办理社保卡。如不会操作，可坚持柜台办理。柜台办理一般需要10个工作日，自助机是现场出卡。</h6>
+<blockquote>
+<p>开户后，会拿到一张一式两份的表格。在支付宝市民中心的社保一栏，找到社保预约，进行社保卡相关业务预约，而后在指定时间，携带身份证、表格，前往柜台，工作人员对你的开户信息进行核实后，去往自助机进行办理社保卡。如不会操作，可坚持柜台办理。柜台办理一般需要10个工作日，自助机是现场出卡。</p>
+</blockquote>
 <h6 id="7-如果以前在河南境内有办理过城镇居民医疗-农村合作医疗此类业务如何办理社保卡">7. 如果以前在河南境内有办理过城镇居民医疗、农村合作医疗此类业务，如何办理社保卡？</h6>
-<h6 id="需要预约社保卡业务后去往柜台由工作人员挂失掉旧卡才能办理新卡">需要预约社保卡业务后，去往柜台，由工作人员挂失掉旧卡，才能办理新卡。</h6>
-<h6 id="具体参照第6条">具体参照第6条。</h6>
+<blockquote>
+<p>需要预约社保卡业务后，去往柜台，由工作人员挂失掉旧卡，才能办理新卡。<br>
+具体参照第6条。</p>
+</blockquote>
 <h6 id="8-避坑指北">8. 避坑指北</h6>
-<h6 id="如果可以的话尽可能去市政综合服务大厅那里部门更齐全工作人员更专业-之前去往区办事处工作人员回复的模棱两可让人头晕">如果可以的话，尽可能去市政综合服务大厅，那里部门更齐全，工作人员更专业。之前去往区办事处，工作人员回复的模棱两可，让人头晕。</h6>
+<blockquote>
+<p>如果可以的话，尽可能去市政综合服务大厅，那里部门更齐全，工作人员更专业。之前去往区办事处，工作人员回复的模棱两可，词不达意，让人头晕。</p>
+</blockquote>
 <hr>
 <h4 id="公积金">公积金</h4>
 <blockquote>
@@ -63,7 +97,26 @@
 下面列举一些笔者问到的问题和工作人员的相关解答。</p>
 </blockquote>
 <h6 id="1-无工作人员能否开个人公积金账户">1. 无工作人员能否开个人公积金账户？</h6>
-<h6 id="可以开个人公积金账户选择灵活就业进行公积金缴纳">可以开个人公积金账户，选择灵活就业进行公积金缴纳。</h6>
+<blockquote>
+<p>可以开个人公积金账户，选择灵活就业进行公积金缴纳。</p>
+</blockquote>
+<h6 id="2-首次在郑州开通个人公积金账户需要去哪里办理什么时间可以办理需要哪些证件">2. 首次在郑州开通个人公积金账户，需要去哪里办理？什么时间可以办理？需要哪些证件？</h6>
+<blockquote>
+<p>首次办理，需要前往<code>郑州市中原区百花路老公积金大楼</code>，即建行二楼，进行<code>开户、划费</code>业务的办理。<br>
+办理时间，每月的1-19日，是办理日期。周六日不办理业务。<br>
+证件需要，郑州本地建行卡一张、身份证原件、身份证复印件一份。</p>
+</blockquote>
+<h6 id="3-异地公积金是否可以转移到本地">3. 异地公积金是否可以转移到本地？</h6>
+<blockquote>
+<p>可以，在异地公积金封存半年后，即可转移。满足条件者，前往市政综合服务大厅，到公积金区域，进行办理业务。</p>
+<blockquote>
+<p>另外，需要注意的是，异地转入后，与本地无关联，只查询近六个月流水。全国只能有一份公积金在缴存。</p>
+</blockquote>
+</blockquote>
+<h6 id="4-个人灵活就业缴纳公积金可否办理贷款">4. 个人灵活就业缴纳公积金，可否办理贷款？</h6>
+<blockquote>
+<p>可以，走个人灵活就业缴纳公积金，在办理贷款时，只查询近半年公积金流水，只要近半年内不断缴即可。</p>
+</blockquote>
 ]]></content>
     </entry>
     <entry>
@@ -446,55 +499,6 @@ Vue.prototype.$message = message; //重写message提示框
 <h5 id="19年翻阅了诸多计算机底层书籍老大的话就愈发印象深刻尤其是在翻看一本名为编码隐匿在计算机背后的语言书籍时才恍然发觉部门老大所言的东西未尝不是没道理的">19年翻阅了诸多计算机底层书籍，老大的话就愈发印象深刻，尤其是在翻看一本名为《编码·隐匿在计算机背后的语言》书籍时，才恍然发觉部门老大所言的东西，未尝不是没道理的。</h5>
 <h5 id="看着编码一书不禁感慨老祖宗们的伟大思想-计算机中最基础部分的0和1组成了现在看到的千千万万的信息流-0和1不正像极了阴与阳之说-阴阳生万物01组成计算机世界-当然0和1的本质也就是对应着电流的正负-随之会联想到原子-夸克一系列微小的单位正是这些小到不能更小的东西组成了世界万物">看着《编码》一书，不禁感慨老祖宗们的伟大思想。计算机中最基础部分的0和1，组成了现在看到的千千万万的信息流。0和1，不正像极了，阴与阳之说。阴阳生万物，01组成计算机世界。当然，0和1的本质，也就是对应着电流的正负。随之，会联想到原子、夸克一系列微小的单位，正是这些小到不能更小的东西，组成了世界万物。</h5>
 <h5 id="联想到这些不得不感慨原来我们的世界竟然是如此简单的组成却又如此纷繁复杂">联想到这些，不得不感慨，原来我们的世界，竟然是如此简单的组成，却又如此纷繁复杂。</h5>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[更换Win10系统的字体]]></title>
-        <id>https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/</id>
-        <link href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">
-        </link>
-        <updated>2020-04-16T07:31:13.000Z</updated>
-        <summary type="html"><![CDATA[<h5 id="天下苦偶尔用macos偶尔用win10的用户久已">天下苦偶尔用macOS偶尔用Win10的用户久已。</h5>
-]]></summary>
-        <content type="html"><![CDATA[<h5 id="天下苦偶尔用macos偶尔用win10的用户久已">天下苦偶尔用macOS偶尔用Win10的用户久已。</h5>
-<!-- more -->
-<blockquote>
-<p>由于我是一个工作用<code>Windows10</code>操作系统，闲暇用<code>macOS</code>操作系统的搬砖民工。<br>
-所以，每当我看到<code>Windows10</code>操作系统自带默认的<code>微软雅黑</code>，我简直无力吐槽。尤其是对于我这种搬砖民工来讲，写代码的时候，微软雅黑，简直不能更具备瞎了眼的功力。</p>
-</blockquote>
-<blockquote>
-<p>当然，这不是本文的缘由。一天写代码闲暇时光里，我看到一篇文章，是在说为什么<code>小米10</code>不能称为高端机。引出了<code>成也MIUI，败也MIUI</code>的话题。其中就说到了<code>小米兰亭Pro</code>，说这款是仅次于<code>San Francisco</code>的字体。<br>
-遂，勾起了修改系统默认字体的好奇心。于是，进行了下载和替换字体。</p>
-</blockquote>
-<h4 id="1-下载-san-francisco-字体">1. 下载 <a href="https://github.com/ShannonMYang/FontLibrary">San Francisco</a> 字体</h4>
-<blockquote>
-<p>从下载好的字体中，选择好你需要的，双击，进行安装</p>
-</blockquote>
-<h4 id="2-复制字体名称">2. 复制字体名称</h4>
-<blockquote>
-<p>找到字体库，路径是<code>C盘-&gt;Windows-&gt;Fonts</code>，找到<code>San Francisco</code>字体，右键属性，<code>复制</code>如图所示框起来的名称；</p>
-</blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1587027453128.jpg" alt="复制名" loading="lazy"></figure>
-<h4 id="3-修改注册表">3. 修改注册表</h4>
-<blockquote>
-<p>按下快捷键组合：Win + R ，在输入框中输入regedit</p>
-</blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1587027386687.png" alt="regedit" loading="lazy"></figure>
-<blockquote>
-<p>看到弹出的窗口，输入如下路径</p>
-</blockquote>
-<pre><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts
-</code></pre>
-<blockquote>
-<p>点击鼠标右键，选择 <code>修改</code>菜单，将<code>数值数据</code> 修改为你拷贝来的名字，然后点击确定按钮。</p>
-</blockquote>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1587027435850.png" alt="修改名" loading="lazy"></figure>
-<h4 id="4-重启电脑">4. 重启电脑</h4>
-<blockquote>
-<p>重启电脑，你就会看到一个全新的世界。<br>
-上面的截图，即是重启后，字体全面覆盖生效的效果。<br>
-自此，你告别了Win10的微软雅黑。</p>
-</blockquote>
 ]]></content>
     </entry>
 </feed>
