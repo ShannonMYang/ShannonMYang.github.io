@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shannonmyang.github.io</id>
     <title>木鱼小店</title>
-    <updated>2021-02-23T14:51:16.691Z</updated>
+    <updated>2021-03-12T15:25:24.335Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shannonmyang.github.io"/>
     <link rel="self" href="https://shannonmyang.github.io/atom.xml"/>
@@ -10,6 +10,39 @@
     <logo>https://shannonmyang.github.io/images/avatar.png</logo>
     <icon>https://shannonmyang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 木鱼小店</rights>
+    <entry>
+        <title type="html"><![CDATA[bug_解决 WKWebView 加载本地 css 文件无效]]></title>
+        <id>https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/</id>
+        <link href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">
+        </link>
+        <updated>2021-03-12T15:17:59.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>最近笔者在研究React Native，遂遇到此问题，有此笔记。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>最近笔者在研究React Native，遂遇到此问题，有此笔记。</p>
+</blockquote>
+<!-- more -->
+<h5 id="bug-背景">bug 背景:</h5>
+<blockquote>
+<p><code>Xcode 12.4</code> <code>Swift 5.4</code> <code>WKWebView</code></p>
+<p>模仿网易新闻的新闻页。<br>
+用 Charles 抓请求的 url, 获取从 url 请求回来的数据就带有 HTML 标签；<br>
+再引入自己写的本地 css 与 js 文件，拼接成 HTML 字符串；<br>
+用 WKWebView 的 - (nullable WKNavigation *)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL; 方法加载字符串；<br>
+发现没有 css 样式，而直接把 WKWebView 换成 UIWebView 则可以</p>
+</blockquote>
+<h5 id="解决办法">解决办法:</h5>
+<p>必须设置 baseurl 为 bundle 路径，不能为 nil</p>
+<pre><code class="language-objective-c">// UIWebView的baseUrl可以为空；
+// WKWebView的baseUrl不能为空，会加载不出css的样式。
+[self.webView loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath]]];
+</code></pre>
+<p>ps:<br>
+当时查了好多资料，又是百度又是谷歌的，大多是加载本地 html 文件引入本地 css,js 文件无效，而未说本地无 html 文件的情况，因此做个记录</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[零碎语记]]></title>
         <id>https://shannonmyang.github.io/post/ling-sui-yu-ji/</id>
@@ -476,30 +509,6 @@ Vue.prototype.$message = message; //重写message提示框
 <h5 id="克己不单单是自律">克己，不单单是自律。</h5>
 <h5 id="是要拒绝千般诱惑是要明白自己想要的东西剥去斑杂为之努力经营">是要拒绝千般诱惑，是要明白自己想要的东西，剥去斑杂，为之努力经营。</h5>
 <h5 id="只要你心诚志坚念念回首处必是灵山">只要你心诚志坚，念念回首处，必是灵山。</h5>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[相似联想]]></title>
-        <id>https://shannonmyang.github.io/post/xiang-si-lian-xiang/</id>
-        <link href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">
-        </link>
-        <updated>2020-04-25T14:21:24.000Z</updated>
-        <summary type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
-<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
-]]></summary>
-        <content type="html"><![CDATA[<h5 id="19年一整年的时间翻了好多书">19年一整年的时间，翻了好多书。</h5>
-<h5 id="易经衍生的书籍-计算机类的书籍-地理方面的书籍都有看过">易经衍生的书籍、计算机类的书籍、地理方面的书籍，都有看过。</h5>
-<!-- more -->
-<h5 id="高三那年吧由于每天密集式的刷试卷-作文这个让很多人头疼的东西也就在必刷之列">高三那年吧，由于每天密集式的刷试卷。作文这个让很多人头疼的东西，也就在必刷之列。</h5>
-<h5 id="当时的我为了找寻作文写作用的材料翻了不少杂志-作文指导书籍">当时的我，为了找寻作文写作用的材料，翻了不少杂志、作文指导书籍。</h5>
-<h5 id="记得有一篇杂志文章写的是关于各个公司的宣传语的其中联想的广告语最让我印象深刻-说的是如果没有联想世界将会怎样-一语双关非常妙">记得有一篇杂志文章写的是关于各个公司的宣传语的，其中，联想的广告语最让我印象深刻。说的是，「如果没有联想，世界将会怎样。」一语双关，非常妙。</h5>
-<h5 id="当然写这篇文章不是为了说联想如何如何-而是为了说相似联想这个东西的重要性">当然，写这篇文章不是为了说联想如何如何。而是为了说，相似联想，这个东西的重要性。</h5>
-<h5 id="之前部门老大亦是公司首席科学家一个拥有美国绿卡为美国地震局-某个州的监狱以及amd产线写过系统且至今仍在运行时不时要接国际长途电话远程指导并收费的长者">之前部门老大，亦是公司首席科学家，一个拥有美国绿卡，为美国地震局、某个州的监狱以及AMD产线写过系统，且至今仍在运行，时不时要接国际长途电话，远程指导并收费的长者。</h5>
-<h5 id="在一次部门会议的时候语重心长的对我们几个小伙子说道你们啊要好好看看计算机的底层原理再看看中国的易经-阴阳太极之说的书籍">在一次部门会议的时候，语重心长的对我们几个小伙子说道，「你们啊，要好好看看计算机的底层原理，再看看中国的易经、阴阳太极之说的书籍。」</h5>
-<h5 id="当时大家嘿嘿一笑没当回事">当时大家嘿嘿一笑，没当回事。</h5>
-<h5 id="19年翻阅了诸多计算机底层书籍老大的话就愈发印象深刻尤其是在翻看一本名为编码隐匿在计算机背后的语言书籍时才恍然发觉部门老大所言的东西未尝不是没道理的">19年翻阅了诸多计算机底层书籍，老大的话就愈发印象深刻，尤其是在翻看一本名为《编码·隐匿在计算机背后的语言》书籍时，才恍然发觉部门老大所言的东西，未尝不是没道理的。</h5>
-<h5 id="看着编码一书不禁感慨老祖宗们的伟大思想-计算机中最基础部分的0和1组成了现在看到的千千万万的信息流-0和1不正像极了阴与阳之说-阴阳生万物01组成计算机世界-当然0和1的本质也就是对应着电流的正负-随之会联想到原子-夸克一系列微小的单位正是这些小到不能更小的东西组成了世界万物">看着《编码》一书，不禁感慨老祖宗们的伟大思想。计算机中最基础部分的0和1，组成了现在看到的千千万万的信息流。0和1，不正像极了，阴与阳之说。阴阳生万物，01组成计算机世界。当然，0和1的本质，也就是对应着电流的正负。随之，会联想到原子、夸克一系列微小的单位，正是这些小到不能更小的东西，组成了世界万物。</h5>
-<h5 id="联想到这些不得不感慨原来我们的世界竟然是如此简单的组成却又如此纷繁复杂">联想到这些，不得不感慨，原来我们的世界，竟然是如此简单的组成，却又如此纷繁复杂。</h5>
 ]]></content>
     </entry>
 </feed>
