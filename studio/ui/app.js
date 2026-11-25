@@ -571,11 +571,12 @@ body{margin:0;padding:30px 34px 70px;}
       return;
     }
     const summary = state.git
-      ? `分支：${state.git.branch}\n待提交改动：${state.git.changes} 处\n最近提交：${state.git.lastCommit || '—'}`
+      ? `分支：${state.git.branch}\n待提交改动：${state.git.changes} 处\n未推送提交：${state.git.ahead || 0} 个\n最近提交：${state.git.lastCommit || '—'}`
       : '读取中…';
     const prefix = state.dirty ? '当前文章有未保存修改，发布前会先保存。\n\n' : '';
-    $('#publish-summary').textContent = state.git && state.git.changes === 0
-      ? `${prefix}没有未提交的改动。本次发布将重新构建站点。`
+    const nothingToDo = state.git && state.git.changes === 0 && !(state.git.ahead > 0);
+    $('#publish-summary').textContent = nothingToDo
+      ? `${prefix}没有未提交的改动，也没有待推送的提交，站点已是最新。`
       : prefix + summary;
     const now = new Date();
     const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
