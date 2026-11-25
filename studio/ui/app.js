@@ -845,7 +845,10 @@ body{margin:0;padding:30px 34px 70px;}
           return;
         }
       }
-      const editable = state.items.find((item) => item.kind !== 'note');
+      const editable =
+        state.items.find((item) => item.kind === 'post' && !item.draft) ||
+        state.items.find((item) => item.kind === 'post') ||
+        state.items.find((item) => item.slug === 'about');
       if (editable) await selectItem(editable.path, { force: true });
     } catch (err) {
       toast(`写作台启动失败：${err.message}`, 'error');
