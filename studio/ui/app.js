@@ -1,4 +1,4 @@
-/* 木鱼书店 · 写作台（前端） */
+/* 木禾书店 · 写作台（前端） */
 (() => {
   'use strict';
 
@@ -104,7 +104,7 @@
   const openExternal = (url) => {
     if (!url) return false;
     try {
-      const bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.muyuOpen;
+      const bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.muheOpen;
       if (bridge) {
         bridge.postMessage(url);
         return true;

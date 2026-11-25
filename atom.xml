@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
-  <title>木鱼小店</title>
+  <title>木禾小店</title>
   <subtitle>一个存放开发笔记、菜谱与杂谈的角落。慢慢写，常常看，温故而知新。</subtitle>
   <id>https://shannonmyang.github.io/</id>
   <link href="https://shannonmyang.github.io/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://shannonmyang.github.io/" rel="alternate" type="text/html"/>
   <updated>2022-03-14T06:59:53.000Z</updated>
-  <generator uri="https://github.com/ShannonMYang/ShannonMYang.github.io">muyu-shop</generator>
+  <generator uri="https://github.com/ShannonMYang/ShannonMYang.github.io">muhe-shop</generator>
   <author><name>ShannonMYang</name></author>
   <rights>© 2018–2026 ShannonMYang</rights>
   <entry>

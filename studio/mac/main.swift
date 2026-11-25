@@ -1,7 +1,7 @@
 import Cocoa
 import WebKit
 
-/// 木鱼书店 · 写作台 —— macOS 原生窗口外壳
+/// 木禾书店 · 写作台 —— macOS 原生窗口外壳
 /// 复用本地 Node 写作台（studio/server.mjs），WebKit 只负责显示。
 final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
     private var window: NSWindow!
@@ -40,11 +40,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
             backing: .buffered,
             defer: false
         )
-        window.title = "木鱼书店 · 写作台"
+        window.title = "木禾书店 · 写作台"
         window.minSize = NSSize(width: 980, height: 640)
         window.center()
         window.isReleasedWhenClosed = false
-        window.setFrameAutosaveName("MuyuStudioWindow")
+        window.setFrameAutosaveName("MuheStudioWindow")
 
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .default()
@@ -52,7 +52,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         // 让写作台里的 window.open / target=_blank 能在系统浏览器打开
         configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
         let controller = WKUserContentController()
-        controller.add(self, name: "muyuOpen")
+        controller.add(self, name: "muheOpen")
         configuration.userContentController = controller
 
         webView = WKWebView(frame: frame, configuration: configuration)
@@ -71,15 +71,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         mainMenu.addItem(appItem)
         let appMenu = NSMenu()
         appItem.submenu = appMenu
-        appMenu.addItem(withTitle: "关于木鱼书店", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "关于木禾书店", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "隐藏木鱼书店", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
+        appMenu.addItem(withTitle: "隐藏木禾书店", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
         let hideOthers = NSMenuItem(title: "隐藏其他", action: #selector(NSApplication.hideOtherApplications(_:)), keyEquivalent: "h")
         hideOthers.keyEquivalentModifierMask = [.command, .option]
         appMenu.addItem(hideOthers)
         appMenu.addItem(withTitle: "显示全部", action: #selector(NSApplication.unhideAllApplications(_:)), keyEquivalent: "")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "退出木鱼书店", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "退出木禾书店", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
 
         let editItem = NSMenuItem()
         mainMenu.addItem(editItem)
@@ -148,7 +148,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
         guard let node = findNode() else {
             showFatal(
                 title: "找不到 Node.js",
-                message: "写作台需要 Node.js 18 或更高版本。请先安装 Node.js（brew install node），然后重新打开木鱼书店。"
+                message: "写作台需要 Node.js 18 或更高版本。请先安装 Node.js（brew install node），然后重新打开木禾书店。"
             )
             return
         }
@@ -271,7 +271,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "muyuOpen", let value = message.body as? String, let url = URL(string: value) else { return }
+        guard message.name == "muheOpen", let value = message.body as? String, let url = URL(string: value) else { return }
         NSWorkspace.shared.open(url)
     }
 

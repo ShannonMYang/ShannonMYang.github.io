@@ -157,7 +157,7 @@ function hero(site, stats) {
     <div class="hero__art">
       <div class="hero__book">
         <span class="hero__book-line">${escapeHtml(site.hero?.vertical || '')}</span>
-        <span class="hero__book-mark">木鱼</span>
+        <span class="hero__book-mark">木禾</span>
         <span class="hero__book-caption">${escapeHtml(site.hero?.motto || '')}</span>
       </div>
       <span class="hero__stamp">${ICONS.link}</span>

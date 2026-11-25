@@ -43,7 +43,7 @@ ${item.tags.map((tag) => `    <category term="${escapeHtml(tag)}"/>`).join('\n')
   <link href="${escapeHtml(site.url)}/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="${escapeHtml(site.url)}/" rel="alternate" type="text/html"/>
   <updated>${toDateTimeAttr(updated)}</updated>
-  <generator uri="https://github.com/ShannonMYang/ShannonMYang.github.io">muyu-shop</generator>
+  <generator uri="https://github.com/ShannonMYang/ShannonMYang.github.io">muhe-shop</generator>
   <author><name>${cdataSafe(site.author?.name || site.title)}</name></author>
   <rights>© ${site.since || 2018}–${new Date().getFullYear()} ${cdataSafe(site.author?.name || site.title)}</rights>
 ${entries}

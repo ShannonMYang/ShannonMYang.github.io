@@ -3,9 +3,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-APP_NAME="木鱼书店"
+APP_NAME="木禾书店"
 BUNDLE="$(pwd)/${APP_NAME}.app"
-BIN_NAME="MuyuStudio"
+BIN_NAME="MuheStudio"
 IDENTIFIER="io.github.shannonmyang.studio"
 VERSION="2.0.0"
 
