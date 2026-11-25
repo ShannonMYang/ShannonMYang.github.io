@@ -160,11 +160,6 @@ function hero(site, stats) {
         <span class="hero__book-mark">木鱼</span>
         <span class="hero__book-caption">${escapeHtml(site.hero?.motto || '')}</span>
       </div>
-      <div class="hero__latest">
-        <span class="hero__latest-label">最近更新</span>
-        <a href="${stats.latest?.url || '/archives/'}">${escapeHtml(stats.latest?.title || '')}</a>
-        <time>${stats.latest ? formatDate(stats.latest.date) : ''}</time>
-      </div>
       <span class="hero__stamp">${ICONS.link}</span>
     </div>
   </div>
