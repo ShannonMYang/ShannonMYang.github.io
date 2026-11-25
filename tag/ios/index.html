@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="alternate" type="application/atom+xml" title="土禾小店" href="/atom.xml">
-<link rel="stylesheet" href="/assets/site.css?v=90f86156">
+<link rel="stylesheet" href="/assets/site.css?v=280a26e2">
 
 </head>
 <body class="page-tag">
@@ -62,7 +62,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-49/">iOS 9.0 之后 NSString encode 方法替换</a></h2>
     <p class="card__excerpt">在 iOS 9.0 之后，以前常用的 NSString 编码的方法 stringByAddingPercentEscapesUsingEncoding: 被弃用了，项目中可能会出现一堆如下⚠️： ‘stringByAddingPercentEscapesUsingEncoding:’ is deprecated: first deprecated in iOS 9.0 - Use-stringBy…</p>
     <div class="card__meta">
@@ -80,7 +80,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>macOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#b23a2b">macOS</span></div>
     <h2 class="card__title"><a href="/note/gh-46/">iOS 钥匙串 证书不受信任</a></h2>
     <p class="card__excerpt">记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …</p>
     <div class="card__meta">
@@ -98,7 +98,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-38/">Objective-C 中 Byte 、 Byte *、 Byte [] 的区别及转换</a></h2>
     <p class="card__excerpt">最近在 iOS 项目中遇到了字节和16进制字符串以及NSData之间的各种转换问题，遂有此记录。 此为第一篇，讲解Byte的两种类型数据，及其转换。 一、Byte Byte 是对 字节的封装，其类型为 UInt8，UInt8 其实是 unsigned char 类型。 二、Byte Byte 是声明一个字节流指针，初始方法一般用 C语言 方法 malloc。 三、Byte [] Byte [] 是…</p>
     <div class="card__meta">
@@ -116,7 +116,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>错误解决</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#4a5260">错误解决</span></div>
     <h2 class="card__title"><a href="/note/gh-37/">Xcode 真机调试，总要求需要输入管理员账号和密码</a></h2>
     <p class="card__excerpt">最近用Xcode连接真机调试程序，出现了个未曾遇到的问题，一番搜寻下来，得以解决。 于是，有此记录。 --- 弹出框如下图所示 解决方法 第一步: 打开钥匙串访问，找到系统-&gt;我的证书，里面有相应的开发和调试证书。双击打开你需要的那个比如iPhone developer 下的，选择访问控制。 第二步：将访问控制，改为允许所有应用程序访问此项目，输入密码，保存更改即可。</p>
     <div class="card__meta">
@@ -134,7 +134,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-35/">iOS逆向知识·小记</a></h2>
     <p class="card__excerpt">写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…</p>
     <div class="card__meta">
@@ -152,7 +152,7 @@
     <span class="card__issue">React Native</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>React Native</span><i>·</i><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#b23a2b">React Native</span><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/note/gh-33/">Xcode编译OC和RN混合开发所遇错误·小记</a></h2>
     <p class="card__excerpt">- ### -[AppDelegate setWindow:]: unrecognized selector sent to instance Xcode 11之后，由于对iPad分屏的适配要求，多出了SceneDelegate这么个文件。 如果不加[self.window setWindowScene:windowScene];，会有报错：[WindowScene] Failed to inst…</p>
     <div class="card__meta">
@@ -170,7 +170,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-32/">Xocde编译项目所遇问题·小记</a></h2>
     <p class="card__excerpt">- ### 真机调试时提示 Unable to install &quot;xxx(Project Name)&quot; 真机调试时提示 Unable to install &quot;xxx&quot;，但每次删掉 APP 第一次都能安装。 查看钥匙串发现之前的证书过期 删掉过期的证书后运行，仍然提示 Unable to install &quot;xxx&quot;。去 设置 - 通用 - 描述文件与设备管理 中将之前信任的 APP 删除，再重新真机…</p>
     <div class="card__meta">
@@ -188,7 +188,7 @@
     <span class="card__issue">React Native</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>React Native</span><i>·</i><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#b23a2b">React Native</span><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/note/gh-29/">React Native项目编译调试过程所遇错误·小记</a></h2>
     <p class="card__excerpt">- ### Could not launch “xxx” Security &gt; 环境：Xcode 12.4 (12D4e) &gt; 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 &gt; 报错提示信息 app 启动被 ios 的安全机制阻挡了。 &gt; &gt; 设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…</p>
     <div class="card__meta">
@@ -206,7 +206,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-25/">由 DES加密 衍生的 数据类型 转换问题 · 小记</a></h2>
     <p class="card__excerpt">OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …</p>
     <div class="card__meta">
@@ -224,7 +224,7 @@
     <span class="card__issue">React Native</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>React Native</span><i>·</i><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#b23a2b">React Native</span><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/note/gh-22/">React Native 与 iOS OC 的混合开发</a></h2>
     <p class="card__excerpt">本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…</p>
     <div class="card__meta">
@@ -242,7 +242,7 @@
     <span class="card__issue">React Native</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>React Native</span><i>·</i><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#b23a2b">React Native</span><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/note/gh-19/">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</a></h2>
     <p class="card__excerpt">今天遇到了，用Xcode 11 与真机调试 RN程序，启动后，遇到了报错有二。 遂，有此记录。 ------ 报错1⃣️ Unknown arguments type &#39;attribute&#39; in method -[RCTUIManager set JSResponder:blockNativeResponder] 解决方案 添加框中划线代码，即可解决问题。 ------ 报错2⃣️ Unknow…</p>
     <div class="card__meta">
@@ -260,7 +260,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-2/">iOS 开发多线程之队列组 —— 下载合并图片</a></h2>
     <p class="card__excerpt">- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…</p>
     <div class="card__meta">
@@ -278,7 +278,7 @@
     <span class="card__issue">iOS</span>
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span><i>·</i><span>Objective-C</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span><span class="card__tag" style="--tag-accent:#6e5f2d">Objective-C</span></div>
     <h2 class="card__title"><a href="/note/gh-1/">OC 内省 (反射) 机制的理解</a></h2>
     <p class="card__excerpt">笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…</p>
     <div class="card__meta">
@@ -296,7 +296,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>mac</span><i>·</i><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#96652c">mac</span><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/mac-shang-homebrew-chang-yong-ming-ling/">macOS 中 常用 Homebrew 命令</a></h2>
     <p class="card__excerpt">在macos上不用brew命令，你还要用什么来简化你的开发管理、日常使用管理呢？ 没错，就是那个去谷歌面试，因为二叉树被拒的开发者，开发的homebrew。</p>
     <div class="card__meta">
@@ -314,7 +314,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">bug_解决 WKWebView 加载本地 css 文件无效</a></h2>
     <p class="card__excerpt">最近笔者在研究React Native，遂遇到此问题，有此笔记。</p>
     <div class="card__meta">
@@ -332,7 +332,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/">探究__block本质时，xcrun的报错解决</a></h2>
     <p class="card__excerpt">近期在研究 block ，探究底层的一些东西，遂用到了 xcrun 命令，但是莫名报错，于是就有了如下记录。</p>
     <div class="card__meta">
@@ -350,7 +350,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">Xcode 10 升级后的 Error: Multiple commands produce</a></h2>
     <p class="card__excerpt">之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
     <div class="card__meta">
@@ -368,7 +368,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/ios-da-po-nstimer-xun-huan-yin-yong/">iOS 打破 NSTimer 循环引用</a></h2>
     <p class="card__excerpt">在做 iOS 项目 ，多多少少都会有不留意时候，碰到一些 NSTimer 的 循环引用问题 。 本篇笔记意在记录解决 NSTimer 循环引用问题的方法。</p>
     <div class="card__meta">
@@ -386,7 +386,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/">iOS 离屏渲染优化简单分析</a></h2>
     <p class="card__excerpt">最近在做一个小项目的时候，涉及到了 切圆角问题 。联想到之前看过的 性能优化分析 相关文章，遂有了重新对 离屏渲染 的小小研究。</p>
     <div class="card__meta">
@@ -404,7 +404,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</a></h2>
     <p class="card__excerpt">最近升级了 Xcode 10 版本，运行起之前的项目，各种问题一并爆发。</p>
     <div class="card__meta">
@@ -422,7 +422,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/">iOS 利用 Runtime 自定义导航控制器返回手势</a></h2>
     <p class="card__excerpt">自 iOS7 之后 ，系统的导航控制器就具备了 边缘滑动返回 的功能。 这一改进，使得用户能够很方便的退出当前页面，大屏的用户也不用再费力的去点击导航栏上的返回按钮，很是 人性化 。</p>
     <div class="card__meta">
@@ -440,7 +440,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/zai-xie-ios-xiang-ying-zhe-lian/">再写 iOS 响应者链</a></h2>
     <p class="card__excerpt">最近看到群里讨论有关响应者链的相关面试题。扪心自问，知道一部分，但是不够全。给自己一种青黄不接的感觉。 遂，决定温故一下 iOS 响应者连。再细细看看，发现一下以前没注意的地方。</p>
     <div class="card__meta">
@@ -458,7 +458,7 @@
     
   </a>
   <div class="card__body">
-    <div class="card__kicker"><span>iOS</span></div>
+    <div class="card__kicker"><span class="card__tag" style="--tag-accent:#6d4a62">iOS</span></div>
     <h2 class="card__title"><a href="/post/ios-shi-jian-xiang-ying/">iOS 事件响应</a></h2>
     <p class="card__excerpt">写这篇笔记是源于最近有朋友问到的一个问题：在 UIView 上添加若干子视图，子视图之间互为兄弟视图，如何让那些在父视图外面的子视图响应事件？ 认真想了下，这应该是 iOS 中的一个基础知识点：事件的传递和响应 ，而我们要做的是，拦截下这个事件。</p>
     <div class="card__meta">
@@ -505,6 +505,6 @@
   </div>
 </div>
 <button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
-<script src="/assets/site.js?v=90f86156" defer></script>
+<script src="/assets/site.js?v=280a26e2" defer></script>
 </body>
 </html>

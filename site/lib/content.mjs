@@ -120,6 +120,42 @@ export async function loadContent() {
     }
   }
   const tags = [...tagMap.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh-Hans-CN'));
+
+  // 给每个标签分配一个稳定的、彼此区分度高的印泥色
+  const TAG_PALETTE = [
+    '#b23a2b', // 朱砂
+    '#3f5a78', // 靛青
+    '#4c6b4a', // 苔绿
+    '#96652c', // 赭石
+    '#6d4a62', // 紫檀
+    '#3d6b67', // 青瓷
+    '#8a4433', // 陶红
+    '#4a5260', // 墨蓝
+    '#6e5f2d', // 橄榄
+    '#8f4650', // 胭脂
+    '#5a6b3f', // 竹青
+    '#7a4b2f', // 焦茶
+  ];
+  const usedColors = new Set();
+  for (const tag of tags) {
+    let index = hashString(tag.slug) % TAG_PALETTE.length;
+    let guard = 0;
+    while (usedColors.has(index) && guard < TAG_PALETTE.length) {
+      index = (index + 1) % TAG_PALETTE.length;
+      guard += 1;
+    }
+    usedColors.add(index);
+    if (usedColors.size >= TAG_PALETTE.length) usedColors.clear();
+    tag.color = TAG_PALETTE[index];
+  }
+
+  for (const item of all) {
+    item.tagEntries = item.tags.map((name) => {
+      const slug = tagSlug(name);
+      return { name, slug, color: tagMap.get(slug)?.color || TAG_PALETTE[0] };
+    });
+  }
+
   for (const tag of tags) {
     tag.items.sort((a, b) => b.date - a.date);
     tag.latest = tag.items[0];

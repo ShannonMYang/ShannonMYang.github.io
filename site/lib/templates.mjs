@@ -36,7 +36,7 @@ function tagUrl(tag) {
 }
 
 export function tagPill(tag, extraClass = '') {
-  return `<a class="tag-pill ${extraClass}" href="${escapeAttr(tagUrl(tag))}">${escapeHtml(tag.name)}</a>`;
+  return `<a class="tag-pill ${extraClass}" href="${escapeAttr(tagUrl(tag))}" style="--tag-accent:${escapeAttr(tag.color || '#8a7a63')}">${escapeHtml(tag.name)}</a>`;
 }
 
 function brand(site) {
@@ -189,7 +189,7 @@ function filterBar(stats, tags) {
       ${topTags
         .map(
           (tag) =>
-            `<button class="chip" type="button" data-tag="${escapeAttr(tag.slug)}">${escapeHtml(tag.name)}<span>${tag.count}</span></button>`,
+            `<button class="chip" type="button" data-tag="${escapeAttr(tag.slug)}" style="--tag-accent:${escapeAttr(tag.color || '#8a7a63')}">${escapeHtml(tag.name)}<span>${tag.count}</span></button>`,
         )
         .join('')}
       <a class="chip chip--more" href="/tags/">全部标签 ${ICONS.arrow}</a>
@@ -203,7 +203,7 @@ export function card(item, index = 0) {
   const isNote = item.kind === 'note';
   const hasCover = Boolean(item.cover);
   const ratio = hasCover ? CARD_RATIOS[item.tone % CARD_RATIOS.length] : TYPO_RATIOS[item.tone % TYPO_RATIOS.length];
-  const tags = item.tags.slice(0, 2);
+  const tags = (item.tagEntries || item.tags.map((name) => ({ name, color: '#8a7a63' }))).slice(0, 2);
   const searchText = `${item.title} ${item.excerpt} ${item.tags.join(' ')}`.toLowerCase();
   const tagSlugs = item.tags.map((t) => tagSlug(t)).join('|');
   const glyph = isNote && item.issue ? `#${item.issue}` : item.glyph;
@@ -219,7 +219,7 @@ export function card(item, index = 0) {
     ${issueBadge}
   </a>
   <div class="card__body">
-    <div class="card__kicker">${tags.map((t) => `<span>${escapeHtml(t)}</span>`).join('<i>·</i>')}</div>
+    <div class="card__kicker">${tags.map((t) => `<span class="card__tag" style="--tag-accent:${escapeAttr(t.color)}">${escapeHtml(t.name)}</span>`).join('')}</div>
     <h2 class="card__title"><a href="${escapeAttr(item.url)}">${escapeHtml(item.title)}</a></h2>
     <p class="card__excerpt">${escapeHtml(item.excerpt)}</p>
     <div class="card__meta">
@@ -266,11 +266,8 @@ export function articlePage({ site, item, content, toc, hasMath }) {
   const author = site.author || {};
   const isNote = item.kind === 'note';
   const editUrl = `https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/${item.sourcePath}`;
-  const tagPills = item.tags
-    .map((name) => {
-      const tag = content.tags.find((t) => t.slug === tagSlug(name) || t.name === name);
-      return tag ? tagPill(tag) : `<span class="tag-pill">${escapeHtml(name)}</span>`;
-    })
+  const tagPills = (item.tagEntries || [])
+    .map((tag) => tagPill(tag))
     .join('');
 
   const noteBanner = isNote
@@ -279,7 +276,7 @@ export function articlePage({ site, item, content, toc, hasMath }) {
       <span class="note-source__mark">#${item.issue}</span>
       <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="${escapeAttr(item.issueUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.repo)} #${item.issue}</a>，这里只做归档与阅读优化。</p></div>
     </div>
-    <div class="note-source__meta">${item.tags.map((t) => `<span class="label-chip" style="--label-accent:${escapeAttr(item.accent)}">${escapeHtml(t)}</span>`).join('')}<a class="note-source__link" href="${escapeAttr(item.issueUrl)}" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+    <div class="note-source__meta">${(item.tagEntries || []).map((t) => `<span class="label-chip" style="--label-accent:${escapeAttr(t.color)}">${escapeHtml(t.name)}</span>`).join('')}<a class="note-source__link" href="${escapeAttr(item.issueUrl)}" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
   </aside>`
     : '';
 
@@ -446,7 +443,7 @@ export function tagsPage({ site, content }) {
   <div class="tag-grid">
     ${content.tags
       .map(
-        (tag) => `<a class="tag-card" href="${escapeAttr(tagUrl(tag))}" style="--accent:${escapeAttr(tag.latest?.accent || '#9c6b3c')}">
+        (tag) => `<a class="tag-card" href="${escapeAttr(tagUrl(tag))}" style="--accent:${escapeAttr(tag.color || '#9c6b3c')}">
           <span class="tag-card__count">${String(tag.count).padStart(2, '0')}</span>
           <span class="tag-card__name">${escapeHtml(tag.name)}</span>
           <span class="tag-card__latest">${escapeHtml(tag.latest?.title || '')}</span>
@@ -504,7 +501,9 @@ export function notesPage({ site, content }) {
   <div class="shelf">
     ${entries
       .map(
-        ([label, notes], groupIndex) => `<section class="shelf__group" aria-labelledby="shelf-${groupIndex}">
+        ([label, notes], groupIndex) => {
+          const groupTag = content.tags.find((tag) => tag.slug === tagSlug(label));
+          return `<section class="shelf__group" aria-labelledby="shelf-${groupIndex}" style="--tag-accent:${escapeAttr(groupTag?.color || '#8a7a63')}">
           <header class="shelf__head"><h2 id="shelf-${groupIndex}">${escapeHtml(label)}</h2><span>${notes.length}</span></header>
           <ol class="shelf__list">
             ${notes
@@ -518,7 +517,8 @@ export function notesPage({ site, content }) {
               )
               .join('')}
           </ol>
-        </section>`,
+        </section>`;
+        },
       )
       .join('')}
   </div>

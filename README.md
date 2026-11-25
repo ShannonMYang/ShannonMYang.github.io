@@ -152,6 +152,7 @@ draft: false                  # true 时不会出现在站点上
   - 640–899px：2 列
   - < 640px：1 列
 - 瀑布流有两层：默认 CSS 多列（无 JS 也能看），加载后切换成按列计算高度的绝对定位，保证视觉顺序与「拼图」错落。
+- 每个标签会按名称分配一枚稳定的「印泥色」（朱砂、靛青、苔绿、赭石、紫檀……），首页筛选、卡片标签、文章标签与笔记库分组共用同一套颜色。
 - 字体全部走系统栈（宋体 / 苹方），不依赖外部 CDN；页面离线也能完整显示。
 - 文章页包含：阅读进度、目录高亮、代码复制、图片灯箱、上下篇、相关阅读、JSON-LD、RSS、Sitemap。
 - 所有图片懒加载；首屏只加载可视区封面。
@@ -206,6 +207,7 @@ Node.js 18+（ESM）、markdown-it、highlight.js、KaTeX、gray-matter、turndo
 ## 预览
 
 ![首页](docs/screenshots/home.jpg)
+![彩色标签](docs/screenshots/tags.jpg)
 ![瀑布流](docs/screenshots/home-grid.jpg)
 ![文章页](docs/screenshots/article.jpg)
 ![写作台](docs/screenshots/studio.jpg)
