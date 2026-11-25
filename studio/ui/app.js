@@ -142,10 +142,12 @@
 
   function renderGit() {
     if (!state.git) return;
-    els.gitPill.classList.toggle('is-dirty', state.git.dirty);
+    els.gitPill.classList.toggle('is-dirty', state.git.dirty || state.git.ahead > 0);
     els.gitText.textContent = state.git.dirty
-      ? `${state.git.branch} · ${state.git.changes} 处改动`
-      : `${state.git.branch} · 工作区干净`;
+      ? `${state.git.branch} · ${state.git.changes} 处改动${state.git.ahead > 0 ? ` · 领先 ${state.git.ahead}` : ''}`
+      : state.git.ahead > 0
+        ? `${state.git.branch} · 领先 origin ${state.git.ahead} 个提交`
+        : `${state.git.branch} · 工作区干净`;
     els.gitPill.title = state.git.lastCommit || '';
   }
 
