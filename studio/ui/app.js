@@ -16,6 +16,7 @@
     previewPort: 4401,
     previewUrl: '',
     previewSeq: 0,
+    building: false,
   };
 
   const els = {
@@ -99,6 +100,21 @@
       setTimeout(() => node.remove(), 220);
     }, type === 'error' ? 5200 : 2600);
   }
+
+  const openExternal = (url) => {
+    if (!url) return false;
+    try {
+      const bridge = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.muyuOpen;
+      if (bridge) {
+        bridge.postMessage(url);
+        return true;
+      }
+    } catch (_) {
+      /* ignore */
+    }
+    const popup = window.open(url, '_blank', 'noopener');
+    return Boolean(popup);
+  };
 
   const escapeHtml = (value = '') =>
     String(value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
@@ -648,9 +664,36 @@ body{margin:0;padding:30px 34px 70px;}
     $$('[data-action="new-page"]').forEach((button) => button.addEventListener('click', () => create('page')));
     $('[data-action="publish"]').addEventListener('click', openPublishDialog);
     $('[data-action="sync"]').addEventListener('click', openSyncDialog);
-    $('[data-action="open-site"]').addEventListener('click', () => {
-      if (!state.previewUrl) return;
-      window.open(state.previewUrl, '_blank', 'noopener');
+    $('[data-action="open-site"]').addEventListener('click', async () => {
+      if (!state.previewUrl) {
+        toast('站点预览地址还没有就绪，请稍后重试', 'error');
+        return;
+      }
+      if (state.building) return;
+      state.building = true;
+      try {
+        if (state.dirty && state.current && !state.current.readOnly) {
+          toast('先保存当前修改…');
+          const saved = await save({ silent: true });
+          if (!saved) return;
+        }
+        toast('正在构建本地预览…');
+        const result = await api('/api/build', { method: 'POST' });
+        if (!result.ok) {
+          toast('构建失败，详情见写作台终端输出', 'error');
+          return;
+        }
+        if (state.current && state.current.fields && state.current.fields.draft) {
+          toast('已构建；当前文章是草稿，不会出现在站点预览中', 'error');
+        }
+        if (!openExternal(state.previewUrl)) {
+          toast(`浏览器拦截了新窗口。预览地址：${state.previewUrl}`, 'error');
+        }
+      } catch (err) {
+        toast(err.message, 'error');
+      } finally {
+        state.building = false;
+      }
     });
 
     $('#confirm-publish').addEventListener('click', confirmPublish);

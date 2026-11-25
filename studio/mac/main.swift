@@ -3,7 +3,7 @@ import WebKit
 
 /// 木鱼书店 · 写作台 —— macOS 原生窗口外壳
 /// 复用本地 Node 写作台（studio/server.mjs），WebKit 只负责显示。
-final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
     private var window: NSWindow!
     private var webView: WKWebView!
     private var serverProcess: Process?
@@ -49,10 +49,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .default()
         configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        // 让写作台里的 window.open / target=_blank 能在系统浏览器打开
+        configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        let controller = WKUserContentController()
+        controller.add(self, name: "muyuOpen")
+        configuration.userContentController = controller
 
         webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.width, .height]
         webView.navigationDelegate = self
+        webView.uiDelegate = self
         webView.setValue(false, forKey: "drawsBackground")
         window.contentView = webView
         window.makeKeyAndOrderFront(nil)
@@ -249,6 +255,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate {
     }
 
     // MARK: - WKNavigationDelegate
+
+    // MARK: - WKUIDelegate / bridge
+
+    func webView(
+        _ webView: WKWebView,
+        createWebViewWith configuration: WKWebViewConfiguration,
+        for navigationAction: WKNavigationAction,
+        windowFeatures: WKWindowFeatures
+    ) -> WKWebView? {
+        if navigationAction.targetFrame == nil, let url = navigationAction.request.url {
+            NSWorkspace.shared.open(url)
+        }
+        return nil
+    }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "muyuOpen", let value = message.body as? String, let url = URL(string: value) else { return }
+        NSWorkspace.shared.open(url)
+    }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         let alert = NSAlert()
