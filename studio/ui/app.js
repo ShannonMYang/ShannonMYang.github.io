@@ -297,6 +297,7 @@
         body: JSON.stringify({ path: state.current.path, fields: collectFields(), body: els.markdown.value }),
       });
       state.current = result.item;
+      els.draftBadge.hidden = !result.item.fields.draft;
       els.path.textContent = result.item.path;
       history.replaceState(null, '', `#path=${encodeURIComponent(result.item.path)}`);
       setDirty(false);

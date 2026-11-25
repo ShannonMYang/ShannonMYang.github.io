@@ -27,6 +27,7 @@ function navLink(site, active) {
 function isActiveNav(url, active) {
   if (!active) return false;
   if (url === '/') return active === '/';
+  if (url === '/tags/') return active.startsWith('/tag/') || active.startsWith('/tags/');
   return active.startsWith(url);
 }
 

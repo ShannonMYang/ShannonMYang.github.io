@@ -15,7 +15,7 @@ import { spawnSync, spawn } from 'node:child_process';
 import matter from 'gray-matter';
 import { stringifyFrontmatter } from '../site/lib/frontmatter.mjs';
 import { renderMarkdown } from '../site/lib/markdown.mjs';
-import { asDate, formatDate } from '../site/lib/util.mjs';
+import { asDate, dateInputValue, formatDate } from '../site/lib/util.mjs';
 import { loadContent, loadSite, ROOT } from '../site/lib/content.mjs';
 import { buildSite, gitInfo, publishSite } from '../scripts/lib/publish.mjs';
 
@@ -46,6 +46,7 @@ const MIME = {
 };
 
 let currentPort = PREFERRED_PORT;
+let currentPreviewPort = PREFERRED_PORT + 1;
 
 /* ------------------------------------------------------------------ */
 /* helpers                                                             */
@@ -184,7 +185,7 @@ function itemDetail(relPath) {
     fields: {
       title: parsed.data.title || '',
       slug: parsed.data.slug || path.basename(full, '.md'),
-      date: Number.isNaN(date.getTime()) ? '' : date.toISOString().slice(0, 10),
+      date: dateInputValue(date),
       tags: Array.isArray(parsed.data.tags) ? parsed.data.tags : [],
       cover: parsed.data.cover || '',
       excerpt: parsed.data.excerpt || '',
@@ -218,8 +219,8 @@ async function handleApi(req, res, url) {
       ok: true,
       ...data,
       port: currentPort,
-      previewPort: currentPort + 1,
-      previewUrl: `http://127.0.0.1:${currentPort + 1}/`,
+      previewPort: currentPreviewPort,
+      previewUrl: `http://127.0.0.1:${currentPreviewPort}/`,
       node: process.version,
       root: ROOT,
     });
@@ -247,7 +248,7 @@ async function handleApi(req, res, url) {
         const fields = {
           title,
           slug,
-          date: new Date(`${now.toISOString().slice(0, 10)}T12:00:00+08:00`).toISOString(),
+          date: `${dateInputValue(now)}T12:00:00+08:00`,
           kind,
           tags: [],
           cover: '',
@@ -297,14 +298,13 @@ async function handleApi(req, res, url) {
 
       let dateIso = existing.data.date;
       if (fields.date) {
-        const oldDate = asDate(existing.data.date).toISOString().slice(0, 10);
-        if (fields.date !== oldDate) {
-          dateIso = new Date(`${fields.date}T12:00:00+08:00`).toISOString();
-        } else if (existing.data.date instanceof Date) {
-          dateIso = existing.data.date.toISOString();
-        } else {
-          dateIso = new Date(`${fields.date}T12:00:00+08:00`).toISOString();
-        }
+        const oldDate = dateInputValue(asDate(existing.data.date));
+        dateIso =
+          fields.date !== oldDate
+            ? `${fields.date}T12:00:00+08:00`
+            : existing.data.date instanceof Date || typeof existing.data.date === 'string'
+              ? existing.data.date
+              : `${fields.date}T12:00:00+08:00`;
       }
 
       const merged = {
@@ -507,9 +507,11 @@ async function main() {
       previewPort += 1;
     }
   }
+  currentPreviewPort = previewPort;
 
   await fsp.mkdir(path.dirname(PORT_FILE), { recursive: true });
   await fsp.writeFile(PORT_FILE, String(port), 'utf8');
+  await fsp.writeFile(path.join(ROOT, '.tmp/preview-port'), String(previewPort), 'utf8');
 
   const url = `http://127.0.0.1:${port}/`;
   console.log(`\n  木鱼书店 · 写作台`);
@@ -524,6 +526,7 @@ async function main() {
   const shutdown = () => {
     try {
       fs.rmSync(PORT_FILE, { force: true });
+      fs.rmSync(path.join(ROOT, '.tmp/preview-port'), { force: true });
     } catch {
       /* ignore */
     }

@@ -94,6 +94,12 @@ export function formatDate(date) {
   return p ? `${p.year}.${p.month}.${p.day}` : '';
 }
 
+/** YYYY-MM-DD（按 Asia/Shanghai，供 <input type="date"> 使用） */
+export function dateInputValue(date) {
+  const p = dateParts(date);
+  return p ? `${p.year}-${p.month}-${p.day}` : '';
+}
+
 export function formatDateLong(date) {
   if (!(date instanceof Date) || Number.isNaN(date.getTime())) return '';
   return DATE_LONG_FMT.format(date);

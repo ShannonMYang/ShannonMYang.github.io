@@ -27,7 +27,7 @@ async function run() {
       }, theme);
       for (const route of pages) {
         await page.goto(BASE + route, { waitUntil: 'networkidle' });
-        await page.waitForTimeout(400);
+        await page.waitForTimeout(1000);
         await page.addScriptTag({ path: AXE });
         const result = await page.evaluate(async () => {
           const res = await axe.run(document, {

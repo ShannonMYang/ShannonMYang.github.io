@@ -113,7 +113,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate {
     }
 
     @objc private func openSitePreview() {
-        openURL("http://127.0.0.1:\(currentPort + 1)/")
+        let file = repoRoot.appendingPathComponent(".tmp/preview-port")
+        let port = (try? String(contentsOf: file, encoding: .utf8)).flatMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
+        openURL("http://127.0.0.1:\(port ?? currentPort + 1)/")
     }
 
     @objc private func openStudioInBrowser() {

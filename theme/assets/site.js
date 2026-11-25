@@ -331,7 +331,6 @@
         card.style.left = `${column * (columnWidth + gap)}px`;
         card.style.top = `${heights[column]}px`;
         heights[column] += height + gap;
-        card.classList.add('is-in');
       }
       const maxHeight = Math.max(...heights);
       container.style.height = `${Math.max(0, maxHeight - gap)}px`;
@@ -346,6 +345,7 @@
 
   /* ---------------- Grid filtering ---------------- */
   const filterState = { type: 'all', tag: '', q: '' };
+  let filtersInitialized = false;
   const status = $('#filters-status');
   const clearButtons = $$('[data-clear-filters]');
   const emptyState = $('#empty-state');
@@ -389,7 +389,7 @@
       card.classList.toggle('is-hidden', !match);
       if (match) {
         visible += 1;
-        card.classList.add('is-in');
+        if (filtersInitialized) card.classList.add('is-in');
       }
     }
 
@@ -415,6 +415,7 @@
       if (filterState.q) parts.push(`关键词「${filterState.q}」`);
       status.textContent = parts.join(' · ');
     }
+    filtersInitialized = true;
     masoHelper.layout();
     if (updateUrl) writeParams();
     if (scroll) $('#all')?.scrollIntoView({ behavior: 'smooth', block: 'start' });

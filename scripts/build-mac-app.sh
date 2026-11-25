@@ -22,9 +22,10 @@ swiftc -O -swift-version 5 -module-cache-path "$PWD/.tmp/swift-module-cache" \
   -o "$BUNDLE/Contents/MacOS/$BIN_NAME"
 
 echo "→ 生成应用图标"
-ICONSET="$(mktemp -d)/AppIcon.iconset"
-mkdir -p "$ICONSET"
-python3 - "$ICONSET" <<'PY'
+if python3 -c 'import PIL' >/dev/null 2>&1; then
+  ICONSET="$(mktemp -d)/AppIcon.iconset"
+  mkdir -p "$ICONSET"
+  python3 - "$ICONSET" <<'PY'
 from PIL import Image
 import sys, os
 src = Image.open('theme/assets/icon-512.png').convert('RGB').resize((1024, 1024), Image.LANCZOS)
@@ -34,7 +35,10 @@ for size in [16, 32, 64, 128, 256, 512, 1024]:
     if size <= 512:
         src.resize((size * 2, size * 2), Image.LANCZOS).save(os.path.join(out, f'icon_{size}x{size}@2x.png'))
 PY
-iconutil -c icns "$ICONSET" -o "$BUNDLE/Contents/Resources/AppIcon.icns"
+  iconutil -c icns "$ICONSET" -o "$BUNDLE/Contents/Resources/AppIcon.icns" 2>/dev/null || true
+else
+  echo "  （未安装 Pillow，跳过自定义图标）"
+fi
 
 echo "→ 写入 Info.plist"
 cat > "$BUNDLE/Contents/Info.plist" <<PLIST

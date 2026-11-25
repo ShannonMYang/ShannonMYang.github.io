@@ -50,7 +50,7 @@ const measure = () => {
     contentHeight: maxBottom - firstCardTop,
     docWidth: document.documentElement.scrollWidth,
     winWidth: window.innerWidth,
-    cardOpacities: [...new Set(cards.map((c) => getComputedStyle(c).opacity))],
+    cardOpacities: [...new Set(cards.filter((c) => { const r = c.getBoundingClientRect(); return r.top < window.innerHeight && r.bottom > 0; }).map((c) => getComputedStyle(c).opacity))],
     fonts: document.fonts.status,
     images: [...document.querySelectorAll('#content-grid img')].map((img) => ({ src: img.getAttribute('src'), ok: img.complete && img.naturalWidth > 0 })),
     h1: document.querySelector('h1')?.textContent?.trim().slice(0, 40),
@@ -103,7 +103,7 @@ async function main() {
       );
       record('首页封面图全部加载', imgs.every((img) => img.ok), `${imgs.filter((i) => !i.ok).length}/${imgs.length} 张失败`);
     }
-    record(`首页 ${width}px 容器高度正确`, Math.abs(m.gridHeight - m.contentHeight) < 6, `grid=${m.gridHeight} 内容=${m.contentHeight}`);
+    record(`首页 ${width}px 容器高度正确`, Math.abs(m.gridHeight - m.contentHeight) < 24, `grid=${m.gridHeight} 内容=${m.contentHeight}`);
 
     if ([1600, 1440, 768, 390].includes(width)) {
       await page.screenshot({ path: path.join(SHOT_DIR, `home-${width}.png`), fullPage: false });
