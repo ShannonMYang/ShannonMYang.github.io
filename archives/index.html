@@ -1,914 +1,573 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>文章归档 | 木鱼小店</title>
-<meta name="description" content="温故而知新" />
-<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
-<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>归档 · 木鱼小店</title>
+<meta name="description" content="木鱼小店的全部文章与笔记归档，共 76 篇。">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/archives/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="website">
+<meta property="og:title" content="归档 · 木鱼小店">
+<meta property="og:description" content="木鱼小店的全部文章与笔记归档，共 76 篇。">
+<meta property="og:url" content="https://shannonmyang.github.io/archives/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="归档 · 木鱼小店">
+<meta name="twitter:description" content="木鱼小店的全部文章与笔记归档，共 76 篇。">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
 
-<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
-<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
-  </head>
-  <body>
-    <!-- start: #wrapper -->
-    <div class="wrapper">
-      
-            <header id="header" class="grid-container">
-        <!-- start: .menu-wrapper -->
-        <div class="menu-mobile"> 
-          <i class="fa fa-reorder"></i>
-        </div>
-        <div class="menu-wrapper">
-          <div class="">
-            <div class="logo">
-              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
-            </div>
-            <!-- start: .main-nav -->
-
-            <nav class="main-nav grid-container grid-parent">
-              <ul id="menu-header" class="menu gradient-effect">
-                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
-                
-                  <li class="" >
-                    <a href="/" class="menu">
-                      首页
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/archives" class="menu">
-                      归档
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/tags" class="menu">
-                      标签
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/post/about" class="menu">
-                      关于
-                    </a>
-                  </li>
-                
-                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
-              </ul>
-            </nav>
-            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
-            <!-- end: .main-nav -->
-            <div class="clear"></div>
-            <div class="border hide-on-tablet hide-on-mobile"></div>
-          </div>    
-          <div class="clear"></div>
-        </div>
-        <!-- end: .menu-wrapper -->
-        <div class="clear"></div>
-      </header>
-      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
-        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
-          <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1616407941600" action="/search/index.html" class="search-form" _lpchecked="1">
-              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
-              <button type="submit" class="submit" aria-label="Submit">
-                <i class="fa fa-search-line"></i>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <main id="home" class="main fullcover no-sidebar content">
-        <div class="grid-container module-wrapper enable-masonry aos-init aos-animate" data-aos="fade-up">
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile widget_epcl_related_articles">
-                
-            <!-- start: .articles -->
-            
-
-
-<div class="main-article post">
-  <h2 class="year">共 30 篇文章</h2>
-
-    <h2 class="year">2021</h2>
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/mac-shang-homebrew-chang-yong-ming-ling.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2021-03-22">22 分钟前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/">macOS 中 常用 Homebrew 命令</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2021-03-12">10 天前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">bug_解决 WKWebView 加载本地 css 文件无效</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/ling-sui-yu-ji.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2021-02-20">1 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/">零碎语记</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/zheng-zhou-wu-xian-yi-jin-ban-li-ji/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/zheng-zhou-wu-xian-yi-jin-ban-li-ji.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2021-01-29">2 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/zheng-zhou-wu-xian-yi-jin-ban-li-ji/">郑州五险一金办理记</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    <div class="clear"></div>
-
-    <h2 class="year">2020</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ling-sui-bi-ji/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/ling-sui-bi-ji.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-11-13">4 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ling-sui-bi-ji/">零碎笔记</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-11-13">4 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/">macos 升级 big sur 显示安装所选更新时发生错误</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/bian-cheng-qiong-ren-de-18-zhong-fang-fa/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/bian-cheng-qiong-ren-de-18-zhong-fang-fa.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-10-27">5 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/bian-cheng-qiong-ren-de-18-zhong-fang-fa/">变成穷人的18中方法</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-07-28">8 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/">探究__block本质时，xcrun的报错解决</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/si-shui-liu-nian-zong-jie.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-05-28">10 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/si-shui-liu-nian-zong-jie/">流年·流水账</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-05-28">10 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/">oh-my-zsh 提示不安全信息解决方案</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-05-11">10 个月前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/">解决 element-ui 弹出多个 message 的问题</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/lan-zhu-nei-xin-de-mo-shou/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lan-zhu-nei-xin-de-mo-shou.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-05-05">1 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/lan-zhu-nei-xin-de-mo-shou/">拦住内心的魔兽</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/xiang-si-lian-xiang.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-04-25">1 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/xiang-si-lian-xiang/">相似联想</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/geng-huan-win10-xi-tong-de-zi-ti.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2020-04-16">1 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    <div class="clear"></div>
-
-    <h2 class="year">2019</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-12-24">1 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/">Vue.js 中引入 Font Awesome 字体图标</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-12-21">1 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/mac-xi-tong-chang-gui-zhi-ling/">Mac 系统常规指令</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-07-17">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/">npm 管理依赖包版本</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-07-03">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">Xcode 10 升级后的 Error: Multiple commands produce</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-06-26">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/">iOS 打破 NSTimer 循环引用</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-06-18">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/">iOS 离屏渲染优化简单分析</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-06-17">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-06-15">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/">iOS 利用 Runtime 自定义导航控制器返回手势</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/zheng-hong-shao-rou/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-06-15">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/zheng-hong-shao-rou/">蒸红烧肉</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2019-04-29">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    <div class="clear"></div>
-
-    <h2 class="year">2018</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/hello-gridea/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/hello-gridea.png');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-12-12">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/hello-gridea/">Hello Gridea</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-11-06">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/">算法小记 · 不用四则运算做加法</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-11-05">2 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-07-18">3 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/zai-xie-ios-xiang-ying-zhe-lian/">再写 iOS 响应者链</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-      
-      <article class="item default grid-33 tablet-grid-50 np-mobile">
-        <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/" class="thumb hover-effect">
-          <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('/media/images/custom-featureImage.jpg');"></span>
-        </a>
-        <div class="info gradient-effect">
-          <time datetime="2018-06-15">3 年前</time>
-          <h4 class="title usmall">
-            <a href="https://shannonmyang.github.io/post/ios-shi-jian-xiang-ying/">iOS 事件响应</a>
-          </h4>
-        </div>
-      </article>
-      
-    
-    <div class="clear"></div>
-
-</div>
-            <!-- end: .articles -->
-            
-                        <div class="epcl-pagination section">
-              <div class="nav">
-                
-                
-              </div>
-            </div>
-            
-          </div>
-          </div>
-        </div>
-      </main>
-
-        <footer id="footer" class="grid-container">
-        <div class="widgets row gradient-effect">
-            <div class="default-sidebar border-effect">
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
-                  <h4 class="widget-title title white bordered">最新文章</h4>
-                  
-                  
-                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/mac-shang-homebrew-chang-yong-ming-ling.jpg');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-03-22">2021-03-22</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/">macOS 中 常用 Homebrew 命令</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao.png');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-03-12">2021-03-12</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">bug_解决 WKWebView 加载本地 css 文件无效</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/ling-sui-yu-ji.jpg');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-02-20">2021-02-20</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/">零碎语记</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <div class="clear"></div>
-                </section>
-              </div>
-
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
-                  <h4 class="widget-title title white bordered">标签云</h4>
-                  <div class="tagcloud">
-                    
-                      <a href="https://shannonmyang.github.io/tag/5ybvI6wsF/" class="ctag ctag-0 ctag-5ybvI6wsF" aria-label="">mac</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-1 ctag-zkPOwWCgw" aria-label="">iOS</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/pTdJtut4n/" class="ctag ctag-2 ctag-pTdJtut4n" aria-label="">摘录</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-3 ctag-xdet-8MvB" aria-label="">杂谈</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/iQZ4KGVNP/" class="ctag ctag-4 ctag-iQZ4KGVNP" aria-label="">社保公积金</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/VamS5Q7Cp/" class="ctag ctag-5 ctag-VamS5Q7Cp" aria-label="">计算机基础知识</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-6 ctag-d3FTfjZYU" aria-label="">系统设置</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/p54g6KJSY/" class="ctag ctag-7 ctag-p54g6KJSY" aria-label="">理财</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/WuyCWSu29/" class="ctag ctag-8 ctag-WuyCWSu29" aria-label="">总结</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-9 ctag-awQNAxTv9" aria-label="">Vue.js</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-10 ctag-72sFOp2qr" aria-label="">厨记</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-11 ctag-t5FFzq6Cn" aria-label="">算法</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-12 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
-                    
-                  </div>
-                  <div class="clear"></div>
-                </section>
-              </div>
-
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
-                  <h4 class="widget-title title white bordered">关于我</h4>
-                  <div class="avatar">
-                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
-                  </div>
-                  <div class="info">
-                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
-                    <p class="founder">温故而知新</p>
-                    <div class="social">
-                      
-                          
-                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
-                        
-                      
-                          
-                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
-                        
-                      
-                        
-                      
-                        
-                      
-                        
-                      
-                    </div> 
-                  </div>
-                  <div class="clear"></div>
-                  </section>
-              </div>
-
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="logo">
-          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
-        </div>
-        <p class="published border-effect">
-          ©2019 共 30 篇文章
-          <br/>
-          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
-        </p>
-        
-        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
-          <i class="fa fa-arrow"></i>
-        </a>
-    </footer>
-    
-    <div class="clear"></div>
-
-        
-
+</head>
+<body class="page-archives">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link is-active" href="/archives/" aria-current="page">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
     </div>
-    <!-- end: #wrapper -->
-  </body>
+  </div>
+</header>
+<main id="main">
+  <section class="page-head">
+    <p class="section-eyebrow">ARCHIVE · 76 ENTRIES</p>
+    <h1 class="page-title">归档<span class="page-title__count">76</span></h1>
+    <p class="page-desc">从 9999 到 0，一共 76 次记录。按时间从近到远排列。</p>
+    <nav class="year-nav" aria-label="按年份跳转"><a href="#y2022年">2022年</a><a href="#y2021年">2021年</a><a href="#y2020年">2020年</a><a href="#y2019年">2019年</a><a href="#y2018年">2018年</a></nav>
+  </section>
+  <div class="archive">
+    <section class="archive__group" id="y2022年" aria-labelledby="yl2022年">
+          <header class="archive__year"><h2 id="yl2022年">2022年</h2><span>2 篇</span></header>
+          <ol class="archive__list">
+            <li class="archive__item">
+                  <time datetime="2022-03-14T06:58:01.000Z">03.14</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-49/">iOS 9.0 之后 NSString encode 方法替换</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2022-02-10T02:02:48.000Z">02.10</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-48/">Vue/uni-app 实现不同值展示不同CSS样式</a>
+                  <span class="archive__tags"><span>Vue.js</span><span>CSS</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li>
+          </ol>
+        </section><section class="archive__group" id="y2021年" aria-labelledby="yl2021年">
+          <header class="archive__year"><h2 id="yl2021年">2021年</h2><span>49 篇</span></header>
+          <ol class="archive__list">
+            <li class="archive__item">
+                  <time datetime="2021-12-23T07:30:20.000Z">12.23</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-47/">记一下被Javascript时间转换折磨的历程</a>
+                  <span class="archive__tags"><span>JavaScript</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-11-24T09:42:21.000Z">11.24</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-46/">iOS 钥匙串 证书不受信任</a>
+                  <span class="archive__tags"><span>iOS</span><span>macOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-11-24T06:54:50.000Z">11.24</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-45/">让uni-app中的style动态变化</a>
+                  <span class="archive__tags"><span>Vue.js</span><span>CSS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-10-21T03:03:18.000Z">10.21</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-44/">中文字符 ASCII 码和 NSString 相互转换</a>
+                  <span class="archive__tags"><span>Objective-C</span><span>基础知识</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-10-20T07:31:10.000Z">10.20</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-43/">Chrome 通过设置解决跨域问题</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">3 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-10-20T07:18:43.000Z">10.20</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-42/">由POST 400引出的错误</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-10-15T09:40:44.000Z">10.15</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-41/">Postman 模拟 Request Payload 发送 Post</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-09-10T01:46:00.000Z">09.10</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-40/">RN 0.62 升级遇到的pod &quot;React/Core&quot;错误</a>
+                  <span class="archive__tags"><span>React Native</span><span>Objective-C</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-09-07T07:53:17.000Z">09.07</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-39/">RN 0.62 关于 Animated 的警告和报错</a>
+                  <span class="archive__tags"><span>React Native</span><span>错误解决</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-09-01T10:29:56.000Z">09.01</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-38/">Objective-C 中 Byte 、 Byte *、 Byte [] 的区别及转换</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-08-23T09:32:58.000Z">08.23</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-37/">Xcode 真机调试，总要求需要输入管理员账号和密码</a>
+                  <span class="archive__tags"><span>iOS</span><span>错误解决</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-08-09T15:18:20.000Z">08.09</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-36/">RN 踩坑记</a>
+                  <span class="archive__tags"><span>React Native</span><span>错误解决</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-07-16T02:34:24.000Z">07.16</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-35/">iOS逆向知识·小记</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-07-09T02:54:17.000Z">07.09</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-34/">gitlab提交代码所遇多账户导致的ssh错误·小记</a>
+                  <span class="archive__tags"><span>错误解决</span><span>git</span></span>
+                  <span class="archive__read">3 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-07-02T04:55:34.000Z">07.02</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-33/">Xcode编译OC和RN混合开发所遇错误·小记</a>
+                  <span class="archive__tags"><span>React Native</span><span>iOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-07-01T08:31:31.000Z">07.01</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-32/">Xocde编译项目所遇问题·小记</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-07-01T03:19:48.000Z">07.01</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-31/">nvm：安装、切换不同 Node.js 版本的管理器</a>
+                  <span class="archive__tags"><span>Node.js</span></span>
+                  <span class="archive__read">7 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-24T01:55:26.000Z">06.24</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-29/">React Native项目编译调试过程所遇错误·小记</a>
+                  <span class="archive__tags"><span>React Native</span><span>iOS</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-17T09:15:54.000Z">06.17</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-28/">Xcode 给工程添加 .gitignore 文件</a>
+                  <span class="archive__tags"><span>Objective-C</span><span>基础知识</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-16T09:56:27.000Z">06.16</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-27/">由OC的DES加密衍生的NSData学习</a>
+                  <span class="archive__tags"><span>Objective-C</span><span>基础知识</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-16T09:53:45.000Z">06.16</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-26/">iOS 打包类型和推送操作</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">3 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-11T08:40:40.000Z">06.11</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-25/">由 DES加密 衍生的 数据类型 转换问题 · 小记</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-06-08T07:30:38.000Z">06.08</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-24/">React Native 之原理浅析</a>
+                  <span class="archive__tags"><span>React Native</span><span>底层知识</span></span>
+                  <span class="archive__read">22 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-25T08:14:09.000Z">05.25</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-23/">react-native 项目启动时报错：Module AppRegistry is not registered callable module (calling runApplication)</a>
+                  <span class="archive__tags"><span>React Native</span><span>错误解决</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-18T09:12:44.000Z">05.18</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-22/">React Native 与 iOS OC 的混合开发</a>
+                  <span class="archive__tags"><span>React Native</span><span>iOS</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-12T02:16:19.000Z">05.12</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-21/">React Native 报错 undefined is not an object (evaluating &#39;this.props.navigation.navigate&#39;)</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-10T01:24:39.000Z">05.10</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-20/">如何在 Vim/Vi 中保存文件并退出编辑器</a>
+                  <span class="archive__tags"><span>macOS</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-07T03:01:45.000Z">05.07</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-19/">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</a>
+                  <span class="archive__tags"><span>React Native</span><span>iOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-06T09:35:45.000Z">05.06</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-18/">React-Native FlatList  Warning: Each child in an array or iterator should have a unique “key” prop</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-06T09:27:34.000Z">05.06</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-17/">React Native 页面跳转传值问题</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-05-06T08:58:50.000Z">05.06</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-16/">React Native 使用 react-native-webview 渲染 HTML</a>
+                  <span class="archive__tags"><span>React Native</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-25T06:49:12.000Z">04.25</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-15/">React Native 的基本组件</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">8 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-25T06:01:49.000Z">04.25</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-14/">React Navigation 的依赖安装和基本使用</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">7 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-25T05:20:23.000Z">04.25</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-13/">React Native 的 ScrollView</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-25T03:14:22.000Z">04.25</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-12/">React Native创建初始化项目所遇问题·小记</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-22T07:02:49.000Z">04.22</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-11/">React Naive 的 组件生命周期</a>
+                  <span class="archive__tags"><span>React Native</span><span>基础知识</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-21T02:00:32.000Z">04.21</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-10/">ReactNative 的属性 Props、State及父子组件传值</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-21T01:45:56.000Z">04.21</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-9/">React Native 的 Flex 布局</a>
+                  <span class="archive__tags"><span>React Native</span><span>CSS</span></span>
+                  <span class="archive__read">3 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-21T01:17:27.000Z">04.21</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-8/">React Native 的 CSS 布局</a>
+                  <span class="archive__tags"><span>CSS</span><span>基础知识</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-20T14:11:03.000Z">04.20</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-7/">React Native 的 结构分析</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-12T13:07:53.000Z">04.12</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-6/">npm run dev 和 npm run serve</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-12T13:03:23.000Z">04.12</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-5/">vue-cli3 创建项目的正确姿势</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-04-12T08:29:42.000Z">04.12</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-4/">Vue.js项目npm install错误解析</a>
+                  <span class="archive__tags"></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-03-30T14:20:50.000Z">03.30</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-2/">iOS 开发多线程之队列组 —— 下载合并图片</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-03-30T13:40:15.000Z">03.30</time>
+                  <span class="kind-dot kind-dot--note" role="img" aria-label="笔记"></span>
+                  <a class="archive__title" href="/note/gh-1/">OC 内省 (反射) 机制的理解</a>
+                  <span class="archive__tags"><span>iOS</span><span>Objective-C</span></span>
+                  <span class="archive__read">7 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-03-22T09:53:41.000Z">03.22</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/mac-shang-homebrew-chang-yong-ming-ling/">macOS 中 常用 Homebrew 命令</a>
+                  <span class="archive__tags"><span>mac</span><span>iOS</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-03-12T15:17:59.000Z">03.12</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">bug_解决 WKWebView 加载本地 css 文件无效</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-02-20T03:42:36.000Z">02.20</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ling-sui-yu-ji/">零碎语记</a>
+                  <span class="archive__tags"><span>摘录</span><span>杂谈</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2021-01-29T04:15:36.000Z">01.29</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/zheng-zhou-wu-xian-yi-jin-ban-li-ji/">郑州五险一金办理记</a>
+                  <span class="archive__tags"><span>社保公积金</span></span>
+                  <span class="archive__read">3 分钟</span>
+                </li>
+          </ol>
+        </section><section class="archive__group" id="y2020年" aria-labelledby="yl2020年">
+          <header class="archive__year"><h2 id="yl2020年">2020年</h2><span>10 篇</span></header>
+          <ol class="archive__list">
+            <li class="archive__item">
+                  <time datetime="2020-11-13T11:15:28.000Z">11.13</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ling-sui-bi-ji/">零碎笔记</a>
+                  <span class="archive__tags"><span>计算机基础知识</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-11-13T01:13:52.000Z">11.13</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/macos-sheng-ji-big-sur-xian-shi-an-zhuang-suo-xuan-geng-xin-shi-fa-sheng-cuo-wu/">macos 升级 big sur 显示安装所选更新时发生错误</a>
+                  <span class="archive__tags"><span>mac</span><span>系统设置</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-10-27T03:52:18.000Z">10.27</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/bian-cheng-qiong-ren-de-18-zhong-fang-fa/">变成穷人的18中方法</a>
+                  <span class="archive__tags"><span>理财</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-07-28T08:35:26.000Z">07.28</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/tan-jiu-__block-ben-zhi-xcrun-de-bao-cuo-jie-jue/">探究__block本质时，xcrun的报错解决</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-05-28T04:20:15.000Z">05.28</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/si-shui-liu-nian-zong-jie/">流年·流水账</a>
+                  <span class="archive__tags"><span>总结</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-05-28T02:22:58.000Z">05.28</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/oh-my-zsh-ti-shi-bu-an-quan-xin-xi-jie-jue-fang-an/">oh-my-zsh 提示不安全信息解决方案</a>
+                  <span class="archive__tags"><span>mac</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-05-11T08:04:56.000Z">05.11</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/jie-jue-element-ui-dan-chu-duo-ge-message-de-wen-ti/">解决 element-ui 弹出多个 message 的问题</a>
+                  <span class="archive__tags"><span>Vue.js</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-05-05T04:00:00.000Z">05.05</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/lan-zhu-nei-xin-de-mo-shou/">拦住内心的魔兽</a>
+                  <span class="archive__tags"><span>杂谈</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-04-25T04:00:00.000Z">04.25</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/xiang-si-lian-xiang/">相似联想</a>
+                  <span class="archive__tags"><span>杂谈</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2020-04-16T04:00:00.000Z">04.16</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/geng-huan-win10-xi-tong-de-zi-ti/">更换Win10系统的字体</a>
+                  <span class="archive__tags"><span>系统设置</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li>
+          </ol>
+        </section><section class="archive__group" id="y2019年" aria-labelledby="yl2019年">
+          <header class="archive__year"><h2 id="yl2019年">2019年</h2><span>10 篇</span></header>
+          <ol class="archive__list">
+            <li class="archive__item">
+                  <time datetime="2019-12-24T04:00:00.000Z">12.24</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/vuejs-zhong-yin-ru-font-awesome-zi-ti-tu-biao/">Vue.js 中引入 Font Awesome 字体图标</a>
+                  <span class="archive__tags"><span>Vue.js</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-12-21T04:00:00.000Z">12.21</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/mac-xi-tong-chang-gui-zhi-ling/">Mac 系统常规指令</a>
+                  <span class="archive__tags"><span>系统设置</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-07-17T04:00:00.000Z">07.17</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/npm-guan-li-yi-lai-bao-ban-ben/">npm 管理依赖包版本</a>
+                  <span class="archive__tags"><span>Vue.js</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-07-03T04:00:00.000Z">07.03</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">Xcode 10 升级后的 Error: Multiple commands produce</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-06-26T04:00:00.000Z">06.26</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ios-da-po-nstimer-xun-huan-yin-yong/">iOS 打破 NSTimer 循环引用</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-06-18T04:00:00.000Z">06.18</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/">iOS 离屏渲染优化简单分析</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-06-17T04:00:00.000Z">06.17</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-06-15T04:00:00.000Z">06.15</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/zheng-hong-shao-rou/">蒸红烧肉</a>
+                  <span class="archive__tags"><span>厨记</span></span>
+                  <span class="archive__read">2 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-06-15T04:00:00.000Z">06.15</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ios-li-yong-runtime-zi-ding-yi-dao-hang-kong-zhi-qi-fan-hui-shou-shi/">iOS 利用 Runtime 自定义导航控制器返回手势</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2019-04-29T04:00:00.000Z">04.29</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/lesslesstu-jie-suan-fa-greatergreater-yue-du-bi-ji/">《图解算法》阅读笔记</a>
+                  <span class="archive__tags"><span>算法</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li>
+          </ol>
+        </section><section class="archive__group" id="y2018年" aria-labelledby="yl2018年">
+          <header class="archive__year"><h2 id="yl2018年">2018年</h2><span>5 篇</span></header>
+          <ol class="archive__list">
+            <li class="archive__item">
+                  <time datetime="2018-12-12T04:00:00.000Z">12.12</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/hello-gridea/">Hello Gridea</a>
+                  <span class="archive__tags"><span>Gridea</span></span>
+                  <span class="archive__read">1 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2018-11-06T04:00:00.000Z">11.06</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/suan-fa-xiao-ji-bu-yong-si-ze-yun-suan-zuo-jia-fa/">算法小记 · 不用四则运算做加法</a>
+                  <span class="archive__tags"><span>算法</span></span>
+                  <span class="archive__read">5 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2018-11-05T04:00:00.000Z">11.05</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/suan-fa-xiao-ji-fei-bo-na-qi-shu-lie-qing-wa-tiao-tai-jie-wen-ti/">算法小记 · 斐波那契数列 + 青蛙跳台阶问题</a>
+                  <span class="archive__tags"><span>算法</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2018-07-18T04:00:00.000Z">07.18</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/zai-xie-ios-xiang-ying-zhe-lian/">再写 iOS 响应者链</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">4 分钟</span>
+                </li><li class="archive__item">
+                  <time datetime="2018-06-15T04:00:00.000Z">06.15</time>
+                  <span class="kind-dot kind-dot--post" role="img" aria-label="文章"></span>
+                  <a class="archive__title" href="/post/ios-shi-jian-xiang-ying/">iOS 事件响应</a>
+                  <span class="archive__tags"><span>iOS</span></span>
+                  <span class="archive__read">3 分钟</span>
+                </li>
+          </ol>
+        </section>
+  </div>
+</main></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
 </html>

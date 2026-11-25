@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>iOS 打包类型和推送操作 · 木鱼小店</title>
+<meta name="description" content="项目运行模式 release/debug 和推送 app 在手机上编译运行的时候 run运行模式无论是选择的debug还是release， a. 手动配置描述文件和证书： 若release运行，signing(Release) 选择的描述文件须是dev的，因为devfile包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-26/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 打包类型和推送操作 · 木鱼小店">
+<meta property="og:description" content="项目运行模式 release/debug 和推送 app 在手机上编译运行的时候 run运行模式无论是选择的debug还是release， a. 手动配置描述文件和证书： 若release运行，signing(Release) 选择的描述文件须是dev的，因为devfile包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-26/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="iOS 打包类型和推送操作 · 木鱼小店">
+<meta name="twitter:description" content="项目运行模式 release/debug 和推送 app 在手机上编译运行的时候 run运行模式无论是选择的debug还是release， a. 手动配置描述文件和证书： 若release运行，signing(Release) 选择的描述文件须是dev的，因为devfile包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-06-16T09:53:45.000Z">2021年6月16日</time><span class="article__kicker-dot">·</span><span>约 3 分钟</span></div>
+      <h1 class="article__title">iOS 打包类型和推送操作</h1>
+      <p class="article__lead">项目运行模式 release/debug 和推送 app 在手机上编译运行的时候 run运行模式无论是选择的debug还是release， a. 手动配置描述文件和证书： 若release运行，signing(Release) 选择的描述文件须是dev的，因为devfile包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-26.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#26</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/26" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #26</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/26" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h2 id="项目运行模式-releasedebug-和推送" class="prose-h prose-h2"><a class="h-anchor" href="#项目运行模式-releasedebug-和推送" aria-hidden="true" tabindex="-1">#</a>项目运行模式 release/debug 和推送</h2><h3 id="app-在手机上编译运行的时候" class="prose-h prose-h3"><a class="h-anchor" href="#app-在手机上编译运行的时候" aria-hidden="true" tabindex="-1">#</a>app 在手机上编译运行的时候</h3><h4 id="run运行模式无论是选择的debug还是release" class="prose-h prose-h4"><a class="h-anchor" href="#run运行模式无论是选择的debug还是release" aria-hidden="true" tabindex="-1">#</a>run运行模式无论是选择的debug还是release，</h4><blockquote>
+<p>a. 手动配置描述文件和证书：
+若release运行，signing(Release) 选择的描述文件须是dev的，因为dev_file包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc时能运行但是app不能启动成功)。
+debug或者adhoc运行，在手动选择描述文件的时候，同理。
+当然选择了dev的描述文件，自动匹配的证书也是dev的，因为生成dev_file的时候，只能选择dev证书，这个不能修改。</p>
+</blockquote>
+<blockquote>
+<p>b. 自动配置（Automatically manage signing）：
+选择Team, 自动匹配的是dev证书和Xcode自动管理的描述文件，其实运行的时候，也是包含的UUId的设备的证书。自动配置：可以run —release和debug，应该是自动匹配的包含UUID设备的file。</p>
+</blockquote>
+<p>直接运行，无论 run 的 release 还是 debug，自动 signing 或者手动配置描述文件，此时 iOS JPush，JPush 只能选择开发环境推送消息，才能成功（JPush 初始化方法的 apsForProduction，isProduction 参数设置 YES 或者 NO 都无关）；</p>
+<h3 id="导出包的操作" class="prose-h prose-h3"><a class="h-anchor" href="#导出包的操作" aria-hidden="true" tabindex="-1">#</a>导出包的操作：</h3><blockquote>
+<p>a. 自动配置签名，release编译，打development包，还是只有开发环境推送才能推；
+b. 自动配置签名，release编译，打adhoc包，还是只有生产环境推送才能推；
+c. 自动配置签名，release编译，打appstore包，直接不能装；
+d. 自动配置签名，debug编译，打dev包，只能开发环境推送；
+e. 自动配置签名，debug编译，打adhoc包，只能生产推送；</p>
+</blockquote>
+<p>自动配置的，导出包时，不需要手动选择描述文件</p>
+<blockquote>
+<p>A. 手动配置签名，release编译，导出dev包，导出时需要选择dev描述文件,只有dev文件供选择，只能开发环境推送；
+B.手动配置签名，release编译，导出adhoc包，导出时需要选择adhoc描述文件,只有adhoc文件供选择；
+C. 手动配置签名，release编译，导出appstore包，导出时需要选择dis描述文件,只有dis文件供选择；</p>
+</blockquote>
+<h3 id="总结" class="prose-h prose-h3"><a class="h-anchor" href="#总结" aria-hidden="true" tabindex="-1">#</a>总结：</h3><blockquote>
+<p>自动签名和手动签名，导出的不同在于：最后导出时，是否需要选择描述文件；
+无论签名方式如何，编译模式如何，最后导出包的选择：appstore,adhoc,development 才决定了推送的环境。
+所以才实际操作中，只有导出类型为 adhoc 包安装，或者 appstore 包到 testFlight 安装，才能用生产推送。</p>
+</blockquote>
+<blockquote>
+<p>推送授权弹框注意点：</p>
+</blockquote>
+<p><em>1.在集成推送完好的情况下， tagget里面capabilities中关掉Push Notifications，就收不到通知，但是在安装启动的时候，还能弹出系统的是否允许通知的弹框。
+2. 允许推送的授权弹框的出现是由 JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound，声音这些设置才有的，这些不设置，则不弹授权框，也不会接收到推送消息。</em></p>
+<blockquote>
+<p>网络授权弹框</p>
+</blockquote>
+<p><em>1. 当项目中首次安装并启动，里面有网络请求的情况下，系统会自动弹授权弹框；
+2. 当切换app的网络权限：关闭app网络和允许网络来回切换时，当关闭网络权限后则每次启动，会弹出网络已关闭，去设置的系统弹框。</em></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#项目运行模式-releasedebug-和推送">项目运行模式 release/debug 和推送</a></li><li class="toc__item toc__item--h3"><a href="#app-在手机上编译运行的时候">app 在手机上编译运行的时候</a></li><li class="toc__item toc__item--h3"><a href="#导出包的操作">导出包的操作：</a></li><li class="toc__item toc__item--h3"><a href="#总结">总结：</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-27/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">由OC的DES加密衍生的NSData学习</span><span class="postnav__meta">2021.06.16 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-25/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">由 DES加密 衍生的 数据类型 转换问题 · 小记</span><span class="postnav__meta">2021.06.11 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.06.16</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"iOS 打包类型和推送操作","datePublished":"2021-06-16T09:53:45.000Z","dateModified":"2021-06-16T09:53:45.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"项目运行模式 release/debug 和推送 app 在手机上编译运行的时候 run运行模式无论是选择的debug还是release， a. 手动配置描述文件和证书： 若release运行，signing(Release) 选择的描述文件须是dev的，因为devfile包含了账号中的注册的设备，选择dis的描述文件是运行不起来的，因为不包含注册UUID设备的描述文件是不能直接运行的(adhoc…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-26/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

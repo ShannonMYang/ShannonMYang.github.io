@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>笔记库 · 木鱼小店</title>
+<meta name="description" content="从 GitHub Issues 同步的 47 篇开发笔记。">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/notes/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="website">
+<meta property="og:title" content="笔记库 · 木鱼小店">
+<meta property="og:description" content="从 GitHub Issues 同步的 47 篇开发笔记。">
+<meta property="og:url" content="https://shannonmyang.github.io/notes/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="笔记库 · 木鱼小店">
+<meta name="twitter:description" content="从 GitHub Issues 同步的 47 篇开发笔记。">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-notes">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link is-active" href="/notes/" aria-current="page">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <section class="page-head">
+    <p class="section-eyebrow">GITHUB NOTES · 47 ENTRIES</p>
+    <h1 class="page-title">笔记库<span class="page-title__count">47</span></h1>
+    <p class="page-desc">这些笔记原先零散地写在 GitHub Issues 里。现在它们被同步到这里，按主题收进书架，也可以直接去 GitHub 查看原文与讨论。</p>
+    <div class="page-head__actions"><a class="btn btn--ghost btn--sm" href="https://github.com/ShannonMYang/MyPersonalBlog" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg> 原始 Issues 仓库</a><a class="btn btn--ghost btn--sm" href="/archives/">全部内容归档</a></div>
+  </section>
+  <div class="shelf">
+    <section class="shelf__group" aria-labelledby="shelf-0">
+          <header class="shelf__head"><h2 id="shelf-0">React Native</h2><span>19</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-11/">
+                  <span class="shelf__num">#11</span>
+                  <span class="shelf__title">React Naive 的 组件生命周期</span>
+                  <span class="shelf__date">2021.04.22</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-12/">
+                  <span class="shelf__num">#12</span>
+                  <span class="shelf__title">React Native创建初始化项目所遇问题·小记</span>
+                  <span class="shelf__date">2021.04.25</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-13/">
+                  <span class="shelf__num">#13</span>
+                  <span class="shelf__title">React Native 的 ScrollView</span>
+                  <span class="shelf__date">2021.04.25</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-14/">
+                  <span class="shelf__num">#14</span>
+                  <span class="shelf__title">React Navigation 的依赖安装和基本使用</span>
+                  <span class="shelf__date">2021.04.25</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-15/">
+                  <span class="shelf__num">#15</span>
+                  <span class="shelf__title">React Native 的基本组件</span>
+                  <span class="shelf__date">2021.04.25</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-16/">
+                  <span class="shelf__num">#16</span>
+                  <span class="shelf__title">React Native 使用 react-native-webview 渲染 HTML</span>
+                  <span class="shelf__date">2021.05.06</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-17/">
+                  <span class="shelf__num">#17</span>
+                  <span class="shelf__title">React Native 页面跳转传值问题</span>
+                  <span class="shelf__date">2021.05.06</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-18/">
+                  <span class="shelf__num">#18</span>
+                  <span class="shelf__title">React-Native FlatList  Warning: Each child in an array or iterator should have a unique “key” prop</span>
+                  <span class="shelf__date">2021.05.06</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-19/">
+                  <span class="shelf__num">#19</span>
+                  <span class="shelf__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+                  <span class="shelf__date">2021.05.07</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-21/">
+                  <span class="shelf__num">#21</span>
+                  <span class="shelf__title">React Native 报错 undefined is not an object (evaluating &#39;this.props.navigation.navigate&#39;)</span>
+                  <span class="shelf__date">2021.05.12</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-22/">
+                  <span class="shelf__num">#22</span>
+                  <span class="shelf__title">React Native 与 iOS OC 的混合开发</span>
+                  <span class="shelf__date">2021.05.18</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-23/">
+                  <span class="shelf__num">#23</span>
+                  <span class="shelf__title">react-native 项目启动时报错：Module AppRegistry is not registered callable module (calling runApplication)</span>
+                  <span class="shelf__date">2021.05.25</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-24/">
+                  <span class="shelf__num">#24</span>
+                  <span class="shelf__title">React Native 之原理浅析</span>
+                  <span class="shelf__date">2021.06.08</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-29/">
+                  <span class="shelf__num">#29</span>
+                  <span class="shelf__title">React Native项目编译调试过程所遇错误·小记</span>
+                  <span class="shelf__date">2021.06.24</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-33/">
+                  <span class="shelf__num">#33</span>
+                  <span class="shelf__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+                  <span class="shelf__date">2021.07.02</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-36/">
+                  <span class="shelf__num">#36</span>
+                  <span class="shelf__title">RN 踩坑记</span>
+                  <span class="shelf__date">2021.08.09</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-39/">
+                  <span class="shelf__num">#39</span>
+                  <span class="shelf__title">RN 0.62 关于 Animated 的警告和报错</span>
+                  <span class="shelf__date">2021.09.07</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-40/">
+                  <span class="shelf__num">#40</span>
+                  <span class="shelf__title">RN 0.62 升级遇到的pod &quot;React/Core&quot;错误</span>
+                  <span class="shelf__date">2021.09.10</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-9/">
+                  <span class="shelf__num">#9</span>
+                  <span class="shelf__title">React Native 的 Flex 布局</span>
+                  <span class="shelf__date">2021.04.21</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-1">
+          <header class="shelf__head"><h2 id="shelf-1">iOS</h2><span>9</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-1/">
+                  <span class="shelf__num">#1</span>
+                  <span class="shelf__title">OC 内省 (反射) 机制的理解</span>
+                  <span class="shelf__date">2021.03.30</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-2/">
+                  <span class="shelf__num">#2</span>
+                  <span class="shelf__title">iOS 开发多线程之队列组 —— 下载合并图片</span>
+                  <span class="shelf__date">2021.03.30</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-25/">
+                  <span class="shelf__num">#25</span>
+                  <span class="shelf__title">由 DES加密 衍生的 数据类型 转换问题 · 小记</span>
+                  <span class="shelf__date">2021.06.11</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-32/">
+                  <span class="shelf__num">#32</span>
+                  <span class="shelf__title">Xocde编译项目所遇问题·小记</span>
+                  <span class="shelf__date">2021.07.01</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-35/">
+                  <span class="shelf__num">#35</span>
+                  <span class="shelf__title">iOS逆向知识·小记</span>
+                  <span class="shelf__date">2021.07.16</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-37/">
+                  <span class="shelf__num">#37</span>
+                  <span class="shelf__title">Xcode 真机调试，总要求需要输入管理员账号和密码</span>
+                  <span class="shelf__date">2021.08.23</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-38/">
+                  <span class="shelf__num">#38</span>
+                  <span class="shelf__title">Objective-C 中 Byte 、 Byte *、 Byte [] 的区别及转换</span>
+                  <span class="shelf__date">2021.09.01</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-46/">
+                  <span class="shelf__num">#46</span>
+                  <span class="shelf__title">iOS 钥匙串 证书不受信任</span>
+                  <span class="shelf__date">2021.11.24</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-49/">
+                  <span class="shelf__num">#49</span>
+                  <span class="shelf__title">iOS 9.0 之后 NSString encode 方法替换</span>
+                  <span class="shelf__date">2022.03.14</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-2">
+          <header class="shelf__head"><h2 id="shelf-2">未分类</h2><span>9</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-10/">
+                  <span class="shelf__num">#10</span>
+                  <span class="shelf__title">ReactNative 的属性 Props、State及父子组件传值</span>
+                  <span class="shelf__date">2021.04.21</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-26/">
+                  <span class="shelf__num">#26</span>
+                  <span class="shelf__title">iOS 打包类型和推送操作</span>
+                  <span class="shelf__date">2021.06.16</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-4/">
+                  <span class="shelf__num">#4</span>
+                  <span class="shelf__title">Vue.js项目npm install错误解析</span>
+                  <span class="shelf__date">2021.04.12</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-41/">
+                  <span class="shelf__num">#41</span>
+                  <span class="shelf__title">Postman 模拟 Request Payload 发送 Post</span>
+                  <span class="shelf__date">2021.10.15</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-42/">
+                  <span class="shelf__num">#42</span>
+                  <span class="shelf__title">由POST 400引出的错误</span>
+                  <span class="shelf__date">2021.10.20</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-43/">
+                  <span class="shelf__num">#43</span>
+                  <span class="shelf__title">Chrome 通过设置解决跨域问题</span>
+                  <span class="shelf__date">2021.10.20</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-5/">
+                  <span class="shelf__num">#5</span>
+                  <span class="shelf__title">vue-cli3 创建项目的正确姿势</span>
+                  <span class="shelf__date">2021.04.12</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-6/">
+                  <span class="shelf__num">#6</span>
+                  <span class="shelf__title">npm run dev 和 npm run serve</span>
+                  <span class="shelf__date">2021.04.12</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-7/">
+                  <span class="shelf__num">#7</span>
+                  <span class="shelf__title">React Native 的 结构分析</span>
+                  <span class="shelf__date">2021.04.20</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-3">
+          <header class="shelf__head"><h2 id="shelf-3">Objective-C</h2><span>3</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-27/">
+                  <span class="shelf__num">#27</span>
+                  <span class="shelf__title">由OC的DES加密衍生的NSData学习</span>
+                  <span class="shelf__date">2021.06.16</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-28/">
+                  <span class="shelf__num">#28</span>
+                  <span class="shelf__title">Xcode 给工程添加 .gitignore 文件</span>
+                  <span class="shelf__date">2021.06.17</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-44/">
+                  <span class="shelf__num">#44</span>
+                  <span class="shelf__title">中文字符 ASCII 码和 NSString 相互转换</span>
+                  <span class="shelf__date">2021.10.21</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-4">
+          <header class="shelf__head"><h2 id="shelf-4">Vue.js</h2><span>2</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-45/">
+                  <span class="shelf__num">#45</span>
+                  <span class="shelf__title">让uni-app中的style动态变化</span>
+                  <span class="shelf__date">2021.11.24</span>
+                  <span class="shelf__go">→</span>
+                </a></li><li><a href="/note/gh-48/">
+                  <span class="shelf__num">#48</span>
+                  <span class="shelf__title">Vue/uni-app 实现不同值展示不同CSS样式</span>
+                  <span class="shelf__date">2022.02.10</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-5">
+          <header class="shelf__head"><h2 id="shelf-5">macOS</h2><span>1</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-20/">
+                  <span class="shelf__num">#20</span>
+                  <span class="shelf__title">如何在 Vim/Vi 中保存文件并退出编辑器</span>
+                  <span class="shelf__date">2021.05.10</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-6">
+          <header class="shelf__head"><h2 id="shelf-6">Node.js</h2><span>1</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-31/">
+                  <span class="shelf__num">#31</span>
+                  <span class="shelf__title">nvm：安装、切换不同 Node.js 版本的管理器</span>
+                  <span class="shelf__date">2021.07.01</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-7">
+          <header class="shelf__head"><h2 id="shelf-7">错误解决</h2><span>1</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-34/">
+                  <span class="shelf__num">#34</span>
+                  <span class="shelf__title">gitlab提交代码所遇多账户导致的ssh错误·小记</span>
+                  <span class="shelf__date">2021.07.09</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-8">
+          <header class="shelf__head"><h2 id="shelf-8">JavaScript</h2><span>1</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-47/">
+                  <span class="shelf__num">#47</span>
+                  <span class="shelf__title">记一下被Javascript时间转换折磨的历程</span>
+                  <span class="shelf__date">2021.12.23</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section><section class="shelf__group" aria-labelledby="shelf-9">
+          <header class="shelf__head"><h2 id="shelf-9">CSS</h2><span>1</span></header>
+          <ol class="shelf__list">
+            <li><a href="/note/gh-8/">
+                  <span class="shelf__num">#8</span>
+                  <span class="shelf__title">React Native 的 CSS 布局</span>
+                  <span class="shelf__date">2021.04.21</span>
+                  <span class="shelf__go">→</span>
+                </a></li>
+          </ol>
+        </section>
+  </div>
+</main></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

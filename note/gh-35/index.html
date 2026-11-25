@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>iOS逆向知识·小记 · 木鱼小店</title>
+<meta name="description" content="写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-35/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS逆向知识·小记 · 木鱼小店">
+<meta property="og:description" content="写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-35/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="iOS逆向知识·小记 · 木鱼小店">
+<meta name="twitter:description" content="写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-07-16T02:34:24.000Z">2021年7月16日</time><span class="article__kicker-dot">·</span><span>约 4 分钟</span></div>
+      <h1 class="article__title">iOS逆向知识·小记</h1>
+      <p class="article__lead">写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-35.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#35</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/35" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #35</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#2B138E">iOS</span><span class="label-chip" style="--label-accent:#2B138E">Objective-C</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/35" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>写在前面的啰哩啰嗦：
+最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。
+这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。</p>
+</blockquote>
+<hr>
+<h3 id="最基础的混淆" class="prose-h prose-h3"><a class="h-anchor" href="#最基础的混淆" aria-hidden="true" tabindex="-1">#</a>最基础的混淆</h3><blockquote>
+<p>什么是混淆？网上差不多都说烂了。
+那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲爹妈都认不出来，造成阅读困难。但它自己认识，还能运行，这就是混淆。</p>
+</blockquote>
+<p><em>最常见的基础混淆</em></p>
+<blockquote>
+<p>通过宏定义，替换关键方法字符串
+因为我们都知道，宏定义，在编译之后，就是字符串的替换，所以可以利用这个特性，进行方法的混淆。让本来见名知意的方法，变得乱七八糟、面目全非。</p>
+</blockquote>
+<p><em>定义头文件、定义宏</em></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> ConfuseDefine_h</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> ConfuseDefine_h</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> TestFunc wojquiceui</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* ConfuseDefine_h */</span></span>
+</code></pre></figure><p><em>在调用的地方使用</em></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#import <span class="hljs-string">&quot;ViewController.h&quot;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">ViewController</span> ()</span>
+
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">ViewController</span></span>
+
+- (<span class="hljs-type">void</span>)viewDidLoad {
+    [<span class="hljs-variable language_">super</span> viewDidLoad];
+    <span class="hljs-comment">// Do any additional setup after loading the view.</span>
+    
+    [<span class="hljs-keyword">self</span> TestFunc];
+}
+
+- (<span class="hljs-type">void</span>)TestFunc
+{
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;%s&quot;</span>, __func__);
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><p><em>.pch文件中引入</em></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> AllNeedUse_pch</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> AllNeedUse_pch</span>
+
+<span class="hljs-meta">#import <span class="hljs-string">&quot;ConfuseDefine.h&quot;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* AllNeedUse_pch */</span></span>
+</code></pre></figure><p><em>.pch文件的路径配置</em>
+<img class="prose-img" src="/post-images/issues/gh-35-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+<p><em>注意点</em></p>
+<blockquote>
+<p>这种替换方法名的混淆方案会让 App Store 审核被拒，2.3.1 - Performance We discovered that your app contains obfuscated code…，因此，不建议在 App Store 上架的项目中使用。</p>
+</blockquote>
+<hr>
+<h3 id="class-dump检测混淆" class="prose-h prose-h3"><a class="h-anchor" href="#class-dump检测混淆" aria-hidden="true" tabindex="-1">#</a>class-dump检测混淆</h3><blockquote>
+<p>class-dump 是一个命令行工具，它利用 Objective-C 语言的 runtime 的特性，将存储在 mach-O 文件中的 @interface 和 @protocol 信息提取出来，并生成对应的.h 文件。 它将 xx.app 格式的 iOS 项目文件进行分析，并通过命令生成该 app 源代码中的所有头文件列表，其中就包含了方法名称，可以清晰的查看 dump 出来的方法名是否已经被混淆。</p>
+</blockquote>
+<p><em>安装 class-dump</em></p>
+<blockquote>
+<p>首先需要去这里：<a href="http://stevenygard.com/projects/class-dump/" target="_blank" rel="noopener noreferrer" class="ext-link">class-dump</a>，下载 <code>class-dump</code> 压缩包，解压后将文件夹中的 <code>class-dump</code> 可执行文件拷贝到 /usr/local/bin 目录下。</p>
+</blockquote>
+<p><em>具体操作步骤：</em></p>
+<ol>
+<li>
+<p>解压 class-dump 文件，如下图所示：
+<img class="prose-img" src="/post-images/issues/gh-35-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</li>
+<li>
+<p>打开终端，输入如下命令，即可打开 <code>/usr/local/bin</code> 目录文件夹，然后将 <code>class-dump</code> 文件拷贝到此目录下。</p>
+</li>
+</ol>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">open /usr/local/bin
+</code></pre></figure><ol start="3">
+<li>给 class-dump 文件更改权限，终端输入如下命令：</li>
+</ol>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">sudo chmod 777 /usr/local/bin/class-dump
+</code></pre></figure><ol start="4">
+<li>在终端输入 class-dump 查看是否安装成功，如显示命令的介绍和版本信息，就说明已经安装成功。
+<img class="prose-img" src="/post-images/issues/gh-35-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></li>
+</ol>
+<p><em>class-dump 使用方法</em></p>
+<blockquote>
+<p>dump 命令如下：</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">gradle · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">class</span>-<span class="hljs-keyword">dump</span> -H <span class="hljs-regexp">/Users/y</span>angjinlong<span class="hljs-regexp">/Shannon/</span>打包<span class="hljs-regexp">/Payload/</span>TestConfuseCode.app -o <span class="hljs-regexp">/Users/y</span>angjinlong<span class="hljs-regexp">/Shannon/</span>打包/codeHeaderSet
+</code></pre></figure><p>其中，-H 是生成头文件的命令，-o 是指定的头文件保存目录，<code>/Users/yangjinlong/Shannon/打包/Payload/TestConfuseCode.app</code> 则是 App 文件的路径。</p>
+<p>将在 <code>codeHeaderSet</code> 文件夹中看到所有 dump 出的头文件。如下示例：
+<img class="prose-img" src="/post-images/issues/gh-35-4.png" alt="Snipaste_2021-07-16_10-07-27" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+<p><strong>Tips：如何从打包出来的 xxx.ipa 文件中提取 xxx.app 文件</strong></p>
+<p>先将 xxx.ipa 文件后缀名修改为 xxx.zip ， 然后解压 xxx.zip 文件，会得到一个名为 Payload 的文件夹，文件夹中就放置的咱们需要的 xxx.app 文件，导出即可。</p>
+<p><em>注意点</em></p>
+<blockquote>
+<p>不是所有的 xxx.app 文件都可以轻易的 dump 出头文件列表，只有未加密的，自己开发暂未上架 App store 的 app 可以导出，App store 上架的三方应用由于被苹果加过密（加壳），不能直接 dump，需要先进行砸壳（Dumpdecrypted 工具）后，才能 dump 出需要的头文件。</p>
+</blockquote>
+<blockquote>
+<p>从 AppStore 直接下载的 ipa， 苹果公司对其做了 FairPlay DRM 技术进行加密保护，无法直接使用 class-dump 工具获取头文件（会遇到警告：<code>Warning: This file does not contain any Objective-C runtime information.</code>）。但是如果是通过 development 打包出来的话的 App 的话，是可以直接使用 class-dump 查看所有头文件的，这里介绍的就是通过此情况来说明如何获取 .h 文件的。</p>
+</blockquote>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#最基础的混淆">最基础的混淆</a></li><li class="toc__item toc__item--h3"><a href="#class-dump检测混淆">class-dump检测混淆</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-36/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">RN 踩坑记</span><span class="postnav__meta">2021.08.09 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-34/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">gitlab提交代码所遇多账户导致的ssh错误·小记</span><span class="postnav__meta">2021.07.09 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-32/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xocde编译项目所遇问题·小记</span>
+            <span class="mini-card__meta">2021.07.01 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-29/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native项目编译调试过程所遇错误·小记</span>
+            <span class="mini-card__meta">2021.06.24 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.07.16</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"iOS逆向知识·小记","datePublished":"2021-07-16T02:34:24.000Z","dateModified":"2021-07-16T02:34:24.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"写在前面的啰哩啰嗦： 最近在做两款差不多一样的App，其实就是相当于要做两个马甲包，毕竟大部分代码和界面，都差不多。所以，在被要求后续做上架后，研究了很久前听闻和看过的代码混淆。 这里主要简单介绍，最简单的混淆，以及如何通过逆向工具，进行混淆是否成功的监测。 ------ 最基础的混淆 什么是混淆？网上差不多都说烂了。 那我用我自己的话，简单总结一下。就是让你的项目代码在编译打包后，面目全非，它亲…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-35/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Navigation 的依赖安装和基本使用 · 木鱼小店</title>
+<meta name="description" content="------ - #### 目录 1. 简介 2. 依赖安装 3. StackNavigator 栈导航 4. TabNavigator 标签导航 5. DrawerNavigator 抽屉导航 6. 踩坑记录 补充 7. StackNavigator 中嵌套 TabNavigator 8. TabNavigator 中嵌套 StackNavigator 1. 简介 React Navigatio…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-14/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Navigation 的依赖安装和基本使用 · 木鱼小店">
+<meta property="og:description" content="------ - #### 目录 1. 简介 2. 依赖安装 3. StackNavigator 栈导航 4. TabNavigator 标签导航 5. DrawerNavigator 抽屉导航 6. 踩坑记录 补充 7. StackNavigator 中嵌套 TabNavigator 8. TabNavigator 中嵌套 StackNavigator 1. 简介 React Navigatio…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-14/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Navigation 的依赖安装和基本使用 · 木鱼小店">
+<meta name="twitter:description" content="------ - #### 目录 1. 简介 2. 依赖安装 3. StackNavigator 栈导航 4. TabNavigator 标签导航 5. DrawerNavigator 抽屉导航 6. 踩坑记录 补充 7. StackNavigator 中嵌套 TabNavigator 8. TabNavigator 中嵌套 StackNavigator 1. 简介 React Navigatio…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-04-25T06:01:49.000Z">2021年4月25日</time><span class="article__kicker-dot">·</span><span>约 7 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.10.20</span></div>
+      <h1 class="article__title">React Navigation 的依赖安装和基本使用</h1>
+      <p class="article__lead">------ - #### 目录 1. 简介 2. 依赖安装 3. StackNavigator 栈导航 4. TabNavigator 标签导航 5. DrawerNavigator 抽屉导航 6. 踩坑记录 补充 7. StackNavigator 中嵌套 TabNavigator 8. TabNavigator 中嵌套 StackNavigator 1. 简介 React Navigatio…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-14.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#14</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/14" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #14</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">基础知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/14" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><hr>
+<ul>
+<li>
+<h3 id="目录" class="prose-h prose-h3"><a class="h-anchor" href="#目录" aria-hidden="true" tabindex="-1">#</a>目录</h3></li>
+</ul>
+<blockquote>
+<ol>
+<li>简介</li>
+<li>依赖安装</li>
+<li>StackNavigator 栈导航</li>
+<li>TabNavigator 标签导航</li>
+<li>DrawerNavigator 抽屉导航</li>
+<li>踩坑记录
+<strong>补充</strong></li>
+<li>StackNavigator 中嵌套 TabNavigator</li>
+<li>TabNavigator 中嵌套 StackNavigator</li>
+</ol>
+</blockquote>
+<h4 id="1-简介" class="prose-h prose-h4"><a class="h-anchor" href="#1-简介" aria-hidden="true" tabindex="-1">#</a>1. 简介</h4><blockquote>
+<p>React Navigation 是 React Native 用来进行屏幕页面切换的导航方案，替代了废弃的 Navigator。配置 React Navigation 比配置 Navigator 要简单很多。React Navigation 5.x 版本是目前最新的稳定版本。</p>
+<p>如果你是 ReactNative 新手，建议安装 0.60.0 以上的版本，可以省去很多配置操作。(小声逼逼) 其实放这个命令是为了方便以后自己看，经常忘了怎么操作。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npx react-native init NavStudy --version 0.60.0  //版本号自行定义
+</code></pre></figure><h4 id="2-依赖安装" class="prose-h prose-h4"><a class="h-anchor" href="#2-依赖安装" aria-hidden="true" tabindex="-1">#</a>2. 依赖安装</h4><h4 id="a-安装-react-navigationnative" class="prose-h prose-h4"><a class="h-anchor" href="#a-安装-react-navigationnative" aria-hidden="true" tabindex="-1">#</a>a. 安装 react-navigation/native</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">aspectj · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">  npm install <span class="hljs-meta">@react</span>-navigation/<span class="hljs-keyword">native</span>
+  <span class="hljs-comment">//使用yarn就用yarn add安装</span>
+  yarn add <span class="hljs-meta">@react</span>-navigation/<span class="hljs-keyword">native</span>
+</code></pre></figure><h4 id="b-navigation-的运行会依赖于如下依赖项安装这些库" class="prose-h prose-h4"><a class="h-anchor" href="#b-navigation-的运行会依赖于如下依赖项安装这些库" aria-hidden="true" tabindex="-1">#</a>b. navigation 的运行会依赖于如下依赖项，安装这些库</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">aspectj · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"> npm install react-<span class="hljs-keyword">native</span>-reanimated react-<span class="hljs-keyword">native</span>-gesture-<span class="hljs-keyword">handler</span> react-<span class="hljs-keyword">native</span>-screens react-<span class="hljs-keyword">native</span>-safe-area-context <span class="hljs-meta">@react</span>-<span class="hljs-keyword">native</span>-community/masked-view
+</code></pre></figure><h4 id="c-链接-2-中的库-060-版本以上的跳过此步骤" class="prose-h prose-h4"><a class="h-anchor" href="#c-链接-2-中的库-060-版本以上的跳过此步骤" aria-hidden="true" tabindex="-1">#</a>c. 链接 2 中的库 (0.60 版本以上的跳过此步骤)</h4><blockquote>
+<p>React Native 0.60 及更高版本开始，会自动链接，如果你版本是 0.60 及以上，这一步就可以跳过；而 React Native 0.59 以及更低版本则需要手动链接，安装 react-native link。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">aspectj · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   react-<span class="hljs-keyword">native</span> link react-<span class="hljs-keyword">native</span>-reanimated
+   react-<span class="hljs-keyword">native</span> link react-<span class="hljs-keyword">native</span>-gesture-<span class="hljs-keyword">handler</span>
+   react-<span class="hljs-keyword">native</span> link react-<span class="hljs-keyword">native</span>-screens
+   react-<span class="hljs-keyword">native</span> link react-<span class="hljs-keyword">native</span>-safe-area-context
+</code></pre></figure><blockquote>
+<p>埋坑</p>
+<p>按照官方的说法：React Native 0.60 及更高版本开始，会自动链接，如果你版本是 0.60 及以上，这一步就可以跳过；而 React Native 0.59 以及更低版本则需要手动链接，安装 react-native link。</p>
+</blockquote>
+<p>我的生产环境为：“react-native”: “0.64.0”, 满足条件。
+实际操作中，依赖未添加并自动链接，跑后续代码中偶尔抽风会提示：
+“RNCSafeAreaProvider” was not found in the UIManager.
+“RNSScreen&quot; was not found in the UIManager. ”</p>
+<blockquote>
+<p>总结，还是需要手动连接。并且，是逐条执行。</p>
+</blockquote>
+<h4 id="d-在入口文件-indexjs-或-appjs-的头部引入如下依赖" class="prose-h prose-h4"><a class="h-anchor" href="#d-在入口文件-indexjs-或-appjs-的头部引入如下依赖" aria-hidden="true" tabindex="-1">#</a>d. 在入口文件 (index.js 或 App.js) 的头部引入如下依赖</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   // 必须放在最顶部
+   import &#39;react-native-gesture-handler&#39;;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">coffeescript · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-regexp">//</span> index.js
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;react-native-gesture-handler&#x27;</span>;
+<span class="hljs-keyword">import</span> {AppRegistry} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+<span class="hljs-keyword">import</span> App <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App&#x27;</span>;
+<span class="hljs-keyword">import</span> {name <span class="hljs-keyword">as</span> appName} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app.json&#x27;</span>;
+
+AppRegistry.registerComponent(appName, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> App);
+</code></pre></figure><h4 id="e-安装-navigator-库" class="prose-h prose-h4"><a class="h-anchor" href="#e-安装-navigator-库" aria-hidden="true" tabindex="-1">#</a>e. 安装 navigator 库</h4><blockquote>
+<p>有三种导航模式可以选，分别是 StackNavigator 栈导航、TabNavigator 标签导航、DrawerNavigator 抽屉导航，下面会分别说一下怎么使用。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">aspectj · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   <span class="hljs-comment">// StackNavigator</span>
+   npm install <span class="hljs-meta">@react</span>-navigation/stack
+  
+   <span class="hljs-comment">// TabNavigator</span>
+   npm install <span class="hljs-meta">@react</span>-navigation/bottom-tabs
+  
+   <span class="hljs-comment">// DrawerNavigator</span>
+   npm install <span class="hljs-meta">@react</span>-navigation/drawer
+</code></pre></figure><h4 id="3-stacknavigator-导航" class="prose-h prose-h4"><a class="h-anchor" href="#3-stacknavigator-导航" aria-hidden="true" tabindex="-1">#</a>3. StackNavigator 导航</h4><p><img class="prose-img" src="/post-images/issues/gh-14-1.png" alt="抽屉式 Navigator" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<h4 id="a-引入组件" class="prose-h prose-h4"><a class="h-anchor" href="#a-引入组件" aria-hidden="true" tabindex="-1">#</a>a. 引入组件</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   <span class="hljs-keyword">import</span> { <span class="hljs-title class_">NavigationContainer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/native&#x27;</span>;
+   <span class="hljs-keyword">import</span> { createStackNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/stack&#x27;</span>;
+</code></pre></figure><h4 id="b-创建栈导航" class="prose-h prose-h4"><a class="h-anchor" href="#b-创建栈导航" aria-hidden="true" tabindex="-1">#</a>b. 创建栈导航</h4><p>createStackNavigator 提供 APP 屏幕之间切换的能力，它是以栈的形式来管理屏幕之间的切换，新切换到的屏幕会放在栈的顶部。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   <span class="hljs-keyword">const</span> <span class="hljs-title class_">Stack</span> = <span class="hljs-title function_">createStackNavigator</span>();
+</code></pre></figure><h4 id="c-将需要进行屏幕切换的组件放入栈导航里" class="prose-h prose-h4"><a class="h-anchor" href="#c-将需要进行屏幕切换的组件放入栈导航里" aria-hidden="true" tabindex="-1">#</a>c. 将需要进行屏幕切换的组件放入栈导航里</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">   <span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+     <span class="hljs-keyword">return</span> (
+       <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Home&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{HomeScreen}</span> /&gt;</span>
+         <span class="hljs-tag">&lt;/<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+       <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+     );
+   }
+</code></pre></figure><h4 id="d-完整代码" class="prose-h prose-h4"><a class="h-anchor" href="#d-完整代码" aria-hidden="true" tabindex="-1">#</a>d. 完整代码</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// app/views/LoginScreen.js</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">View</span>, <span class="hljs-title class_">Text</span>, <span class="hljs-title class_">TouchableOpacity</span>, <span class="hljs-title class_">StyleSheet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HomeScreen</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+	<span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+		<span class="hljs-variable language_">super</span>(props);
+	}
+
+	<span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+		<span class="hljs-keyword">return</span> (
+			<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-name">TouchableOpacity</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.button}</span> <span class="hljs-attr">onPress</span>=<span class="hljs-string">{()</span> =&gt;</span> this.props.navigation.navigate(&#x27;Home&#x27;)}&gt;
+					<span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.buttonText}</span>&gt;</span>Go to Home Page<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-name">TouchableOpacity</span>&gt;</span>
+			<span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+		)
+	}
+}
+
+<span class="hljs-keyword">const</span> styles = <span class="hljs-title class_">StyleSheet</span>.<span class="hljs-title function_">create</span>({
+	<span class="hljs-attr">button</span>: {
+		<span class="hljs-attr">width</span>: <span class="hljs-number">250</span>,
+		<span class="hljs-attr">marginTop</span>: <span class="hljs-number">80</span>,
+		<span class="hljs-attr">marginLeft</span>: <span class="hljs-number">50</span>,
+		<span class="hljs-attr">minHeight</span>: <span class="hljs-number">46</span>,
+		<span class="hljs-attr">paddingHorizontal</span>: <span class="hljs-number">15</span>,
+		<span class="hljs-attr">paddingVertical</span>: <span class="hljs-number">6</span>,
+		<span class="hljs-attr">borderStyle</span>: <span class="hljs-string">&#x27;solid&#x27;</span>,
+		<span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">borderRadius</span>: <span class="hljs-number">8</span>,
+		<span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ae9373&#x27;</span>,
+		<span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;#f5f5f5&#x27;</span>,
+		<span class="hljs-attr">textAlign</span>: <span class="hljs-string">&#x27;center&#x27;</span>
+	},
+	<span class="hljs-attr">buttonText</span>: {
+		<span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#ae9373&#x27;</span>,
+		<span class="hljs-attr">fontSize</span>: <span class="hljs-number">20</span>,
+		<span class="hljs-attr">lineHeight</span>: <span class="hljs-number">30</span>,
+		<span class="hljs-attr">textAlign</span>: <span class="hljs-string">&#x27;center&#x27;</span>
+	},
+})
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// app/views/HomeScreen.js</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">View</span>, <span class="hljs-title class_">Text</span>, <span class="hljs-title class_">TouchableOpacity</span>, <span class="hljs-title class_">StyleSheet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HomeScreen</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+    <span class="hljs-variable language_">super</span>(props);
+  }
+  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> (
+      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">TouchableOpacity</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.button}</span> <span class="hljs-attr">onPress</span>=<span class="hljs-string">{()</span> =&gt;</span> this.props.navigation.navigate(&#x27;Login&#x27;)}&gt;
+          <span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.buttonText}</span>&gt;</span>Go to Login Page<span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">TouchableOpacity</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+    )
+  }
+}
+
+<span class="hljs-keyword">const</span> styles = <span class="hljs-title class_">StyleSheet</span>.<span class="hljs-title function_">create</span>({
+	<span class="hljs-attr">button</span>: {
+		<span class="hljs-attr">width</span>: <span class="hljs-number">250</span>,
+		<span class="hljs-attr">marginTop</span>: <span class="hljs-number">80</span>,
+		<span class="hljs-attr">marginLeft</span>: <span class="hljs-number">50</span>,
+		<span class="hljs-attr">minHeight</span>: <span class="hljs-number">46</span>,
+		<span class="hljs-attr">paddingHorizontal</span>: <span class="hljs-number">15</span>,
+		<span class="hljs-attr">paddingVertical</span>: <span class="hljs-number">6</span>,
+		<span class="hljs-attr">borderStyle</span>: <span class="hljs-string">&#x27;solid&#x27;</span>,
+		<span class="hljs-attr">borderWidth</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">borderRadius</span>: <span class="hljs-number">8</span>,
+		<span class="hljs-attr">borderColor</span>: <span class="hljs-string">&#x27;#ae9373&#x27;</span>,
+		<span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;#f5f5f5&#x27;</span>,
+		<span class="hljs-attr">textAlign</span>: <span class="hljs-string">&#x27;center&#x27;</span>
+	},
+	<span class="hljs-attr">buttonText</span>: {
+		<span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;#ae9373&#x27;</span>,
+		<span class="hljs-attr">fontSize</span>: <span class="hljs-number">20</span>,
+		<span class="hljs-attr">lineHeight</span>: <span class="hljs-number">30</span>,
+		<span class="hljs-attr">textAlign</span>: <span class="hljs-string">&#x27;center&#x27;</span>
+	},
+})
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// App.js</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;react-native-gesture-handler&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">NavigationContainer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/native&#x27;</span>;
+<span class="hljs-keyword">import</span> { createStackNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/stack&#x27;</span>;
+<span class="hljs-comment">//引入页面模块</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">LoginScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/LoginScreen&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">HomeScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/HomeScreen&#x27;</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Stack</span> = <span class="hljs-title function_">createStackNavigator</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Login&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{LoginScreen}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Home&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{HomeScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
+</code></pre></figure><h4 id="4-tabnavigator-导航" class="prose-h prose-h4"><a class="h-anchor" href="#4-tabnavigator-导航" aria-hidden="true" tabindex="-1">#</a>4. TabNavigator 导航</h4><blockquote>
+<p>底部导航栏，有的 app 开发的时候需要用到底部导航栏切换。使用方法跟 StackNavigator 类似。
+<img class="prose-img" src="/post-images/issues/gh-14-2.png" alt="Tab式 Navigator" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+</blockquote>
+<h4 id="a-安装" class="prose-h prose-h4"><a class="h-anchor" href="#a-安装" aria-hidden="true" tabindex="-1">#</a>a. 安装：</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm install @react-navigation/bottom-tabs
+</code></pre></figure><h4 id="b-完整代码" class="prose-h prose-h4"><a class="h-anchor" href="#b-完整代码" aria-hidden="true" tabindex="-1">#</a>b. 完整代码</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-title class_">App</span>.<span class="hljs-property">js</span>
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;react-native-gesture-handler&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">NavigationContainer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/native&#x27;</span>;
+<span class="hljs-comment">//导入</span>
+<span class="hljs-keyword">import</span> { createBottomTabNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/bottom-tabs&#x27;</span>;
+<span class="hljs-comment">//引入页面模块</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">LoginScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/LoginScreen&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">HomeScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/HomeScreen&#x27;</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Tab</span> = <span class="hljs-title function_">createBottomTabNavigator</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Navigator</span> 
+        <span class="hljs-attr">tabBarOptions</span>=<span class="hljs-string">{{</span>
+          <span class="hljs-attr">activeTintColor:</span> &#x27;<span class="hljs-attr">tomato</span>&#x27;,
+          <span class="hljs-attr">inactiveTintColor:</span> &#x27;<span class="hljs-attr">gray</span>&#x27;,
+          <span class="hljs-attr">tabStyle</span> <span class="hljs-attr">:</span> {
+            <span class="hljs-attr">backgroundColor:</span> &#x27;#<span class="hljs-attr">ddd</span>&#x27;,
+            <span class="hljs-attr">paddingBottom:</span> <span class="hljs-attr">15</span>,
+            <span class="hljs-attr">borderRightWidth:</span> <span class="hljs-attr">1</span>,
+            <span class="hljs-attr">borderRightColor:</span> &#x27;#<span class="hljs-attr">fff</span>&#x27;
+          },
+        }}
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Home&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{HomeScreen}</span> <span class="hljs-attr">options</span>=<span class="hljs-string">{{</span>
+          <span class="hljs-attr">headerStyle:</span> {
+            <span class="hljs-attr">backgroundColor:</span> &#x27;#<span class="hljs-attr">f4511e</span>&#x27;,
+          },
+          <span class="hljs-attr">headerTintColor:</span> &#x27;#<span class="hljs-attr">fff</span>&#x27;,
+          <span class="hljs-attr">headerTitleStyle:</span> {
+            <span class="hljs-attr">fontWeight:</span> &#x27;<span class="hljs-attr">bold</span>&#x27;,
+          },
+        }} /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Login&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{LoginScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Tab.Navigator</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
+</code></pre></figure><h4 id="5-drawernavigator-导航" class="prose-h prose-h4"><a class="h-anchor" href="#5-drawernavigator-导航" aria-hidden="true" tabindex="-1">#</a>5. DrawerNavigator 导航</h4><p><img class="prose-img" src="/post-images/issues/gh-14-3.png" alt="抽屉式 Navigator" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<h4 id="a-安装-1" class="prose-h prose-h4"><a class="h-anchor" href="#a-安装-1" aria-hidden="true" tabindex="-1">#</a>a. 安装：</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm install @react-navigation/drawer
+</code></pre></figure><h4 id="b-完整代码-1" class="prose-h prose-h4"><a class="h-anchor" href="#b-完整代码-1" aria-hidden="true" tabindex="-1">#</a>b. 完整代码</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// App.js</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;react-native-gesture-handler&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">NavigationContainer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/native&#x27;</span>;
+<span class="hljs-comment">//导入</span>
+<span class="hljs-keyword">import</span> { createDrawerNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/drawer&#x27;</span>;
+<span class="hljs-comment">//引入页面模块</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">LoginScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/LoginScreen&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">HomeScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/HomeScreen&#x27;</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Drawer</span> = <span class="hljs-title function_">createDrawerNavigator</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>
+      <span class="hljs-attr">drawerStyle</span>=<span class="hljs-string">{{</span>
+        <span class="hljs-attr">backgroundColor:</span> &#x27;#<span class="hljs-attr">c6cbef</span>&#x27;,
+        <span class="hljs-attr">width:</span> <span class="hljs-attr">200</span>,
+      }}
+    &gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Drawer.Navigator</span> <span class="hljs-attr">initialRouteName</span>=<span class="hljs-string">&#x27;Home&#x27;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Drawer.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;Home&#x27;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{HomeScreen}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Drawer.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&#x27;Login&#x27;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{LoginScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Drawer.Navigator</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
+</code></pre></figure><h4 id="6-踩坑" class="prose-h prose-h4"><a class="h-anchor" href="#6-踩坑" aria-hidden="true" tabindex="-1">#</a>6. 踩坑</h4><h4 id="a-安装依赖导致进入系统后闪退" class="prose-h prose-h4"><a class="h-anchor" href="#a-安装依赖导致进入系统后闪退" aria-hidden="true" tabindex="-1">#</a>a. 安装依赖导致进入系统后闪退</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm intall react-native-screens
+</code></pre></figure><blockquote>
+<p>注意，因为在运行如上语句的时候，会自动安装最新版本。所以可能当前版本为不稳定版本，或者是 beta 测试版本。所以要注意尽量安装稳定的依赖版本。</p>
+</blockquote>
+<h4 id="b-cnpm-安装依赖失败" class="prose-h prose-h4"><a class="h-anchor" href="#b-cnpm-安装依赖失败" aria-hidden="true" tabindex="-1">#</a>b. cnpm 安装依赖失败</h4><blockquote>
+<p>一般我们都习惯使用淘宝镜像 cnpm install 代替 npm install 下载依赖，下载速度更快；我在用 cnpm install 下载发现 package.json 文件中并没有增加依赖项，node_modules 中却成功下载依赖文件，导入文件的时候由于找不到文件报错，再重新使用 npm install 安装会报错，无法安装成功。</p>
+</blockquote>
+<h4 id="7-tabnavigator-中嵌套-stacknavigator" class="prose-h prose-h4"><a class="h-anchor" href="#7-tabnavigator-中嵌套-stacknavigator" aria-hidden="true" tabindex="-1">#</a>7. TabNavigator 中嵌套 StackNavigator</h4><blockquote>
+<p>在 TabNavigator 中调用 this.props.navigation.navigate('Login') 就可以跳回到 Login 页面，此时就从 TabNavigator 回到 StackNavigator 导航啦。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// App.js</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;react-native-gesture-handler&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">NavigationContainer</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/native&#x27;</span>;
+<span class="hljs-comment">//导入</span>
+<span class="hljs-keyword">import</span> { createStackNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/stack&#x27;</span>;
+<span class="hljs-keyword">import</span> { createBottomTabNavigator } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@react-navigation/bottom-tabs&#x27;</span>;
+<span class="hljs-comment">//引入页面模块</span>
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">LoginScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/LoginScreen&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">MainScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/MainScreen&#x27;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">SettingsScreen</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/views/SettingsScreen&#x27;</span>;
+
+<span class="hljs-comment">//嵌套路由，需要嵌套的类型都要创建</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Stack</span> = <span class="hljs-title function_">createStackNavigator</span>();
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Tab</span> = <span class="hljs-title function_">createBottomTabNavigator</span>();
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">Home</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="hljs-comment">//Tab页面home中有Main和Settings两个Stack导航页面</span>
+    <span class="hljs-comment">//注意要引入MainScreen和SettingsScreen</span>
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Main&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{MainScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Settings&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{SettingsScreen}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Stack.Navigator</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Navigator</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Home&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{Home}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Login&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{LoginScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Tab.Navigator</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
+</code></pre></figure><h4 id="8-stacknavigator-中嵌套-tabnavigator" class="prose-h prose-h4"><a class="h-anchor" href="#8-stacknavigator-中嵌套-tabnavigator" aria-hidden="true" tabindex="-1">#</a>8. StackNavigator 中嵌套 TabNavigator</h4><p>修改上面的 Home 和 App 如下，其实嵌套路由的写法都是类似的，其它就不多说啦。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Home</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="hljs-comment">//Stack页面home中有Main和Settings两个Tab导航页面</span>
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Tab.Navigator</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Main&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{MainScreen}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tab.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Settings&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{SettingsScreen}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Tab.Navigator</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">NavigationContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Login&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{LoginScreen}</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Stack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Home&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{Home}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Stack.Navigator</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NavigationContainer</span>&gt;</span></span>
+  );
+}
+</code></pre></figure><hr>
+<p><a href="https://blog.csdn.net/cream66/article/details/104650082" target="_blank" rel="noopener noreferrer" class="ext-link">主要参考链接 1</a>
+<a href="https://blog.csdn.net/weixin_42219468/article/details/106224181" target="_blank" rel="noopener noreferrer" class="ext-link">次要参考链接 2</a>
+<a href="https://blog.csdn.net/average17/article/details/79132007" target="_blank" rel="noopener noreferrer" class="ext-link">次要参考链接 3</a></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#目录">目录</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-15/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">React Native 的基本组件</span><span class="postnav__meta">2021.04.25 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-13/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 的 ScrollView</span><span class="postnav__meta">2021.04.25 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-13/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 ScrollView</span>
+            <span class="mini-card__meta">2021.04.25 · 4 分钟</span>
+          </a><a class="mini-card" href="/note/gh-15/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的基本组件</span>
+            <span class="mini-card__meta">2021.04.25 · 8 分钟</span>
+          </a><a class="mini-card" href="/note/gh-12/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native创建初始化项目所遇问题·小记</span>
+            <span class="mini-card__meta">2021.04.25 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.10.20</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Navigation 的依赖安装和基本使用","datePublished":"2021-04-25T06:01:49.000Z","dateModified":"2021-10-20T09:31:55.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"------ - #### 目录 1. 简介 2. 依赖安装 3. StackNavigator 栈导航 4. TabNavigator 标签导航 5. DrawerNavigator 抽屉导航 6. 踩坑记录 补充 7. StackNavigator 中嵌套 TabNavigator 8. TabNavigator 中嵌套 StackNavigator 1. 简介 React Navigatio…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-14/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

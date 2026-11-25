@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>npm run dev 和 npm run serve · 木鱼小店</title>
+<meta name="description" content="1、ERR 引发的思考 创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下 --- 2、dev build serve? 其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。 npm run XXX 是执行配置在 package.json 中的脚本，比如： npm ru…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-6/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="npm run dev 和 npm run serve · 木鱼小店">
+<meta property="og:description" content="1、ERR 引发的思考 创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下 --- 2、dev build serve? 其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。 npm run XXX 是执行配置在 package.json 中的脚本，比如： npm ru…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-6/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="npm run dev 和 npm run serve · 木鱼小店">
+<meta name="twitter:description" content="1、ERR 引发的思考 创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下 --- 2、dev build serve? 其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。 npm run XXX 是执行配置在 package.json 中的脚本，比如： npm ru…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-04-12T13:07:53.000Z">2021年4月12日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">npm run dev 和 npm run serve</h1>
+      <p class="article__lead">1、ERR 引发的思考 创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下 --- 2、dev build serve? 其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。 npm run XXX 是执行配置在 package.json 中的脚本，比如： npm ru…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-6.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#6</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/6" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #6</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/6" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h2 id="1err-引发的思考" class="prose-h prose-h2"><a class="h-anchor" href="#1err-引发的思考" aria-hidden="true" tabindex="-1">#</a>1、ERR 引发的思考</h2><p>创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">stata · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm <span class="hljs-keyword">run</span> dev
+npm <span class="hljs-keyword">ERR</span>! missing script: dev
+
+npm <span class="hljs-keyword">ERR</span>! A complete <span class="hljs-keyword">log</span> of this <span class="hljs-keyword">run</span> can be found <span class="hljs-keyword">in</span>:
+npm <span class="hljs-keyword">ERR</span>!     <span class="hljs-keyword">E</span>:\nodejs\node_cache\_logs\2018-12-12T15_06_08_674Z-debug.<span class="hljs-keyword">log</span>
+</code></pre></figure><hr>
+<h2 id="2dev-build-serve" class="prose-h prose-h2"><a class="h-anchor" href="#2dev-build-serve" aria-hidden="true" tabindex="-1">#</a>2、dev build serve?</h2><p>其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。
+npm run XXX 是执行配置在 package.json 中的脚本，比如：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JSON · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+　　<span class="hljs-attr">&quot;serve&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vue-cli-service serve&quot;</span><span class="hljs-punctuation">,</span>
+　　<span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vue-cli-service build&quot;</span><span class="hljs-punctuation">,</span>
+　　<span class="hljs-attr">&quot;lint&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vue-cli-service lint&quot;</span>
+<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+</code></pre></figure><p>npm run xxx 中的 xxx 可以理解为键值对的 key，实际上 run 的是在 package.json 里面 scripts 配置的 value；</p>
+<p>比如，npm run serve 实际运行的是 vue-cli-service serve；</p>
+<p>而放在 3.0 以前运行的则是 node build/dev-server.js 文件；</p>
+<p>这时候我们再来看上边的问题是不是豁然了呢， scripts 中并没有配置 dev ，所以控制台报了 [missing script: dev] 的错误 ；</p>
+<hr>
+<h2 id="3总结" class="prose-h prose-h2"><a class="h-anchor" href="#3总结" aria-hidden="true" tabindex="-1">#</a>3、总结</h2><p>npm run xxx，并不是你想运行就运行的，只有在 package.json scripts 配置了，你才能 run 的，所以不是所有的项目都能 npm run dev/build。</p>
+<p>要了解这些命令做了什么，就要去 scripts 中看具体执行的是什么代码。</p>
+<p>这里就像是一些命令的快捷方式，免去每次都要输入很长的的命令（比如 serve 那行）</p>
+<p>一般项目都会有 build, dev, unit 等，所以起名，最起码要从名字上基本能看出来是干什么的。</p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#1err-引发的思考">1、ERR 引发的思考</a></li><li class="toc__item toc__item--h2"><a href="#2dev-build-serve">2、dev build serve?</a></li><li class="toc__item toc__item--h2"><a href="#3总结">3、总结</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-7/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">React Native 的 结构分析</span><span class="postnav__meta">2021.04.20 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-5/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">vue-cli3 创建项目的正确姿势</span><span class="postnav__meta">2021.04.12 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.04.12</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"npm run dev 和 npm run serve","datePublished":"2021-04-12T13:07:53.000Z","dateModified":"2021-04-12T13:07:53.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"1、ERR 引发的思考 创建好的 vue 项目直接执行 vue run dev 报错？运行 vue run serve 就可以启动... 如下 --- 2、dev build serve? 其实 npm run dev 或者是 npm run serve 等 npm run xxx 并不是一定要这么写。 npm run XXX 是执行配置在 package.json 中的脚本，比如： npm ru…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-6/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

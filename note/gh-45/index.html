@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>让uni-app中的style动态变化 · 木鱼小店</title>
+<meta name="description" content="记于2021年11月24日。 题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。 --- class支持的语法 style支持的语法 完整例子 --- 经过一番测试，最终选择的是class的方式，动态变化样式。 --- 参考链接 无…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-45/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让uni-app中的style动态变化 · 木鱼小店">
+<meta property="og:description" content="记于2021年11月24日。 题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。 --- class支持的语法 style支持的语法 完整例子 --- 经过一番测试，最终选择的是class的方式，动态变化样式。 --- 参考链接 无…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-45/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="让uni-app中的style动态变化 · 木鱼小店">
+<meta name="twitter:description" content="记于2021年11月24日。 题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。 --- class支持的语法 style支持的语法 完整例子 --- 经过一番测试，最终选择的是class的方式，动态变化样式。 --- 参考链接 无…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-11-24T06:54:50.000Z">2021年11月24日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">让uni-app中的style动态变化</h1>
+      <p class="article__lead">记于2021年11月24日。 题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。 --- class支持的语法 style支持的语法 完整例子 --- 经过一番测试，最终选择的是class的方式，动态变化样式。 --- 参考链接 无…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/vue-js/">Vue.js</a><a class="tag-pill " href="/tag/css/">CSS</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-45.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#45</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/45" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #45</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#68DC68">Vue.js</span><span class="label-chip" style="--label-accent:#68DC68">CSS</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/45" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>记于2021年11月24日。</p>
+<p>题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。</p>
+</blockquote>
+<hr>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">
+   	
+
+</code></pre></figure><p><strong>class支持的语法</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">angelscript · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">&lt;view <span class="hljs-keyword">class</span>=&quot;<span class="hljs-symbol">box</span>&quot; :<span class="hljs-symbol">class</span>=&quot;[<span class="hljs-symbol">age</span>&gt;<span class="hljs-symbol">10</span>?<span class="hljs-symbol">class1:</span>&#x27;&#x27;,<span class="hljs-symbol">sex</span>==&#x27;女&#x27;?<span class="hljs-symbol">class2:</span>&#x27;&#x27;]&quot;&gt;<span class="hljs-symbol">box</span>&lt;/<span class="hljs-symbol">view</span>&gt;
+</code></pre></figure><p><strong>style支持的语法</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">ruby · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">&lt;view <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-symbol">:style=<span class="hljs-string">&quot;{&#x27;color&#x27;: Color,&#x27;font-size&#x27;: size+&#x27;px&#x27;}&quot;</span>&gt;box&lt;/view&gt;</span>
+</code></pre></figure><p><strong>完整例子</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">XML · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"> <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">view</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[age&gt;10?class1:&#x27;&#x27;,sex==&#x27;女&#x27;?class2:&#x27;&#x27;]&quot;</span>&gt;</span>绑定<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+        
+        <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;{&#x27;color&#x27;: Color,&#x27;font-size&#x27;: size+&#x27;px&#x27;}&quot;</span>&gt;</span>绑定<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+    <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+        <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) {
+            <span class="hljs-keyword">return</span> {
+                <span class="hljs-attr">class1</span>: <span class="hljs-string">&quot;bor&quot;</span>,
+                <span class="hljs-attr">class2</span>: <span class="hljs-string">&quot;fs&quot;</span>,
+                <span class="hljs-attr">age</span>:<span class="hljs-number">20</span>,
+                <span class="hljs-attr">sex</span>:<span class="hljs-string">&#x27;女&#x27;</span>,
+                <span class="hljs-title class_">Color</span>: <span class="hljs-string">&quot;#333333&quot;</span>,
+                <span class="hljs-attr">size</span>: <span class="hljs-number">50</span>
+            }
+        },
+        <span class="hljs-attr">methods</span>: {
+
+        }
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+    <span class="hljs-selector-class">.box</span> {
+        <span class="hljs-attribute">background</span>: pink;
+        <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFFFFF</span>;
+        <span class="hljs-attribute">width</span>: <span class="hljs-number">350</span>upx;
+        <span class="hljs-attribute">height</span>: <span class="hljs-number">350</span>upx;
+        <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">100%</span>;
+        <span class="hljs-attribute">display</span>: flex;
+        <span class="hljs-attribute">justify-content</span>: center;
+        <span class="hljs-attribute">align-items</span>: center;
+        <span class="hljs-attribute">font-size</span>: <span class="hljs-number">50</span>upx;
+    }
+
+    <span class="hljs-selector-class">.bor</span> {
+        <span class="hljs-attribute">border</span>: <span class="hljs-number">10</span>upx solid <span class="hljs-number">#CCC</span>;
+    }
+
+    <span class="hljs-selector-class">.fs</span> {
+        <span class="hljs-attribute">font-size</span>: <span class="hljs-number">80</span>upx;
+        <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFF</span>;
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre></figure><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-45-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<hr>
+<blockquote>
+<p>经过一番测试，最终选择的是class的方式，动态变化样式。</p>
+</blockquote>
+<hr>
+<p><strong>参考链接</strong>
+<a href="https://blog.csdn.net/weixin_44433499/article/details/106442636" target="_blank" rel="noopener noreferrer" class="ext-link">无情搬运工</a></p>
+</div>
+      
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/vue-js/">Vue.js</a><a class="tag-pill " href="/tag/css/">CSS</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-46/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">iOS 钥匙串 证书不受信任</span><span class="postnav__meta">2021.11.24 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-44/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">中文字符 ASCII 码和 NSString 相互转换</span><span class="postnav__meta">2021.10.21 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-48/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Vue/uni-app 实现不同值展示不同CSS样式</span>
+            <span class="mini-card__meta">2022.02.10 · 4 分钟</span>
+          </a><a class="mini-card" href="/note/gh-9/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 Flex 布局</span>
+            <span class="mini-card__meta">2021.04.21 · 3 分钟</span>
+          </a><a class="mini-card" href="/note/gh-8/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 CSS 布局</span>
+            <span class="mini-card__meta">2021.04.21 · 2 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.11.24</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"让uni-app中的style动态变化","datePublished":"2021-11-24T06:54:50.000Z","dateModified":"2021-11-24T07:02:04.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"记于2021年11月24日。 题记：最近在做一些uni-app的页面需求，基于能少做就少做的懒惰原因，也基于vue的组件化，决定尽可能多的复用组件。于是，就遇到了这么个需求，要让一些组件根据不同的网络请求返回值，显示出不同的背景色、字体颜色之类的。 --- class支持的语法 style支持的语法 完整例子 --- 经过一番测试，最终选择的是class的方式，动态变化样式。 --- 参考链接 无…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-45/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

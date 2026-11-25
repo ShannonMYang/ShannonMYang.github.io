@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Native项目编译调试过程所遇错误·小记 · 木鱼小店</title>
+<meta name="description" content="- ### Could not launch “xxx” Security &gt; 环境：Xcode 12.4 (12D4e) &gt; 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 &gt; 报错提示信息 app 启动被 ios 的安全机制阻挡了。 &gt; &gt; 设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-29/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native项目编译调试过程所遇错误·小记 · 木鱼小店">
+<meta property="og:description" content="- ### Could not launch “xxx” Security &gt; 环境：Xcode 12.4 (12D4e) &gt; 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 &gt; 报错提示信息 app 启动被 ios 的安全机制阻挡了。 &gt; &gt; 设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-29/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Native项目编译调试过程所遇错误·小记 · 木鱼小店">
+<meta name="twitter:description" content="- ### Could not launch “xxx” Security &gt; 环境：Xcode 12.4 (12D4e) &gt; 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 &gt; 报错提示信息 app 启动被 ios 的安全机制阻挡了。 &gt; &gt; 设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-06-24T01:55:26.000Z">2021年6月24日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.07.14</span></div>
+      <h1 class="article__title">React Native项目编译调试过程所遇错误·小记</h1>
+      <p class="article__lead">- ### Could not launch “xxx” Security &gt; 环境：Xcode 12.4 (12D4e) &gt; 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 &gt; 报错提示信息 app 启动被 ios 的安全机制阻挡了。 &gt; &gt; 设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-29.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#29</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/29" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #29</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">iOS</span><span class="label-chip" style="--label-accent:#C6391F">Objective-C</span><span class="label-chip" style="--label-accent:#C6391F">错误解决</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/29" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><ul class="contains-task-list">
+<li>
+<h2 id="could-not-launch-xxx-security" class="prose-h prose-h2"><a class="h-anchor" href="#could-not-launch-xxx-security" aria-hidden="true" tabindex="-1">#</a>Could not launch “xxx” Security</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：iPhone 6s 12.5.1 未联网</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>报错提示信息 app 启动被 ios 的安全机制阻挡了。</p>
+<p>设置 –&gt; 通用 –&gt; 设备管理 –&gt; 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致)</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="application-the-app-delegate-must-implement-the-window-property-if-it-wants-to-use-a-main-storyboard-file" class="prose-h prose-h2"><a class="h-anchor" href="#application-the-app-delegate-must-implement-the-window-property-if-it-wants-to-use-a-main-storyboard-file" aria-hidden="true" tabindex="-1">#</a>[Application] The app delegate must implement the window property if it wants to use a main storyboard file.</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：iPhone 6s 12.5.1 Wi-Fi连接网络</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>报错提示的信息具现在真机上是啥样呢？就是启动黑屏的问题。</p>
+<p>根据提示打开 AppDelegate.h 文件时候发现确实没有声明 UIWindow 属性
+补充缺失的代码即可：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">AppDelegate</span> : <span class="hljs-title">UIResponder</span> &lt;<span class="hljs-title">UIApplicationDelegate</span>&gt;</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">strong</span>, <span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UIWindow</span> * window;
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><p>重新 Run 一遍，即可看到正常的启动页，也就是启动白屏（假使你什么都没做，就是个原模原样的初创demo）</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="unknown-argument-type-attribute-in-method-rctappstate-getcuttentappstateerror-extend-rctconvert-to-support-this-type" class="prose-h prose-h2"><a class="h-anchor" href="#unknown-argument-type-attribute-in-method-rctappstate-getcuttentappstateerror-extend-rctconvert-to-support-this-type" aria-hidden="true" tabindex="-1">#</a>Unknown argument type '<strong>attribute</strong>' in method -[RCTAppState getCuttentAppState:error:]. Extend RCTConvert to support this type.</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：<code>iPhone 6s</code> 12.5.1 Wi-Fi连接网络
+<code>node</code> 14.10.1  <code>npm</code> 6.14.8</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>首先要说明的是，这是React 0.59 版本的 bug。</p>
+<p>需要编辑一下下面这个文件里的内容:</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">react-native/React/Core/Base/RCTModuleMethod.mm
+</code></pre></figure><p>在第 94 行 添加如下内容:</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">RCTReadString(input, <span class="hljs-string">&quot;__attribute__((__unused__))&quot;</span>) ||
+</code></pre></figure></blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="no-podspec-found-for-jcorern-in-nodemodulesjcore-react-native" class="prose-h prose-h2"><a class="h-anchor" href="#no-podspec-found-for-jcorern-in-nodemodulesjcore-react-native" aria-hidden="true" tabindex="-1">#</a>[!] No podspec found for <code>JCoreRN</code> in <code>../node_modules/jcore-react-native</code></h2></li>
+<li>
+<h2 id="no-podspec-found-for-jpushrn-in-nodemodulesjpush-react-native" class="prose-h prose-h2"><a class="h-anchor" href="#no-podspec-found-for-jpushrn-in-nodemodulesjpush-react-native" aria-hidden="true" tabindex="-1">#</a>[!] No podspec found for <code>JPushRN</code> in <code>../node_modules/jpush-react-native</code></h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：<code>iPhone 6s</code> 12.5.1 Wi-Fi连接网络
+<code>node</code> 14.10.1  <code>npm</code> 6.14.8</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>首先要说明的是，这是JPush的React Native库升级所导致的 bug。
+可否再具体？报错原因是因为 pod install 时没有找到对应 node_moudles 下 react-native 目录下的 .podspec 文件</p>
+<p>其次说最直接的解决方案，直接拖来老版本的做替换就好。</p>
+<p>更为细致的解决方案：
+先说说这里可以导致错误的两种可能：</p>
+<p>1⃣️  node_mudules/react-native 目录下有.podspec 文件，但和 Podfile 依赖文件里定义的名字不符
+2⃣️  node_modules/react-native 目录下没有.podspec 文件</p>
+<p>针对第一种情况：需要将 Podfile 中的文件，改成 react-native 目录下的.podspec 文件名。改完之后，重新执行命令 <code>pod install</code>，倒入成功，即可解决错误。</p>
+<p>针对第二种情况：自己在 react-native 目录下新建.podspec 文件，然后根据其他目录下的.podpec 文件内容进行添加。（一般这种情况的概率不大，如果真这样，更建议直接重新通过 npm 导包）</p>
+<p>解决方案参考链接： <a href="https://blog.csdn.net/judgejames/article/details/103927033" target="_blank" rel="noopener noreferrer" class="ext-link">[!] No podspec found for 'react-native' in ./node_modules/react-native 报错解决</a></p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="showing-recent-messages-undefined-symbol-objcclassattrackingmanager" class="prose-h prose-h2"><a class="h-anchor" href="#showing-recent-messages-undefined-symbol-objcclassattrackingmanager" aria-hidden="true" tabindex="-1">#</a>Showing Recent Messages Undefined symbol: <em>OBJC_CLASS</em>$_ATTrackingManager</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：<code>iPhone 6s</code> 12.5.1 Wi-Fi连接网络
+<code>node</code> 14.10.1  <code>npm</code> 6.14.8</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>首先要说明的，这是缺少 <code>AppTrackingTransparency.framework</code> 库所导致的 bug。</p>
+<p>最直接有效的解决方案就是拖过来这个缺失的库到项目里，然后 在 XCode 中配置即可： <code>Build Phases</code> -&gt; <code>Link Binary With Libraries</code></p>
+<p>由这个引发的类似经典错误的解决方案参考链接：<a href="https://cloud.tencent.com/developer/article/1143313" target="_blank" rel="noopener noreferrer" class="ext-link">iOS 经典错误 Undefined symbols for architecture XXX:</a></p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="sentryerror-native-client-is-not-available-cant-start-on-native" class="prose-h prose-h2"><a class="h-anchor" href="#sentryerror-native-client-is-not-available-cant-start-on-native" aria-hidden="true" tabindex="-1">#</a>SentryError: Native Client is not available, can't start on native.</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：<code>iPhone 6s</code> 12.5.1 Wi-Fi连接网络
+<code>node</code> 14.10.1  <code>npm</code> 6.14.8</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>首先要说明的，Sentry 是一个开源的实时错误报告工具，支持 web 前后端、移动应用以及游戏，支持 Python、OC、Java、Go、Node.js、Django、RoR 等主流编程语言和框架 ，还提供了 GitHub、Slack、Trello 等常见开发工具的集成。</p>
+<p>最简单直接的解决方案，(当然，这个前提是，你用不到这个 <code>Sentry</code>) 那就可以选择移除掉，并移除掉相关的调用。</p>
+<p>更为细致的解决方案如下，在调用代码初始化的地方，新增对 <code>enableNative</code> 属性的设置。（到不到的话，可以选择用<code>VSCode</code> 全局搜索 <code>Sentry.init({</code> ）</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-title class_">Sentry</span>.<span class="hljs-title function_">init</span>({
+   <span class="hljs-attr">dsn</span>: <span class="hljs-string">&#x27;...&#x27;</span>,
+   <span class="hljs-attr">enableNative</span>: <span class="hljs-literal">false</span>
+})
+</code></pre></figure></blockquote>
+</li>
+</ul>
+<hr>
+<ul class="contains-task-list">
+<li>
+<h2 id="source-file-is-not-valid-utf-8" class="prose-h prose-h2"><a class="h-anchor" href="#source-file-is-not-valid-utf-8" aria-hidden="true" tabindex="-1">#</a>source file is not valid utf-8</h2></li>
+<li>
+<h2 id="too-many-errors-emitted-stopping-now" class="prose-h prose-h2"><a class="h-anchor" href="#too-many-errors-emitted-stopping-now" aria-hidden="true" tabindex="-1">#</a>too many errors emitted, stopping now</h2><blockquote>
+<p>环境：Xcode 12.4 (12D4e)
+真机：<code>iPhone 6s</code> 12.5.1 Wi-Fi连接网络
+<code>node</code> 14.10.1  <code>npm</code> 6.14.8</p>
+</blockquote>
+</li>
+<li class="task-list-item">
+<p><label><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> <strong>解决方法</strong></label></p>
+<blockquote>
+<p>首先要说明的，这两个错误都是乱码所导致的 bug。<code>Xcode</code>编译器的话，会告诉你 不是 utf-8，然后报错。
+第一个错误是主要错误，第二个错误是因为第一个错误大范围大批量出现导致的报错。
+我这里的错误主要是因为在传输文件的过程中，被加密软件进行改动。</p>
+<p>解决方案：直接将正确的代码复制过来就好。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<h2 id="no-bundle-url-present-make-sure-youre-running-a-packager-server-or-have-included-a-jsbundle-file-in-your-application-bundle" class="prose-h prose-h2"><a class="h-anchor" href="#no-bundle-url-present-make-sure-youre-running-a-packager-server-or-have-included-a-jsbundle-file-in-your-application-bundle" aria-hidden="true" tabindex="-1">#</a>No bundle URL present.  Make sure you're running a packager server or have included a .jsbundle file in your application bundle.</h2></li>
+</ul>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-29-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<blockquote>
+<p>由于笔者一直挂着科学上网的缘故，所以，不稳定的时候，也会造成这个错误。不过，此处，更多的原因是未执行 <code>npm install </code>，执行完之后，就好了。
+另外要说的话，由于笔者 是用 <code>npx react-native init xxx</code> 创建的项目，所以，也是执行的 <code>npx react-native run-ios</code>运行项目。其实更建议执行，<code>npm start</code>，然后通过 Xcode 运行项目。</p>
+</blockquote>
+<p><a href="https://www.crifan.com/react_native_ios_run_again_error_no_bundle_url_present/" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接</a></p>
+<hr>
+<ul>
+<li>
+<h2 id="error-cant-find-the-node-binary-to-build-the-react-native-bundle-if-you-have-a-non-standard-nodejs-installation-select-your-project-in-xcode-find-build-phases-bundle-react-native-code-and-images-and-change-nodebinary-to-an-absolute-path-to-your-node-executable-you-can-find-it-by-invoking-which-node-in-the-terminal-logout" class="prose-h prose-h2"><a class="h-anchor" href="#error-cant-find-the-node-binary-to-build-the-react-native-bundle-if-you-have-a-non-standard-nodejs-installation-select-your-project-in-xcode-find-build-phases-bundle-react-native-code-and-images-and-change-nodebinary-to-an-absolute-path-to-your-node-executable-you-can-find-it-by-invoking-which-node-in-the-terminal-logout" aria-hidden="true" tabindex="-1">#</a>error: Can't find the 'node' binary to build the React Native bundle. If you have a non-standard Node.js installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to an absolute path to your node executable. You can find it by invoking 'which node' in the terminal. logout</h2></li>
+</ul>
+<blockquote>
+<p>由于此处，笔者使用的是 nvm 进行的 node 版本的管理，所以，找到当前运行的 node版本所在目录的命令是 <code>nvm which 14.10.1</code>。
+随后，将目录地址，复制到如图所示位置即可。</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-29-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p><a href="https://www.jianshu.com/p/033db05fca5a" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接 a</a><br>
+<a href="https://stackoverflow.com/questions/44492197/react-native-ios-build-cant-find-node" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接 b</a></p>
+<hr>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#could-not-launch-xxx-security">Could not launch “xxx” Security</a></li><li class="toc__item toc__item--h2"><a href="#application-the-app-delegate-must-implement-the-window-property-if-it-wants-to-use-a-main-storyboard-file">[Application] The app delegate must implement the window property if it wants to use a main storyboard file.</a></li><li class="toc__item toc__item--h2"><a href="#unknown-argument-type-attribute-in-method-rctappstate-getcuttentappstateerror-extend-rctconvert-to-support-this-type">Unknown argument type &#39;attribute&#39; in method -[RCTAppState getCuttentAppState:error:]. Extend RCTConvert to support this type.</a></li><li class="toc__item toc__item--h2"><a href="#no-podspec-found-for-jcorern-in-nodemodulesjcore-react-native">[!] No podspec found for JCoreRN in ../nodemodules/jcore-react-native</a></li><li class="toc__item toc__item--h2"><a href="#no-podspec-found-for-jpushrn-in-nodemodulesjpush-react-native">[!] No podspec found for JPushRN in ../nodemodules/jpush-react-native</a></li><li class="toc__item toc__item--h2"><a href="#showing-recent-messages-undefined-symbol-objcclassattrackingmanager">Showing Recent Messages Undefined symbol: OBJCCLASS$ATTrackingManager</a></li><li class="toc__item toc__item--h2"><a href="#sentryerror-native-client-is-not-available-cant-start-on-native">SentryError: Native Client is not available, can&#39;t start on native.</a></li><li class="toc__item toc__item--h2"><a href="#source-file-is-not-valid-utf-8">source file is not valid utf-8</a></li><li class="toc__item toc__item--h2"><a href="#too-many-errors-emitted-stopping-now">too many errors emitted, stopping now</a></li><li class="toc__item toc__item--h2"><a href="#no-bundle-url-present-make-sure-youre-running-a-packager-server-or-have-included-a-jsbundle-file-in-your-application-bundle">No bundle URL present. Make sure you&#39;re running a packager server or have included a .jsbundle file in your application bundle.</a></li><li class="toc__item toc__item--h2"><a href="#error-cant-find-the-node-binary-to-build-the-react-native-bundle-if-you-have-a-non-standard-nodejs-installation-select-your-project-in-xcode-find-build-phases-bundle-react-native-code-and-images-and-change-nodebinary-to-an-absolute-path-to-your-node-executable-you-can-find-it-by-invoking-which-node-in-the-terminal-logout">error: Can&#39;t find the &#39;node&#39; binary to build the React Native bundle. If you have a non-standard Node.js installation, select your project in Xcode, find &#39;Build Phases&#39; - &#39;Bundle React Native code and images&#39; and change NODEBINARY to an absolute path to your node executable. You can find it by invoking &#39;which node&#39; in the terminal. logout</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-31/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">nvm：安装、切换不同 Node.js 版本的管理器</span><span class="postnav__meta">2021.07.01 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-28/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">Xcode 给工程添加 .gitignore 文件</span><span class="postnav__meta">2021.06.17 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a><a class="mini-card" href="/note/gh-19/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+            <span class="mini-card__meta">2021.05.07 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.07.14</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Native项目编译调试过程所遇错误·小记","datePublished":"2021-06-24T01:55:26.000Z","dateModified":"2021-07-14T06:31:27.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"- ### Could not launch “xxx” Security > 环境：Xcode 12.4 (12D4e) > 真机：iPhone 6s 12.5.1 未联网 - [x] 解决方法 > 报错提示信息 app 启动被 ios 的安全机制阻挡了。 > > 设置 –> 通用 –> 设备管理 –> 信任，重新在 XCode 上运行 app 就好了。(这里我主要的问题就是没有联网所致) --…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-29/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

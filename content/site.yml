@@ -1,0 +1,44 @@
+# 站点配置 —— 改这里就能改首页文案、作者信息与导航
+title: 木鱼小店
+wordmark: 木鱼小店
+latin: MUYU SHOP
+tagline: 温故而知新
+description: 一个存放开发笔记、菜谱与杂谈的角落。慢慢写，常常看，温故而知新。
+url: https://shannonmyang.github.io
+since: 2018
+
+author:
+  name: ShannonMYang
+  avatar: /images/avatar.png
+  bio: iOS / 前端 / 偶尔下厨。喜欢把踩过的坑记下来，也喜欢把日子过慢一点。
+  github: https://github.com/ShannonMYang
+  jianshu: https://www.jianshu.com/u/2fd0c319f098
+  email: ""
+
+# GitHub Issues 笔记来源（Studio 的「同步笔记」会读取这里）
+notes:
+  repo: ShannonMYang/MyPersonalBlog
+  url: https://github.com/ShannonMYang/MyPersonalBlog
+  label: 笔记
+
+navigation:
+  - title: 首页
+    url: /
+  - title: 笔记库
+    url: /notes/
+  - title: 归档
+    url: /archives/
+  - title: 标签
+    url: /tags/
+  - title: 关于
+    url: /about/
+
+hero:
+  eyebrow: SINCE 2018 · 记录与思考
+  vertical: 木鱼小楼听春雨
+  motto: 温故而知新，可以为师矣
+  description: 这里存放开发路上踩过的坑、读过的书、做过的菜，以及一些没有结论的念头。慢慢写，常常看。
+
+footer:
+  since: 2018
+  note: 用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。

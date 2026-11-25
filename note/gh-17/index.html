@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Native 页面跳转传值问题 · 木鱼小店</title>
+<meta name="description" content="今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。 后，查询英文博客和github各种issue，方得以解决。 遂，有此记录。 ------ App.js中代码 页面跳转、传值 按钮点击时，触发跳转页面方法 ，将要传递的值，带过去 接收传递的值 以上，可通过打印测验得来。 参考链接">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-17/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 页面跳转传值问题 · 木鱼小店">
+<meta property="og:description" content="今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。 后，查询英文博客和github各种issue，方得以解决。 遂，有此记录。 ------ App.js中代码 页面跳转、传值 按钮点击时，触发跳转页面方法 ，将要传递的值，带过去 接收传递的值 以上，可通过打印测验得来。 参考链接">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-17/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Native 页面跳转传值问题 · 木鱼小店">
+<meta name="twitter:description" content="今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。 后，查询英文博客和github各种issue，方得以解决。 遂，有此记录。 ------ App.js中代码 页面跳转、传值 按钮点击时，触发跳转页面方法 ，将要传递的值，带过去 接收传递的值 以上，可通过打印测验得来。 参考链接">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-05-06T09:27:34.000Z">2021年5月6日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">React Native 页面跳转传值问题</h1>
+      <p class="article__lead">今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。 后，查询英文博客和github各种issue，方得以解决。 遂，有此记录。 ------ App.js中代码 页面跳转、传值 按钮点击时，触发跳转页面方法 ，将要传递的值，带过去 接收传递的值 以上，可通过打印测验得来。 参考链接</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-17.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#17</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/17" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #17</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">基础知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/17" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。</p>
+<p>后，查询英文博客和github各种issue，方得以解决。
+遂，有此记录。</p>
+</blockquote>
+<hr>
+<h3 id="appjs中代码" class="prose-h prose-h3"><a class="h-anchor" href="#appjs中代码" aria-hidden="true" tabindex="-1">#</a>App.js中代码</h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// App.js</span>
+<span class="hljs-comment">// 主页</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">HomeStack</span> = <span class="hljs-title function_">createStackNavigator</span>();
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">HomeStackScreen</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">HomeStack.Navigator</span> <span class="hljs-attr">screenOptions</span>=<span class="hljs-string">{{</span>
+      <span class="hljs-attr">headerTintColor:</span> &#x27;<span class="hljs-attr">tomato</span>&#x27;,  // <span class="hljs-attr">导航条字体颜色</span>
+      <span class="hljs-attr">headerStyle:</span> { <span class="hljs-attr">backgroundColor:</span> &#x27;#<span class="hljs-attr">ffe4e1</span>&#x27; },  // <span class="hljs-attr">导航条的背景色</span>
+      // <span class="hljs-attr">headerBackTitle:</span> &#x27;<span class="hljs-attr">返回</span>&#x27;,  // <span class="hljs-attr">返回按钮的现实问题</span>
+    }}&gt;</span>
+      {/* 导航显示名字，导航当前显示的页面 */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">HomeStack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;网易&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{HomeScreen}</span> <span class="hljs-attr">options</span>=<span class="hljs-string">{{</span>
+         //<span class="hljs-attr">2.</span> <span class="hljs-attr">设置导航标题的</span>“<span class="hljs-attr">名字</span>”<span class="hljs-attr">和</span>“<span class="hljs-attr">位置</span>”（<span class="hljs-attr">同时给多个屏幕设置标题</span>？）
+        //  <span class="hljs-attr">headerTitle:</span> &quot;<span class="hljs-attr">新闻</span>&quot;, 
+        //  <span class="hljs-attr">headerTitleAlign:</span>&#x27;<span class="hljs-attr">center</span>&#x27;,
+         //<span class="hljs-attr">3.</span> <span class="hljs-attr">在headerLeft中可以完全覆盖</span>，<span class="hljs-attr">后退按钮</span>，<span class="hljs-attr">也可以使用headerBackImage</span>
+      }} /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">HomeStack.Screen</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NewsDetail&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">{NewsDetail}</span> <span class="hljs-attr">options</span>=<span class="hljs-string">{{</span>
+         //<span class="hljs-attr">2.</span> <span class="hljs-attr">设置导航标题的</span>“<span class="hljs-attr">名字</span>”<span class="hljs-attr">和</span>“<span class="hljs-attr">位置</span>”（<span class="hljs-attr">同时给多个屏幕设置标题</span>？）
+         <span class="hljs-attr">headerTitle:</span> &quot;<span class="hljs-attr">详情页</span>&quot;, 
+         <span class="hljs-attr">headerTitleAlign:</span>&#x27;<span class="hljs-attr">center</span>&#x27;,
+         <span class="hljs-attr">headerMode:</span> &quot;<span class="hljs-attr">screen</span>&quot;,
+      }}/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">HomeStack.Navigator</span>&gt;</span></span>
+  );
+}
+</code></pre></figure><h3 id="页面跳转传值" class="prose-h prose-h3"><a class="h-anchor" href="#页面跳转传值" aria-hidden="true" tabindex="-1">#</a>页面跳转、传值</h3><blockquote>
+<p>按钮点击时，触发跳转页面方法</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// Home.js</span>
+<span class="hljs-comment">// 选中时，cell的样式和渲染</span>
+        <span class="hljs-keyword">const</span> <span class="hljs-title function_">renderItem</span> = (<span class="hljs-params">{ item }</span>) =&gt; {
+            <span class="hljs-keyword">const</span> backgroundColor = item.<span class="hljs-property">docid</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span>.<span class="hljs-property">selectedId</span> ? <span class="hljs-string">&quot;#6e3b6e&quot;</span> : <span class="hljs-string">&quot;grazy&quot;</span>;
+
+            <span class="hljs-keyword">return</span> (
+                <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Item</span>
+                    <span class="hljs-attr">item</span>=<span class="hljs-string">{item}</span>
+                    <span class="hljs-attr">onPress</span>=<span class="hljs-string">{()</span> =&gt;</span> this.pushToNewsDetail(item.docid)}
+                    // =&gt; this.props.navigation.navigate(&#x27;NewsDetail&#x27;,{id: item.docid})}
+                    style={{ backgroundColor }}
+                /&gt;</span>
+            );
+        };
+</code></pre></figure><blockquote>
+<p>，将要传递的值，带过去</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// Home.js</span>
+<span class="hljs-comment">// 实现详情页面的跳转</span>
+    <span class="hljs-title function_">pushToNewsDetail</span>(<span class="hljs-params">docid</span>) {
+        <span class="hljs-comment">// console.log(docid);</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">navigation</span>.<span class="hljs-title function_">navigate</span>(<span class="hljs-string">&#x27;NewsDetail&#x27;</span>, {
+            <span class="hljs-comment">// 父子页面跳转传递的参数</span>
+            <span class="hljs-attr">id</span>: docid,
+        });
+    }
+</code></pre></figure><h3 id="接收传递的值" class="prose-h prose-h3"><a class="h-anchor" href="#接收传递的值" aria-hidden="true" tabindex="-1">#</a>接收传递的值</h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// NewsDetail.js</span>
+<span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+        <span class="hljs-variable language_">super</span>(props);
+        <span class="hljs-comment">// 接收父页面传递的参数</span>
+        <span class="hljs-keyword">const</span> id = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">route</span>.<span class="hljs-property">params</span>.<span class="hljs-property">id</span>;
+        <span class="hljs-comment">// 设定url</span>
+        <span class="hljs-keyword">let</span> url_api = <span class="hljs-string">&#x27;http://c.m.163.com/nc/article/&#x27;</span> + id + <span class="hljs-string">&#x27;/full.html&#x27;</span>;
+        <span class="hljs-comment">// console.log(&#x27;id: &#x27;, id);</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = {
+            <span class="hljs-attr">html</span>: <span class="hljs-string">&#x27;正在加载网页&#x27;</span>,
+            <span class="hljs-attr">id</span>: id,
+            <span class="hljs-attr">url</span>: url_api,
+        }
+        <span class="hljs-comment">// console.log(this.state.url);</span>
+    }
+</code></pre></figure><p>以上，可通过打印测验得来。</p>
+<p><a href="https://github.com/react-navigation/react-navigation/issues/6863" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接</a></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#appjs中代码">App.js中代码</a></li><li class="toc__item toc__item--h3"><a href="#页面跳转传值">页面跳转、传值</a></li><li class="toc__item toc__item--h3"><a href="#接收传递的值">接收传递的值</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-18/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">React-Native FlatList  Warning: Each child in an array or iterator should have a unique “key” prop</span><span class="postnav__meta">2021.05.06 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-16/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 使用 react-native-webview 渲染 HTML</span><span class="postnav__meta">2021.05.06 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-18/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React-Native FlatList  Warning: Each child in an array or iterator should have a unique “key” prop</span>
+            <span class="mini-card__meta">2021.05.06 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-21/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 报错 undefined is not an object (evaluating &#39;this.props.navigation.navigate&#39;)</span>
+            <span class="mini-card__meta">2021.05.12 · 2 分钟</span>
+          </a><a class="mini-card" href="/note/gh-15/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的基本组件</span>
+            <span class="mini-card__meta">2021.04.25 · 8 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.05.06</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Native 页面跳转传值问题","datePublished":"2021-05-06T09:27:34.000Z","dateModified":"2021-05-06T09:27:34.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"今天在处理仿网易新闻项目的页面跳转时，始终无法获取到传递过来的值，查询各种中文博客，均未有能解决问题的答案。 后，查询英文博客和github各种issue，方得以解决。 遂，有此记录。 ------ App.js中代码 页面跳转、传值 按钮点击时，触发跳转页面方法 ，将要传递的值，带过去 接收传递的值 以上，可通过打印测验得来。 参考链接","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-17/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

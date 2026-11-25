@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>gitlab提交代码所遇多账户导致的ssh错误·小记 · 木鱼小店</title>
+<meta name="description" content="记于2021年07月09日。 最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。 于是我就很纳闷了，上个月中旬提交的时候还是好好的。 身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。 --- 执行git push 命令后，报错如下： 查了好多资料，整体都是在说，你本地的ssh目录下，没有以rsa、pub结尾的文件。 然而，实际情况是。 不仅如此，…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-34/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab提交代码所遇多账户导致的ssh错误·小记 · 木鱼小店">
+<meta property="og:description" content="记于2021年07月09日。 最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。 于是我就很纳闷了，上个月中旬提交的时候还是好好的。 身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。 --- 执行git push 命令后，报错如下： 查了好多资料，整体都是在说，你本地的ssh目录下，没有以rsa、pub结尾的文件。 然而，实际情况是。 不仅如此，…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-34/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="gitlab提交代码所遇多账户导致的ssh错误·小记 · 木鱼小店">
+<meta name="twitter:description" content="记于2021年07月09日。 最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。 于是我就很纳闷了，上个月中旬提交的时候还是好好的。 身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。 --- 执行git push 命令后，报错如下： 查了好多资料，整体都是在说，你本地的ssh目录下，没有以rsa、pub结尾的文件。 然而，实际情况是。 不仅如此，…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+<link rel="stylesheet" href="/assets/katex/katex.min.css">
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-07-09T02:54:17.000Z">2021年7月9日</time><span class="article__kicker-dot">·</span><span>约 3 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.09.02</span></div>
+      <h1 class="article__title">gitlab提交代码所遇多账户导致的ssh错误·小记</h1>
+      <p class="article__lead">记于2021年07月09日。 最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。 于是我就很纳闷了，上个月中旬提交的时候还是好好的。 身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。 --- 执行git push 命令后，报错如下： 查了好多资料，整体都是在说，你本地的ssh目录下，没有以rsa、pub结尾的文件。 然而，实际情况是。 不仅如此，…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a><a class="tag-pill " href="/tag/git/">git</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-34.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#34</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/34" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #34</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#821689">错误解决</span><span class="label-chip" style="--label-accent:#821689">git</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/34" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>记于2021年07月09日。</p>
+</blockquote>
+<blockquote>
+<p>最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。
+于是我就很纳闷了，上个月中旬提交的时候还是好好的。
+身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。</p>
+</blockquote>
+<hr>
+<h4 id="执行git-push-命令后报错如下" class="prose-h prose-h4"><a class="h-anchor" href="#执行git-push-命令后报错如下" aria-hidden="true" tabindex="-1">#</a>执行<code>git push</code> 命令后，报错如下：</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">kex_exchange_identification: Connection closed by remote host
+[core]
+fatal: 无法读取远程仓库。
+
+请确认您有正确的访问权限并且仓库存在。
+</code></pre></figure><h4 id="查了好多资料整体都是在说你本地的ssh目录下没有以rsapub结尾的文件" class="prose-h prose-h4"><a class="h-anchor" href="#查了好多资料整体都是在说你本地的ssh目录下没有以rsapub结尾的文件" aria-hidden="true" tabindex="-1">#</a>查了好多资料，整体都是在说，你本地的<code>ssh目录</code>下，没有以<code>rsa</code>、<code>pub</code>结尾的文件。</h4><blockquote>
+<p>然而，实际情况是。</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-34-1.png" alt="Snipaste_2021-07-09_09-31-20" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Snipaste_2021-07-09_09-31-20</figcaption></figure>
+<blockquote>
+<p>不仅如此，我连gitlab上的ssh keys都是配置过的。</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-34-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h4 id="所以证明问题的症结不在此继续找有说是本地的git没有和ssh-key链接起来" class="prose-h prose-h4"><a class="h-anchor" href="#所以证明问题的症结不在此继续找有说是本地的git没有和ssh-key链接起来" aria-hidden="true" tabindex="-1">#</a>所以，证明问题的症结不在此。继续找。有说是<code>本地的git</code>没有和<code>ssh key</code>链接起来。</h4><blockquote>
+<p>基于有两个<code>rsa文件</code>，于是我将它们连接起来，但是，似乎依旧没任何效果。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+</code></pre></figure><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-34-3.png" alt="Snipaste_2021-07-09_09-32-53" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Snipaste_2021-07-09_09-32-53</figcaption></figure>
+<h4 id="看来问题依旧不是这个继续寻找下去等等好像上面提到有两个rsa文件会不会是多账户问题" class="prose-h prose-h4"><a class="h-anchor" href="#看来问题依旧不是这个继续寻找下去等等好像上面提到有两个rsa文件会不会是多账户问题" aria-hidden="true" tabindex="-1">#</a>看来，问题依旧不是这个。继续寻找下去。等等，好像上面提到有两个<code>rsa文件</code>，会不会是多账户问题。</h4><blockquote>
+<p>有了方向，继续琢磨尝试。
+在 ssh目录 下创建 config 文件，然后编辑，做多账户的配置。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Less · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"># 该文件用于配置私钥对应的服务器
+# <span class="hljs-selector-tag">Default</span> <span class="hljs-selector-tag">gitlab</span> <span class="hljs-selector-tag">user</span>(xxx001<span class="hljs-variable">@nxxxxc</span>.net)
+<span class="hljs-selector-tag">Host</span> <span class="hljs-selector-tag">git</span><span class="hljs-selector-class">.nxxxxc</span><span class="hljs-selector-class">.cn</span>
+ <span class="hljs-selector-tag">HostName</span> <span class="hljs-selector-tag">git</span><span class="hljs-selector-class">.nxxxxc</span><span class="hljs-selector-class">.cn</span>
+ <span class="hljs-selector-tag">User</span> <span class="hljs-selector-tag">git</span>
+ <span class="hljs-selector-tag">IdentityFile</span> /<span class="hljs-selector-tag">Users</span>/<span class="hljs-selector-tag">yxxxxg</span>/<span class="hljs-selector-class">.ssh</span>/<span class="hljs-selector-tag">id_rsa</span>
+
+ # <span class="hljs-selector-tag">second</span> <span class="hljs-selector-tag">user</span>(xxx002<span class="hljs-variable">@nxxxxc</span>.net)
+ # 建一个<span class="hljs-selector-tag">github</span>别名，新建的帐号使用这个别名做克隆和更新
+<span class="hljs-selector-tag">Host</span> <span class="hljs-selector-tag">gitlab</span><span class="hljs-selector-class">.nxxxxc</span>
+ <span class="hljs-selector-tag">HostName</span> <span class="hljs-selector-tag">git</span><span class="hljs-selector-class">.nxxxxc</span><span class="hljs-selector-class">.cn</span>
+ <span class="hljs-selector-tag">User</span> <span class="hljs-selector-tag">git</span>
+ <span class="hljs-selector-tag">IdentityFile</span> /<span class="hljs-selector-tag">Users</span>/<span class="hljs-selector-tag">yxxxxg</span>/<span class="hljs-selector-class">.ssh</span>/<span class="hljs-selector-tag">id_rsa_work</span>
+</code></pre></figure><blockquote>
+<p>其规则就是：从上至下读取 config 的内容，在每个 Host 下寻找对应的私钥。这里将 GitHub SSH 仓库地址中的 <a href="http://git.nxxxxc.cn" target="_blank" rel="noopener noreferrer" class="ext-link">git.nxxxxc.cn</a> 替换成新建的 Host 别名如：gitlab.nxxxxc，那么原地址是：<a href="http://git.nxxxxc.cn" target="_blank" rel="noopener noreferrer" class="ext-link">git.nxxxxc.cn</a>:sxxxlxxxv/yxxaxx.git，替换后应该是：git.nxxxxc:sxxxlxxxv/yxxaxx.git</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>2021-09-02，更新，新增如下内容</p>
+</blockquote>
+<p><strong>测试</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">awk · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ ssh -T git.nxxxxc.cn``Hi BeginMan! Yo<span class="hljs-string">u&#x27;ve successfully authenticated, but GitHub does not provide shel``l access.
+$ ssh -T git.nxxxxc 
+Hi shannon! You&#x27;</span>ve successfully authenticated, but GitHub does not provide shell access. 
+</code></pre></figure><p><strong>应用</strong></p>
+<p>测试成功，那么我尝试在我的 work 目录下克隆我的账号下的远程仓库。如下：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-34-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<hr>
+<blockquote>
+<p>然后，在需要上传代码的本地仓库，执行命令<code>vi .git.config</code> 对其进行编辑 。(主要是url那一行)</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">ini · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-section">[core]</span>
+        <span class="hljs-attr">repositoryformatversion</span> = <span class="hljs-number">0</span>
+        <span class="hljs-attr">filemode</span> = <span class="hljs-literal">true</span>
+        <span class="hljs-attr">bare</span> = <span class="hljs-literal">false</span>
+        <span class="hljs-attr">logallrefupdates</span> = <span class="hljs-literal">true</span>
+        <span class="hljs-attr">ignorecase</span> = <span class="hljs-literal">true</span>
+        <span class="hljs-attr">precomposeunicode</span> = <span class="hljs-literal">true</span>
+<span class="hljs-section">[remote &quot;origin&quot;]</span>
+        <span class="hljs-attr">url</span> = ssh://git@gitlab.nxxxxc:<span class="hljs-number">6022</span>/<span class="hljs-number">02</span>-nxxxxc/IntelligentEnterprise/highgrade/wmqy/repair/repairios.git
+        <span class="hljs-attr">fetch</span> = +refs/heads/*:refs/remotes/origin/*
+<span class="hljs-section">[branch &quot;master&quot;]</span>
+        <span class="hljs-attr">remote</span> = origin
+        <span class="hljs-attr">merge</span> = refs/heads/master
+<span class="hljs-section">[branch &quot;dev&quot;]</span>
+        <span class="hljs-attr">remote</span> = origin
+        <span class="hljs-attr">merge</span> = refs/heads/dev
+</code></pre></figure><h4 id="执行git-push成功提交问题解决" class="prose-h prose-h4"><a class="h-anchor" href="#执行git-push成功提交问题解决" aria-hidden="true" tabindex="-1">#</a>执行<code>git push</code>，成功提交，问题解决。</h4><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-34-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<hr>
+<h3 id="小结碰到的问题和找到的资料并不一定百分百的完全吻合需要多做尝试" class="prose-h prose-h3"><a class="h-anchor" href="#小结碰到的问题和找到的资料并不一定百分百的完全吻合需要多做尝试" aria-hidden="true" tabindex="-1">#</a>小结：碰到的问题，和找到的资料，并不一定百分百的完全吻合，需要多做尝试。</h3><h3 id="切焦切躁" class="prose-h prose-h3"><a class="h-anchor" href="#切焦切躁" aria-hidden="true" tabindex="-1">#</a>切焦切躁。</h3><h3 id="毕竟程序猿遇到问题太正常能解决问题但也会需要新的问题" class="prose-h prose-h3"><a class="h-anchor" href="#毕竟程序猿遇到问题太正常能解决问题但也会需要新的问题" aria-hidden="true" tabindex="-1">#</a>毕竟，程序猿遇到问题太正常。能解决问题，但也会需要新的问题。</h3><hr>
+<p><a href="https://www.cnblogs.com/dubaokun/p/3550870.html" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接1 ssh方式 - ssh-key 与 git 账户配置以及多账户配置</a>
+<a href="https://www.cnblogs.com/kevingrace/p/6118297.html" target="_blank" rel="noopener noreferrer" class="ext-link">参考链接2 http方式 - git push 上传代码到 gitlab 上，报错 401/403 (或需要输入用户名和密码)</a></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#小结碰到的问题和找到的资料并不一定百分百的完全吻合需要多做尝试">小结：碰到的问题，和找到的资料，并不一定百分百的完全吻合，需要多做尝试。</a></li><li class="toc__item toc__item--h3"><a href="#切焦切躁">切焦切躁。</a></li><li class="toc__item toc__item--h3"><a href="#毕竟程序猿遇到问题太正常能解决问题但也会需要新的问题">毕竟，程序猿遇到问题太正常。能解决问题，但也会需要新的问题。</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a><a class="tag-pill " href="/tag/git/">git</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-35/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">iOS逆向知识·小记</span><span class="postnav__meta">2021.07.16 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-33/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">Xcode编译OC和RN混合开发所遇错误·小记</span><span class="postnav__meta">2021.07.02 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-32/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xocde编译项目所遇问题·小记</span>
+            <span class="mini-card__meta">2021.07.01 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-29/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native项目编译调试过程所遇错误·小记</span>
+            <span class="mini-card__meta">2021.06.24 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.09.02</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"gitlab提交代码所遇多账户导致的ssh错误·小记","datePublished":"2021-07-09T02:54:17.000Z","dateModified":"2021-09-02T02:04:30.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"记于2021年07月09日。 最近修复了工作代码中的一些bug。在修复完，往gitlab仓库提交的时候，遇到了错误。 于是我就很纳闷了，上个月中旬提交的时候还是好好的。 身为程序猿，当然是遇到问题解决问题了。于是着手查资料，开始解决。 --- 执行git push 命令后，报错如下： 查了好多资料，整体都是在说，你本地的ssh目录下，没有以rsa、pub结尾的文件。 然而，实际情况是。 不仅如此，…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-34/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

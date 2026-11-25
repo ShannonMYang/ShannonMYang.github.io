@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>nvm：安装、切换不同 Node.js 版本的管理器 · 木鱼小店</title>
+<meta name="description" content="nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。 为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错. 错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些. 安…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-31/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nvm：安装、切换不同 Node.js 版本的管理器 · 木鱼小店">
+<meta property="og:description" content="nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。 为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错. 错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些. 安…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-31/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="nvm：安装、切换不同 Node.js 版本的管理器 · 木鱼小店">
+<meta name="twitter:description" content="nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。 为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错. 错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些. 安…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+<link rel="stylesheet" href="/assets/katex/katex.min.css">
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-07-01T03:19:48.000Z">2021年7月1日</time><span class="article__kicker-dot">·</span><span>约 7 分钟</span></div>
+      <h1 class="article__title">nvm：安装、切换不同 Node.js 版本的管理器</h1>
+      <p class="article__lead">nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。 为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错. 错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些. 安…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/node-js/">Node.js</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-31.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#31</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/31" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #31</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#F9DCAF">Node.js</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/31" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-31-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。</p>
+<blockquote>
+<p>为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错.</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm ERR! code ERESOLVE  
+npm ERR! code EACCES
+npm ERR! errno: -13,
+</code></pre></figure><p>错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些.</p>
+</blockquote>
+<h2 id="安装-nvm" class="prose-h prose-h2"><a class="h-anchor" href="#安装-nvm" aria-hidden="true" tabindex="-1">#</a>安装 NVM</h2><blockquote>
+<p>说明：这里没使用brew安装nvm。是因为，安装之后，执行 <code>nvm --version</code> 是没有反应的，也就是安装失败的。所以采用如下命令进行 nvm 的安装。</p>
+</blockquote>
+<p>可用<code>cURL</code>或<code>wget</code>指令使用安装脚本安装或更新 nvm：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ curl -o- <span class="hljs-attr">https</span>:<span class="hljs-comment">//raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash</span>
+</code></pre></figure><p>或</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ wget -qO- <span class="hljs-attr">https</span>:<span class="hljs-comment">//raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash</span>
+</code></pre></figure><p>此安装脚本会将 nvm repo clone 到<code>~/.nvm</code>，并且将 source line 新增至你的 profile 设定 ( <code>~/.bash_profile</code>、<code>~/.zshrc</code>、<code>~/.profile</code>或<code>~/.bashrc</code>)：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">export</span> <span class="hljs-variable constant_">NVM_DIR</span>=<span class="hljs-string">&quot;$HOME/.nvm&quot;</span>
+[ -s <span class="hljs-string">&quot;$NVM_DIR/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="hljs-string">&quot;$NVM_DIR/nvm.sh&quot;</span>  # <span class="hljs-title class_">This</span> loads nvm
+[ -s <span class="hljs-string">&quot;$NVM_DIR/bash_completion&quot;</span> ] &amp;&amp; \. <span class="hljs-string">&quot;$NVM_DIR/bash_completion&quot;</span>  # <span class="hljs-title class_">This</span> loads nvm bash_completion
+</code></pre></figure><blockquote>
+<p>由于笔者使用的是 oh-myzsh, 所以执行了命令 <code>vi ~/.zshrc</code>, 进行了编辑.
+<img class="prose-img" src="/post-images/issues/gh-31-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</blockquote>
+<p>如果在 Linux 执行安装脚本后，执行下面指令会显示以下讯息或没有任何讯息时，建议重开一个新的终端机 (terminal) 再重新执行一次<code>nvm</code>指令：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ command -v nvm
+<span class="hljs-attr">nvm</span>: command not found
+</code></pre></figure><p>如果还是无法使用 nvm，可执行下面指令立即应用 ZSH 的设定：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ source .<span class="hljs-property">zshrc</span>
+</code></pre></figure><p>注意：</p>
+<ul>
+<li>使用<code>nvm</code>时，不需要<code>sudo</code>即可使用<code>npm -g</code>全域安装模组，所以与其执行<code>sudo npm i -g</code>，不如执行<code>npm i -g</code></li>
+<li>若你有<code>~/.npmrc</code>，请确保里面不包含任何<code>prefix</code>的设定 (因为与<code>nvm</code>不相容)</li>
+<li>你可以 (但不应该) 保留以前在 “系统” 安装的 Node.js，但<code>nvm</code>只对你的使用者帐户 (用于安装<code>nvm</code>的使用者帐户) 可用。可能会导致版本不 match，因为其他使用者会使用<code>/usr/local/lib/node_modules/*</code>，而使用者帐户会使用<code>~/.nvm/versions/node/vX.X.X/lib/node_modules/*</code></li>
+</ul>
+<h2 id="version确认-nvm-是否安装成功" class="prose-h prose-h2"><a class="h-anchor" href="#version确认-nvm-是否安装成功" aria-hidden="true" tabindex="-1">#</a><code>--version</code>：确认 NVM 是否安装成功</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm --version
+<span class="hljs-number">0.34</span><span class="hljs-number">.0</span>
+</code></pre></figure><h2 id="install利用-nvm-安装-nodejs" class="prose-h prose-h2"><a class="h-anchor" href="#install利用-nvm-安装-nodejs" aria-hidden="true" tabindex="-1">#</a><code>install</code>：利用 NVM 安装 Node.js</h2><p>安装 NVM 后，其实还没安装 Node 环境：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ node  
+<span class="hljs-attr">zsh</span>: command not <span class="hljs-attr">found</span>: node
+</code></pre></figure><p>如果执行下面指令，会提醒你需要执行<code>install</code>指令才能安装 Node.js：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm use node
+N/<span class="hljs-attr">A</span>: version <span class="hljs-string">&quot;node -&gt; N/A&quot;</span> is not yet installed.
+
+<span class="hljs-title class_">You</span> need to run <span class="hljs-string">&quot;nvm install node&quot;</span> to install it before <span class="hljs-keyword">using</span> it.
+</code></pre></figure><p>安装最新版的 Node.js：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm install node
+<span class="hljs-title class_">Downloading</span> and installing node v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>...
+<span class="hljs-title class_">Downloading</span> <span class="hljs-attr">https</span>:<span class="hljs-comment">//nodejs.org/dist/v12.8.1/node-v12.8.1-linux-x64.tar.xz...</span>
+#################################################################################################### <span class="hljs-number">100.0</span>%
+<span class="hljs-title class_">Computing</span> checksum <span class="hljs-keyword">with</span> sha256sum
+<span class="hljs-title class_">Checksums</span> matched!
+<span class="hljs-title class_">Now</span> <span class="hljs-keyword">using</span> node v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span> (npm v6<span class="hljs-number">.10</span><span class="hljs-number">.2</span>)
+<span class="hljs-title class_">Creating</span> <span class="hljs-keyword">default</span> <span class="hljs-attr">alias</span>: <span class="hljs-keyword">default</span> -&gt; <span class="hljs-title function_">node</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>)
+</code></pre></figure><p>如果要指定安装版本，可以直接指定版本号：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm install <span class="hljs-number">8.9</span><span class="hljs-number">.1</span>
+</code></pre></figure><p>安装的第一个版本的 Node.js 会成员 nvm 的预设版本，新的 shell 就会以预设版本的 Node.js 来使用 (例如：<code>nvm alias default</code>)。</p>
+<p>查看目前安装 Node.js 的版本：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ node -v
+v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>
+</code></pre></figure><h2 id="ls-remote察看可用的安装版本" class="prose-h prose-h2"><a class="h-anchor" href="#ls-remote察看可用的安装版本" aria-hidden="true" tabindex="-1">#</a><code>ls-remote</code>：察看可用的安装版本</h2><p>可以看目前有哪些可用版本可安装，在版本号前面的<code>-&gt;</code>箭头符号代表目前 nvm 正在使用的 Node.js 版本：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm ls-remote
+...
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.1</span>   (<span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.2</span>   (<span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>   (<span class="hljs-title class_">Latest</span> <span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+...
+        v12<span class="hljs-number">.7</span><span class="hljs-number">.0</span>
+        v12<span class="hljs-number">.8</span><span class="hljs-number">.0</span>
+-&gt;      v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>
+</code></pre></figure><p>不过刚刚的<code>ls-remote</code>指令会把所有可用的版本都列出来，但通常会选择安装 LTS (Long-term support，长期支援) 版，所以只要加上<code>-lts</code>参数就可以指列出可用的 LTS 版：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm ls-remote --lts
+...
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.1</span>   (<span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.2</span>   (<span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>   (<span class="hljs-title class_">Latest</span> <span class="hljs-attr">LTS</span>: <span class="hljs-title class_">Dubnium</span>)
+</code></pre></figure><p>如果版本号的文字有特殊颜色 (不是白色字)，则代表该版本的 Node.js 有透过 nvm 安装过，例如：我的电脑就安装了<code>v14.10.1</code>和<code>v16.4.0</code>：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-31-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h2 id="ls查看目前安装了哪些版本" class="prose-h prose-h2"><a class="h-anchor" href="#ls查看目前安装了哪些版本" aria-hidden="true" tabindex="-1">#</a><code>ls</code>：查看目前安装了哪些版本</h2><p><code>ls</code> 指令可以查看目前安装了哪些版本：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm ls
+       v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>
+-&gt;      v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>
+<span class="hljs-keyword">default</span> -&gt; <span class="hljs-title function_">node</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>)
+node -&gt; <span class="hljs-title function_">stable</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+stable -&gt; <span class="hljs-number">12.8</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+iojs -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+unstable -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+lts<span class="hljs-comment">/* -&gt; lts/dubnium (-&gt; N/A)
+lts/argon -&gt; v4.9.1 (-&gt; N/A)
+lts/boron -&gt; v6.17.1 (-&gt; N/A)
+lts/carbon -&gt; v8.16.1 (-&gt; N/A)
+lts/dubnium -&gt; v10.16.3
+</span></code></pre></figure><h2 id="use切换-nodejs-版本" class="prose-h prose-h2"><a class="h-anchor" href="#use切换-nodejs-版本" aria-hidden="true" tabindex="-1">#</a><code>use</code>：切换 Node.js 版本</h2><p>如果要使用 nvm 切换正在使用的 Node.js 版本，可用<code>use</code>指令：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm use v10<span class="hljs-number">.6</span><span class="hljs-number">.3</span>
+<span class="hljs-title class_">Now</span> <span class="hljs-keyword">using</span> node v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span> (npm v6<span class="hljs-number">.9</span><span class="hljs-number">.0</span>)
+</code></pre></figure><p>如果切换的目标版本还没安装，nvm 会提醒你要安装：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm use lts/carbon 
+N/<span class="hljs-attr">A</span>: version <span class="hljs-string">&quot;lts/carbon -&gt; N/A&quot;</span> is not yet installed.
+
+<span class="hljs-title class_">You</span> need to run <span class="hljs-string">&quot;nvm install lts/carbon&quot;</span> to install it before <span class="hljs-keyword">using</span> it.
+</code></pre></figure><p>透过 nvm 安装 Node.js 时，nvm 会将不同的 Node.js 版本储存在<code>~/.nvm/versions/node/vX.X.X</code>，然后再修改<code>$PATH</code>，将指定版本的 Node.js 路径加入：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm current
+v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>
+$ echo $PATH             
+/home/titan/.<span class="hljs-property">nvm</span>/versions/node/v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>/<span class="hljs-attr">bin</span>:<span class="hljs-regexp">/usr/</span>local/<span class="hljs-attr">sbin</span>:<span class="hljs-regexp">/usr/</span>local/<span class="hljs-attr">bin</span>:<span class="hljs-regexp">/usr/</span><span class="hljs-attr">sbin</span>:<span class="hljs-regexp">/usr/</span><span class="hljs-attr">bin</span>:<span class="hljs-regexp">/sbin:/</span>bin
+
+$ use v12<span class="hljs-number">.13</span><span class="hljs-number">.1</span>
+$ nvm current
+v12<span class="hljs-number">.13</span><span class="hljs-number">.1</span>
+$ echo $PATH             
+/home/titan/.<span class="hljs-property">nvm</span>/versions/node/v12<span class="hljs-number">.13</span><span class="hljs-number">.1</span>/<span class="hljs-attr">bin</span>:<span class="hljs-regexp">/usr/</span>local/<span class="hljs-attr">sbin</span>:<span class="hljs-regexp">/usr/</span>local/<span class="hljs-attr">bin</span>:<span class="hljs-regexp">/usr/</span><span class="hljs-attr">sbin</span>:<span class="hljs-regexp">/usr/</span><span class="hljs-attr">bin</span>:<span class="hljs-regexp">/sbin:/</span>bin
+</code></pre></figure><p>在 nvm 的各个 Node.js 版本安装的全域套件都会在各自版本的目录内安装，所以在切换至新安装的 Node.js 版本后需要重新安装，也因为如此，不同版本间的套件就不会有冲突问题。</p>
+<h2 id="current察看目前使用版本" class="prose-h prose-h2"><a class="h-anchor" href="#current察看目前使用版本" aria-hidden="true" tabindex="-1">#</a><code>current</code>：察看目前使用版本</h2><p>如果忘记自己切换到哪个版本，可以用<code>current</code>指令：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm current
+v10<span class="hljs-number">.6</span><span class="hljs-number">.3</span>
+</code></pre></figure><h2 id="run直接执行-nodejs" class="prose-h prose-h2"><a class="h-anchor" href="#run直接执行-nodejs" aria-hidden="true" tabindex="-1">#</a><code>run</code>：直接执行 Node.js</h2><p>如果要直接执行 Node.js，可以使用下面指令：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm run node
+<span class="hljs-title class_">Running</span> node v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span> (npm v6<span class="hljs-number">.10</span><span class="hljs-number">.2</span>)
+<span class="hljs-title class_">Welcome</span> to <span class="hljs-title class_">Node</span>.<span class="hljs-property">js</span> v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>.
+<span class="hljs-title class_">Type</span> <span class="hljs-string">&quot;.help&quot;</span> <span class="hljs-keyword">for</span> more information.
+&gt;
+</code></pre></figure><h2 id="exec指定要执行的-nodejs-版本" class="prose-h prose-h2"><a class="h-anchor" href="#exec指定要执行的-nodejs-版本" aria-hidden="true" tabindex="-1">#</a><code>exec</code>：指定要执行的 Node.js 版本</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm exec <span class="hljs-number">12.8</span><span class="hljs-number">.1</span> node
+<span class="hljs-title class_">Running</span> node v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span> (npm v6<span class="hljs-number">.10</span><span class="hljs-number">.2</span>)
+<span class="hljs-title class_">Welcome</span> to <span class="hljs-title class_">Node</span>.<span class="hljs-property">js</span> v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>.
+<span class="hljs-title class_">Type</span> <span class="hljs-string">&quot;.help&quot;</span> <span class="hljs-keyword">for</span> more information.
+&gt;
+</code></pre></figure><h2 id="which察看-nodejs-的安装路径" class="prose-h prose-h2"><a class="h-anchor" href="#which察看-nodejs-的安装路径" aria-hidden="true" tabindex="-1">#</a><code>which</code>：察看 Node.js 的安装路径</h2><p>执行下面指令可以查看特定版本的 Node.js 的安装路径：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm which <span class="hljs-number">12.8</span><span class="hljs-number">.1</span>
+/home/titan/.<span class="hljs-property">nvm</span>/versions/node/v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>/bin/node
+</code></pre></figure><h2 id="alias" class="prose-h prose-h2"><a class="h-anchor" href="#alias" aria-hidden="true" tabindex="-1">#</a>alias</h2><p>如下图有些版本的文字是红色或是显示<code>N/A</code>，就代表该版本未在电脑安装：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-31-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>预设 alias 可以取代版本号：</p>
+<ul>
+<li><code>node</code>：安装最新版的 Node.js</li>
+<li><code>iojs</code>：安装最新版的 io.js</li>
+<li><code>stable</code>：此 alias 已弃用，仅适用于 v0.12 以及更旧版，目前改为<code>node</code>alias</li>
+<li><code>unstable</code>：此 alias 为 v0.11，最后一个 “unstable” (不稳定) Node release，在 v1.0 之后的版本都是稳定版 (in SemVer, versions communicate breakage, not stability)</li>
+</ul>
+<p>可在下面这些指令使用以上预设别名：</p>
+<ul>
+<li><code>nvm install</code></li>
+<li><code>nvm use</code></li>
+<li><code>nvm run</code></li>
+<li><code>nvm exec</code></li>
+<li><code>nvm which</code></li>
+<li>… 等</li>
+</ul>
+<h2 id="alias察看别名设定别名" class="prose-h prose-h2"><a class="h-anchor" href="#alias察看别名设定别名" aria-hidden="true" tabindex="-1">#</a><code>alias</code>：察看别名、设定别名</h2><h2 id="察看别名" class="prose-h prose-h2"><a class="h-anchor" href="#察看别名" aria-hidden="true" tabindex="-1">#</a>察看别名</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm alias                                                                    * ?
+<span class="hljs-keyword">default</span> -&gt; v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>
+node -&gt; <span class="hljs-title function_">stable</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+stable -&gt; <span class="hljs-number">12.8</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+iojs -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+unstable -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+lts<span class="hljs-comment">/* -&gt; lts/erbium (-&gt; N/A)
+lts/argon -&gt; v4.9.1 (-&gt; N/A)
+lts/boron -&gt; v6.17.1 (-&gt; N/A)
+lts/carbon -&gt; v8.16.2 (-&gt; N/A)
+lts/dubnium -&gt; v10.17.0 (-&gt; N/A)
+lts/erbium -&gt; v12.13.0 (-&gt; N/A)
+</span></code></pre></figure><h2 id="设定别名" class="prose-h prose-h2"><a class="h-anchor" href="#设定别名" aria-hidden="true" tabindex="-1">#</a>设定别名</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm alias titan-test v10<span class="hljs-number">.15</span><span class="hljs-number">.3</span>                                                  * ?
+titan-test -&gt; v10<span class="hljs-number">.15</span><span class="hljs-number">.3</span>
+</code></pre></figure><p>接着用<code>nvm alias</code>指令就会看到刚刚新增的别名所对应的 Node.js 版本：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$ nvm alias                                                                    * ?
+titan-test -&gt; v10<span class="hljs-number">.15</span><span class="hljs-number">.3</span>
+<span class="hljs-keyword">default</span> -&gt; v10<span class="hljs-number">.16</span><span class="hljs-number">.3</span>
+node -&gt; <span class="hljs-title function_">stable</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+stable -&gt; <span class="hljs-number">12.8</span> (-&gt; v12<span class="hljs-number">.8</span><span class="hljs-number">.1</span>) (<span class="hljs-keyword">default</span>)
+iojs -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+unstable -&gt; N/<span class="hljs-title function_">A</span> (<span class="hljs-keyword">default</span>)
+lts<span class="hljs-comment">/* -&gt; lts/erbium (-&gt; N/A)
+lts/argon -&gt; v4.9.1 (-&gt; N/A)
+lts/boron -&gt; v6.17.1 (-&gt; N/A)
+lts/carbon -&gt; v8.16.2 (-&gt; N/A)
+lts/dubnium -&gt; v10.17.0 (-&gt; N/A)
+lts/erbium -&gt; v12.13.0 (-&gt; N/A)
+</span></code></pre></figure><h2 id="资料来源" class="prose-h prose-h2"><a class="h-anchor" href="#资料来源" aria-hidden="true" tabindex="-1">#</a>资料来源</h2><ul>
+<li><a href="https://github.com/nvm-sh/nvm#install--update-script" target="_blank" rel="noopener noreferrer" class="ext-link">nvm-sh/nvm: Node Version Manager</a></li>
+</ul>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#安装-nvm">安装 NVM</a></li><li class="toc__item toc__item--h2"><a href="#version确认-nvm-是否安装成功">--version：确认 NVM 是否安装成功</a></li><li class="toc__item toc__item--h2"><a href="#install利用-nvm-安装-nodejs">install：利用 NVM 安装 Node.js</a></li><li class="toc__item toc__item--h2"><a href="#ls-remote察看可用的安装版本">ls-remote：察看可用的安装版本</a></li><li class="toc__item toc__item--h2"><a href="#ls查看目前安装了哪些版本">ls：查看目前安装了哪些版本</a></li><li class="toc__item toc__item--h2"><a href="#use切换-nodejs-版本">use：切换 Node.js 版本</a></li><li class="toc__item toc__item--h2"><a href="#current察看目前使用版本">current：察看目前使用版本</a></li><li class="toc__item toc__item--h2"><a href="#run直接执行-nodejs">run：直接执行 Node.js</a></li><li class="toc__item toc__item--h2"><a href="#exec指定要执行的-nodejs-版本">exec：指定要执行的 Node.js 版本</a></li><li class="toc__item toc__item--h2"><a href="#which察看-nodejs-的安装路径">which：察看 Node.js 的安装路径</a></li><li class="toc__item toc__item--h2"><a href="#alias">alias</a></li><li class="toc__item toc__item--h2"><a href="#alias察看别名设定别名">alias：察看别名、设定别名</a></li><li class="toc__item toc__item--h2"><a href="#察看别名">察看别名</a></li><li class="toc__item toc__item--h2"><a href="#设定别名">设定别名</a></li><li class="toc__item toc__item--h2"><a href="#资料来源">资料来源</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/node-js/">Node.js</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-32/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">Xocde编译项目所遇问题·小记</span><span class="postnav__meta">2021.07.01 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-29/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native项目编译调试过程所遇错误·小记</span><span class="postnav__meta">2021.06.24 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.07.01</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"nvm：安装、切换不同 Node.js 版本的管理器","datePublished":"2021-07-01T03:19:48.000Z","dateModified":"2021-07-01T07:10:43.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"nvm 是 Node.js 的版本管理器 (version manager)，可在同一台主机上安装多个版本的 Node.js 环境，因为不同专案可能会使用不同的 Node.js 版本，那就需要透过一个版本管理器来切换不同的 Node.js 版本。 为什么记录这篇笔记.因为在编译RN项目的时候,遇到报错. 错误原因是啥呢?是因为node的版本太高了.所以,想来还是用node版本管理工具方便一些. 安…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-31/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

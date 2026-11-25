@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Native 使用 react-native-webview 渲染 HTML · 木鱼小店</title>
+<meta name="description" content="在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。 React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。 早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-16/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 使用 react-native-webview 渲染 HTML · 木鱼小店">
+<meta property="og:description" content="在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。 React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。 早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-16/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Native 使用 react-native-webview 渲染 HTML · 木鱼小店">
+<meta name="twitter:description" content="在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。 React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。 早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-05-06T08:58:50.000Z">2021年5月6日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span></div>
+      <h1 class="article__title">React Native 使用 react-native-webview 渲染 HTML</h1>
+      <p class="article__lead">在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。 React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。 早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-16.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#16</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/16" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #16</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/16" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><p>在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。</p>
+<p>React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。</p>
+<blockquote>
+<p>早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中。</p>
+</blockquote>
+<p>话不多说，让我们来试试这个组件。</p>
+<hr>
+<h3 id="渲染url-html-内容" class="prose-h prose-h3"><a class="h-anchor" href="#渲染url-html-内容" aria-hidden="true" tabindex="-1">#</a>渲染URL HTML 内容</h3><p>在开始之前，你需要使用 <code>yarn</code> 或者 <code>npm</code> 来安装它：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">yarn add react-native-webview
+<span class="hljs-comment">// 或者</span>
+npm install react-native-webview --save
+</code></pre></figure><p>安装完成后，我们就可以在程序代码中使用它：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">View</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">WebView</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native-webview&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NewsDetail</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> (
+      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">WebView</span> <span class="hljs-attr">source</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">uri:</span> &#x27;<span class="hljs-attr">https:</span>//<span class="hljs-attr">www.baidu.com</span>&#x27; }} /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+    )
+  }
+}
+</code></pre></figure><p>需要注意的是：第一次安装完成后，需要重新执行一次 <code>npx react-native run-ios</code> 或者 <code>npx react-native run-android</code> 让 rn 帮我们自动链接一次，否则会抛出以下错误：
+<img class="prose-img" src="/post-images/issues/gh-16-1.png" alt="错误异常" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<blockquote>
+<p>实际上，还需要在ios目录下，执行<code>pod install</code>，否则，依旧会出现异常提示。</p>
+</blockquote>
+<p>重新执行 <code>npx react-native run-ios</code> 或者 <code>npx react-native run-android</code>后，报错没了，但是页面上一片空白：</p>
+<p><strong>这是什么原因呢？</strong> 在查看了一下文件之后，发现 WebView 预设为不会自动设置其高度，所以这个时候高度为 0，我们才无法在页面中找到它。需要注意的是，如果 WebView 的父级元件是View，使用直接style给的 WebView 元件设定高度是无效的，需要给这个View组件设定高度才能正常显示。然而在ScrollView中，则是需要给的 WebView 本身设定的高度。其它几个组件，例如SafeAreaView 我没有去尝试，需要你自己亲自去检验。</p>
+<p>知道原因后，我们将 WebView 父元素 style 设置为 flex: 1，让其铺满整个萤幕，在 reload 一次看看效果：
+<img class="prose-img" src="/post-images/issues/gh-16-2.png" alt="显示成功" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<p>搞定，我们已经成功的把百度页面展现到我们的 RN App 中了。</p>
+<hr>
+<h3 id="渲染-html-字串" class="prose-h prose-h3"><a class="h-anchor" href="#渲染-html-字串" aria-hidden="true" tabindex="-1">#</a>渲染 HTML 字串</h3><p>有时候我们需要将 API 中返回的 HTML 字串解析出来。渲染 HTML 字串的时候，我们需要将源中的 uri 替换为 html，它的值就是我们的 HTML 字串。与 uri 不同的是，渲染 HTML 字串的时候，我们需要设定 originWhitelist，某些可以设定 [“*”] 来允许执行原生程序代码。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">{<span class="hljs-comment">/* ... */</span>}
+&lt;<span class="hljs-title class_">WebView</span>
+  originWhitelist={[<span class="hljs-string">&#x27;*&#x27;</span>]}
+  source={{ <span class="hljs-attr">html</span>: <span class="hljs-string">`&lt;h1&gt;這裡是一個標題&lt;/h1&gt;`</span> }}
+/&gt;
+{<span class="hljs-comment">/* ... */</span>}
+</code></pre></figure><p>这样，我们就成功的把标题给渲染出来了。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">StyleSheet</span>, <span class="hljs-title class_">Text</span>, <span class="hljs-title class_">View</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">WebView</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native-webview&#x27;</span>;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">NewsDetail</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+        <span class="hljs-variable language_">super</span>(props);
+        <span class="hljs-comment">// 接收父页面传递的参数</span>
+        <span class="hljs-keyword">const</span> id = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">route</span>.<span class="hljs-property">params</span>.<span class="hljs-property">id</span>;
+        <span class="hljs-comment">// 设定url</span>
+        <span class="hljs-keyword">let</span> url_api = <span class="hljs-string">&#x27;http://c.m.163.com/nc/article/&#x27;</span> + id + <span class="hljs-string">&#x27;/full.html&#x27;</span>;
+        <span class="hljs-comment">// console.log(&#x27;id: &#x27;, id);</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = {
+            <span class="hljs-attr">html</span>: <span class="hljs-string">&#x27;正在加载网页&#x27;</span>,
+            <span class="hljs-attr">id</span>: id,
+            <span class="hljs-attr">url</span>: url_api,
+            <span class="hljs-attr">webViewHeight</span>: <span class="hljs-number">0</span>
+        }
+        <span class="hljs-comment">// console.log(this.state.url);</span>
+    }
+
+    <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">return</span> (
+            <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span> }} &gt;</span>
+                {/* <span class="hljs-tag">&lt;<span class="hljs-name">WebView</span> <span class="hljs-attr">source</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">uri:</span> &#x27;<span class="hljs-attr">https:</span>//<span class="hljs-attr">www.baidu.com</span>&#x27; }} /&gt;</span> */}
+                <span class="hljs-tag">&lt;<span class="hljs-name">WebView</span> <span class="hljs-attr">source</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">html:</span> <span class="hljs-attr">this.state.html</span>, <span class="hljs-attr">baseIrl:</span> &#x27;&#x27; }}/&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+        )
+    }
+
+    <span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-comment">// console.log(this.state.url);</span>
+        <span class="hljs-comment">// 请求数据</span>
+        <span class="hljs-title function_">fetch</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span>.<span class="hljs-property">url</span>)
+            .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.<span class="hljs-title function_">json</span>())
+            .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">responseData</span>) =&gt;</span> {
+                <span class="hljs-comment">// 取出所有的数据</span>
+                <span class="hljs-keyword">let</span> allData = responseData[<span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span>.<span class="hljs-property">id</span>];
+                <span class="hljs-comment">// console.log(allData);</span>
+
+                <span class="hljs-comment">// 取出body中的数据</span>
+                <span class="hljs-keyword">var</span> body = allData[<span class="hljs-string">&#x27;body&#x27;</span>];
+
+                <span class="hljs-comment">// 取出图片数组</span>
+                <span class="hljs-keyword">let</span> img = allData[<span class="hljs-string">&#x27;img&#x27;</span>];
+
+                <span class="hljs-comment">// 遍历图片数组</span>
+                <span class="hljs-keyword">if</span> (img.<span class="hljs-property">length</span> == <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">return</span>;
+                }
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> index = <span class="hljs-number">0</span>; index &lt; img.<span class="hljs-property">length</span>; index++) {
+                    <span class="hljs-comment">// 取出单个对象</span>
+                    <span class="hljs-keyword">const</span> element = img[index];
+                    <span class="hljs-comment">// 取出src</span>
+                    <span class="hljs-keyword">let</span> src = element.<span class="hljs-property">src</span>;
+                    <span class="hljs-comment">// 取出ref</span>
+                    <span class="hljs-keyword">let</span> ref = element.<span class="hljs-property">ref</span>;
+                    <span class="hljs-comment">// 生成html标签</span>
+                    <span class="hljs-keyword">var</span> imgHtml = <span class="hljs-string">&#x27;![](&#x27;</span> + src + <span class="hljs-string">&#x27;)&#x27;</span>
+                    <span class="hljs-comment">// 替换body中的占位标签</span>
+                    body = body.<span class="hljs-title function_">replace</span>(ref, imgHtml);
+                }
+
+                <span class="hljs-comment">// 更新UI</span>
+                <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>({
+                    <span class="hljs-attr">html</span>: body
+                })
+            })
+    }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">NewsDetail</span>;
+</code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-16-3.png" alt="显示成功" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<hr>
+<h3 id="根据内容自动计算高度" class="prose-h prose-h3"><a class="h-anchor" href="#根据内容自动计算高度" aria-hidden="true" tabindex="-1">#</a>根据内容自动计算高度</h3><p>往往我们无法提前预知 HTML 内容的高度，所以我们无法给其设置一个固定的高度，而是需要根据内容来设置其高度。</p>
+<p>为了达到这个目的，我们需要用到 <code>injectedJavaScript</code> 和 <code>onMessage</code>，</p>
+<p><strong>injectedJavaScript</strong></p>
+<blockquote>
+<p>这个属性的作用是设定一个在网页载入之前执行的 js 程序代码。</p>
+</blockquote>
+<p><strong>onMessage</strong></p>
+<blockquote>
+<p>在 <code>webview</code> 内部的网页中调用 <code>window.postMessage</code> 方法时可以触发此属性对应的函式，从而实现网页和 RN 之间的资料交换。设置此属性的同时会在 <code>webview</code> 中注入一个 <code>postMessage</code> 的全域性函式并发覆盖可能已经存在的同名实现。</p>
+</blockquote>
+<p>网页端的 <code>window.postMessage</code> 只传送一个引数 <code>data</code>，此引数封装在 RN 端的 <code>event</code> 对象中，即 <code>event.nativeEvent.data</code>。<code>data</code> 只能是一个字串。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">View</span>, <span class="hljs-title class_">ScrollView</span>, <span class="hljs-title class_">SafeAreaView</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">WebView</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native-webview&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+    <span class="hljs-variable language_">super</span>(props);
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = { <span class="hljs-attr">webViewHeight</span>: <span class="hljs-number">0</span> };
+  }
+
+  {<span class="hljs-comment">/* 根據內容計算 WebView 高度 */</span>}
+  class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>({ <span class="hljs-attr">webViewHeight</span>: <span class="hljs-title class_">Number</span>(event.<span class="hljs-property">nativeEvent</span>.<span class="hljs-property">data</span>) });
+  }
+
+  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> (
+      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">flex:</span> <span class="hljs-attr">1</span> }}&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>, <span class="hljs-attr">backgroundColor:</span> &#x27;<span class="hljs-attr">yellow</span>&#x27; }}&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">height:</span> <span class="hljs-attr">this.state.webViewHeight</span> }}&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">WebView</span>
+            <span class="hljs-attr">originWhitelist</span>=<span class="hljs-string">{[</span>&#x27;*&#x27;]}
+            <span class="hljs-attr">source</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">html:</span> `&lt;<span class="hljs-attr">p</span>&gt;</span>這裡是一個標題<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>` }}
+            injectedJavaScript=&#x27;window.ReactNativeWebView.postMessage(document.documentElement.scrollHeight)&#x27;
+           
+          /&gt;
+        <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">height:</span> <span class="hljs-attr">100</span>, <span class="hljs-attr">backgroundColor:</span> &#x27;<span class="hljs-attr">green</span>&#x27; }}&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+    )
+  }
+}
+</code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-16-4.png" alt="显示成功" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/>
+从上图可以抛光我们的 WebView 已经根据其中内容动态的计算了其高度。但是还是有一个问题，这里的文字太小了，要解决这个问题我们需要用到meta - viewport。</p>
+<hr>
+<h3 id="采用响应式布局" class="prose-h prose-h3"><a class="h-anchor" href="#采用响应式布局" aria-hidden="true" tabindex="-1">#</a>采用响应式布局</h3><p>这个其实很简单，只需要在 header 中定义 meta 标签即可。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">&lt;<span class="hljs-title class_">WebView</span>
+  originWhitelist={[<span class="hljs-string">&#x27;*&#x27;</span>]}
+  source={{ <span class="hljs-attr">html</span>: <span class="hljs-string">`
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+      &lt;p&gt;這裡是一個標題&lt;/p&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+  `</span> }}
+  injectedJavaScript=<span class="hljs-string">&#x27;window.ReactNativeWebView.postMessage(document.documentElement.scrollHeight)&#x27;</span>
+  class="hljs-variable language_">this</span>.<span class="hljs-property">onWebViewMessage</span>}
+/&gt;
+</code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-16-5.png" alt="显示成功" loading="lazy" decoding="async" referrerpolicy="no-referrer"><br/></p>
+<hr>
+<p><strong>总结</strong></p>
+<blockquote>
+<p>到此，关于 React Native 的基础使用已经讲完了，更多细节请参考RN中文网或者RN官网。</p>
+</blockquote>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#渲染url-html-内容">渲染URL HTML 内容</a></li><li class="toc__item toc__item--h3"><a href="#渲染-html-字串">渲染 HTML 字串</a></li><li class="toc__item toc__item--h3"><a href="#根据内容自动计算高度">根据内容自动计算高度</a></li><li class="toc__item toc__item--h3"><a href="#采用响应式布局">采用响应式布局</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-17/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">React Native 页面跳转传值问题</span><span class="postnav__meta">2021.05.06 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-15/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 的基本组件</span><span class="postnav__meta">2021.04.25 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-17/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 页面跳转传值问题</span>
+            <span class="mini-card__meta">2021.05.06 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-18/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React-Native FlatList  Warning: Each child in an array or iterator should have a unique “key” prop</span>
+            <span class="mini-card__meta">2021.05.06 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-19/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+            <span class="mini-card__meta">2021.05.07 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.05.06</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Native 使用 react-native-webview 渲染 HTML","datePublished":"2021-05-06T08:58:50.000Z","dateModified":"2021-05-06T09:02:02.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"在 App 中，渲染 HTML 是一个非常常见的功能，有可能是直接渲染 HTML 字串或是通过 URL 渲染 HTML 页面。 React Native 提供了一个 WebView 组件以供我们实现 HTML 的渲染。 早期 WebView 是在 React Native 核心包中，随后为了分解 React Native 核心包的体积，便将其单独提出到react-native-webview元素中…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-16/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

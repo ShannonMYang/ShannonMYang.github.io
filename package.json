@@ -1,0 +1,38 @@
+{
+  "name": "muyu-shop-blog",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "木鱼小店 — 静态博客站点、内容仓库与本地写作工作室",
+  "scripts": {
+    "build": "node site/build.mjs",
+    "dev": "node scripts/dev.mjs",
+    "serve": "node scripts/serve.mjs",
+    "studio": "node studio/server.mjs",
+    "sync:issues": "node scripts/sync-issues.mjs",
+    "import:legacy": "node scripts/import-legacy.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "publish": "node scripts/publish.mjs",
+    "app:build": "bash scripts/build-mac-app.sh",
+    "check:layout": "node scripts/verify-layout.mjs",
+    "check:a11y": "node scripts/verify-a11y.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "js-yaml": "^5.5.0",
+    "katex": "^0.16.21",
+    "markdown-it": "^14.1.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-task-lists": "^2.1.1"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.1",
+    "playwright-core": "^1.65.1",
+    "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

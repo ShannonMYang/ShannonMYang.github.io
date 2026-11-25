@@ -1,437 +1,159 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Xcode 10 升级后的 Error: Multiple commands produce | 木鱼小店</title>
-<meta name="description" content="温故而知新" />
-<link rel="shortcut icon" href="https://shannonmyang.github.io/favicon.ico">
-<link rel="stylesheet" href="https://shannonmyang.github.io/styles/main.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>Xcode 10 升级后的 Error: Multiple commands produce · 木鱼小店</title>
+<meta name="description" content="之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode 10 升级后的 Error: Multiple commands produce · 木鱼小店">
+<meta property="og:description" content="之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。">
+<meta property="og:url" content="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Xcode 10 升级后的 Error: Multiple commands produce · 木鱼小店">
+<meta name="twitter:description" content="之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
 
-<script src="https://shannonmyang.github.io/media/js/jquery.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/masonry.pkgd.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/aos.js"></script>
-<script src="https://shannonmyang.github.io/media/js/pace.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/view-image.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/jquery.magnific-popup.min.js"></script>
-<script src="https://shannonmyang.github.io/media/js/functions.js"></script>
-    <meta name="referrer" content="never">
-    <meta name="description" content="
-之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。
-于是，Google 搜索一番，解决了问题，顺..." />
-    <meta name="keywords" content="iOS" />
-    <script src="https://shannonmyang.github.io/media/js/waterfall.min.js"></script>
-    <script src="https://shannonmyang.github.io/media/js/prism.min.js"></script>
-  </head>
-  <body>
-            <header id="header" class="grid-container">
-        <!-- start: .menu-wrapper -->
-        <div class="menu-mobile"> 
-          <i class="fa fa-reorder"></i>
-        </div>
-        <div class="menu-wrapper">
-          <div class="">
-            <div class="logo">
-              <a href="https://shannonmyang.github.io"><img src="/media/images/custom-headerLogo.jpeg" alt=""></a>
-            </div>
-            <!-- start: .main-nav -->
-
-            <nav class="main-nav grid-container grid-parent">
-              <ul id="menu-header" class="menu gradient-effect">
-                <!-- <li class=""><a href="https://shannonmyang.github.io" class="menu">首页</a></li> -->
-                
-                  <li class="" >
-                    <a href="/" class="menu">
-                      首页
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/archives" class="menu">
-                      归档
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/tags" class="menu">
-                      标签
-                    </a>
-                  </li>
-                
-                  <li class="" >
-                    <a href="/post/about" class="menu">
-                      关于
-                    </a>
-                  </li>
-                
-                <li class="search-menu-item hide-on-mobile hide-on-tablet"><a href="#search-lightbox" class="lightbox mfp-inline"><i class="fa fa-search-line"></i></a></li>
-              </ul>
-            </nav>
-            <a href="#search-lightbox" class="lightbox epcl-search-button mfp-inline hide-on-tablet hide-on-desktop"><i class="fa fa-search-line"></i></a>
-            <!-- end: .main-nav -->
-            <div class="clear"></div>
-            <div class="border hide-on-tablet hide-on-mobile"></div>
-          </div>    
-          <div class="clear"></div>
-        </div>
-        <!-- end: .menu-wrapper -->
-        <div class="clear"></div>
-      </header>
-      <div class="hide-on-mobile hide-on-tablet hide-on-desktop">
-        <div id="search-lightbox" class="grid-container grid-small grid-parent mfp-hide">
-          <div class="search-wrapper section">
-            <form id="gridea-search-form" data-update="1616407941600" action="/search/index.html" class="search-form" _lpchecked="1">
-              <input type="text" name="q" id="s" value="" class="search-field" placeholder="搜点啥..." aria-label="搜点啥..." required="">
-              <button type="submit" class="submit" aria-label="Submit">
-                <i class="fa fa-search-line"></i>
-              </button>
-            </form>
-          </div>
-        </div>
+</head>
+<body class="page-article page-kind-post">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/archives/">文章</a><span>/</span><span aria-current="page">文章</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--post">文章</span><time datetime="2019-07-03T04:00:00.000Z">2019年7月3日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">Xcode 10 升级后的 Error: Multiple commands produce</h1>
+      <p class="article__lead">之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/posts/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
       </div>
-
-      <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
-
-        <div class="center content">
-          <div class="featured-image cover" style="background-image: url('/media/images/custom-featureImage.jpg');">
-            <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2019-07-03"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
-              
-              <a href="https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/"> </span>
-              </a>
-              <span id="/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
-              
-            </div>
-            <div class="info">
-              <div class="tags ">
-                
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-0 ctag-zkPOwWCgw" aria-label="">iOS</a>
-                    
-              </div>
-              <h1 class="title ularge white bold">Xcode 10 升级后的 Error: Multiple commands produce</h1>
-            </div>
-          </div>
-        </div>  
-
-        <div class="epcl-page-wrapper">
-          <div class="left-content grid-70 np-mobile">
-            <article class="main-article post">
-              <section class="post-content">
-                <div class="text">
-                  <blockquote>
-<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。<br>
-遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。<br>
+    </header>
+    
+    
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。
+遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。
 于是，Google 搜索一番，解决了问题，顺带记录一下。</p>
 </blockquote>
-<!-- more -->
-<h4 id="error如下">Error如下</h4>
-<pre><code>Multiple commands produce '.../.../.../.../.../info.plist'
-//或者是
-Multiple commands produce '.../.../.../.../.../xxx.app'
-</code></pre>
-<h4 id="原因如下">原因如下</h4>
-<blockquote>
+<h3 id="error如下" class="prose-h prose-h3"><a class="h-anchor" href="#error如下" aria-hidden="true" tabindex="-1">#</a>Error如下</h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">gams · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-function"><span class="hljs-title">Multiple</span></span> commands produce <span class="hljs-string">&#x27;.../.../.../.../.../info.plist&#x27;</span>
+<span class="hljs-comment">//或者是</span>
+<span class="hljs-function"><span class="hljs-title">Multiple</span></span> commands produce <span class="hljs-string">&#x27;.../.../.../.../.../xxx.app&#x27;</span>
+</code></pre></figure><h3 id="原因如下" class="prose-h prose-h3"><a class="h-anchor" href="#原因如下" aria-hidden="true" tabindex="-1">#</a>原因如下</h3><blockquote>
 <p>Apple 在 Xcode 10 默认使用的 Build system 是 New Build System，与 Xcode9 使用的 Legacy Build System 不同而导致的。</p>
 </blockquote>
-<h4 id="解决办法">解决办法</h4>
-<h5 id="1-不修改-build-system">1. 不修改 Build System</h5>
-<blockquote>
+<h3 id="解决办法" class="prose-h prose-h3"><a class="h-anchor" href="#解决办法" aria-hidden="true" tabindex="-1">#</a>解决办法</h3><h4 id="1-不修改-build-system" class="prose-h prose-h4"><a class="h-anchor" href="#1-不修改-build-system" aria-hidden="true" tabindex="-1">#</a>1. 不修改 Build System</h4><blockquote>
 <p>Solution -&gt; Open target -&gt; Build phases &gt; Copy Bundle Resources and remove info.plist from there.</p>
 </blockquote>
-<h5 id="xxxapp-类型错误"><code>.../.../xxx.app 类型错误</code></h5>
-<blockquote>
-<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi>T</mi><mi>A</mi><mi>R</mi><mi>G</mi><mi>E</mi><msub><mi>T</mi><mi>B</mi></msub><mi>U</mi><mi>I</mi><mi>L</mi><msub><mi>D</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi></mrow><mi mathvariant="normal">/</mi></mrow><annotation encoding="application/x-tex">{TARGET_BUILD_DIR}/</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">G</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span><span class="mord">/</span></span></span></span>{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
+<h4 id="xxxapp-类型错误" class="prose-h prose-h4"><a class="h-anchor" href="#xxxapp-类型错误" aria-hidden="true" tabindex="-1">#</a><code>.../.../xxx.app 类型错误</code></h4><blockquote>
+<p>target -&gt; Build phase -&gt; Copy Pods Resources -&gt; Output Files -&gt; 移除 TARGETBUILDDIR/{TARGET_BUILD_DIR}/TARGETB​UILDD​IR/{UNLOCALIZED_RESOURCES_FOLDER_PATH} -&gt; clean -&gt; 重新编译</p>
 </blockquote>
-<figure data-type="image" tabindex="1"><img src="https://shannonmyang.github.io/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy"></figure>
-<h6 id="infoplist-类型错误"><code>'.../.../info.plist' 类型错误</code></h6>
-<blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/1588129856536.png" alt="不修改 Build System" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>不修改 Build System</figcaption></figure>
+<h4 id="infoplist-类型错误" class="prose-h prose-h4"><a class="h-anchor" href="#infoplist-类型错误" aria-hidden="true" tabindex="-1">#</a><code>'.../.../info.plist' 类型错误</code></h4><blockquote>
 <p>target -&gt; 'Build phases' -&gt; 'Copy Bundle Resources' -&gt; 移除 info.plist -&gt; clean -&gt; 重新编译</p>
 </blockquote>
-<figure data-type="image" tabindex="2"><img src="https://shannonmyang.github.io/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy"></figure>
-<h5 id="2-修改-build-system">2. 修改 `Build System'</h5>
-<blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/1588129902892.png" alt="不修改 Build System" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>不修改 Build System</figcaption></figure>
+<h4 id="2-修改-build-system" class="prose-h prose-h4"><a class="h-anchor" href="#2-修改-build-system" aria-hidden="true" tabindex="-1">#</a>2. 修改 `Build System'</h4><blockquote>
 <p>Xcode 菜单栏 -&gt; File -&gt; Workspace Setting，将 build system 修改为 legacy build system，先 clean，然后重新编译。</p>
 </blockquote>
-<figure data-type="image" tabindex="3"><img src="https://shannonmyang.github.io/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy"></figure>
-
-                </div>
-                <div class="clear"></div>
-              </section>
-            </article>
-            <div class="clear"></div>
-
-            <section class="related section">
-              
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/awQNAxTv9.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/npm-guan-li-yi-lai-bao-ban-ben/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-07-17">2019-07-17</time>
-                  <h4 class="title white no-margin">npm 管理依赖包版本</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-              
-              <article class="next grid-50 tablet-grid-50 grid-parent">
-                <div class="thumb cover lazy loaded" style="background-image: url('https://shannonmyang.github.io/media/images/zkPOwWCgw.jpg');"></div>
-                 <a href="https://shannonmyang.github.io/post/ios-da-po-nstimer-xun-huan-yin-yong/" class="full-link"></a>
-                 <div class="info">
-                  <time datetime="2019-06-26">2019-06-26</time>
-                  <h4 class="title white no-margin">iOS 打破 NSTimer 循环引用</h4>
-                </div>
-                 <span class="epcl-button red">
-                  <img src="https://shannonmyang.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
-                </span>
-                <div class="overlay"></div>
-              </article>
-              
-
-                <div class="clear"></div>
-            </section>
-
-              <div class="clear"></div>
-              
-            
-              <div id="comments" class="bg-white hosted ">
-                
-                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-<div id="gitalk-container"></div>
-<div class="clear"></div>
-
-<script>
-  var gitalk = new Gitalk({
-    clientID: '66f5ac971492c259ae1e',
-    clientSecret: 'a0f7fd17940dabb2b6410980daf579a00b0edb00',
-    repo: 'shannonmyang.github.io',
-    owner: 'ShannonMYang',
-    admin: ['ShannonMYang'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
-
-  gitalk.render('gitalk-container')
-</script>
-
-                
-                
-              </div>
-            
-
-            </div>
-          </div>
-      </main>
-
-          <footer id="footer" class="grid-container">
-        <div class="widgets row gradient-effect">
-            <div class="default-sidebar border-effect">
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="tag_cloud-2" class="widget widget_epcl_posts_thumbs underline-effect">
-                  <h4 class="widget-title title white bordered">最新文章</h4>
-                  
-                  
-                  <article class="item post-0 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/mac-shang-homebrew-chang-yong-ming-ling.jpg');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-03-22">2021-03-22</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/mac-shang-homebrew-chang-yong-ming-ling/">macOS 中 常用 Homebrew 命令</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  <article class="item post-1 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao.png');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-03-12">2021-03-12</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/bug_-jie-jue-wkwebview-jia-zai-ben-di-css-wen-jian-wu-xiao/">bug_解决 WKWebView 加载本地 css 文件无效</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  <article class="item post-2 post type-post status-publish format-standard has-post-thumbnail hentry">
-                    <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/" class="thumb hover-effect">
-                      <span class="fullimage cover" style="display:block;border-radius:50%;background-image: url('https://shannonmyang.github.io/post-images/ling-sui-yu-ji.jpg');"></span>
-                    </a>
-                    <div class="info gradient-effect">
-                      <time datetime="2021-02-20">2021-02-20</time>
-                      <h4 class="title usmall">
-                        <a href="https://shannonmyang.github.io/post/ling-sui-yu-ji/">零碎语记</a>
-                      </h4>
-                    </div>
-                    <div class="clear"></div>
-                  </article>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  <div class="clear"></div>
-                </section>
-              </div>
-
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="tag_cloud-2" class="widget widget_tag_cloud underline-effect">
-                  <h4 class="widget-title title white bordered">标签云</h4>
-                  <div class="tagcloud">
-                    
-                      <a href="https://shannonmyang.github.io/tag/5ybvI6wsF/" class="ctag ctag-0 ctag-5ybvI6wsF" aria-label="">mac</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/zkPOwWCgw/" class="ctag ctag-1 ctag-zkPOwWCgw" aria-label="">iOS</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/pTdJtut4n/" class="ctag ctag-2 ctag-pTdJtut4n" aria-label="">摘录</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/xdet-8MvB/" class="ctag ctag-3 ctag-xdet-8MvB" aria-label="">杂谈</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/iQZ4KGVNP/" class="ctag ctag-4 ctag-iQZ4KGVNP" aria-label="">社保公积金</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/VamS5Q7Cp/" class="ctag ctag-5 ctag-VamS5Q7Cp" aria-label="">计算机基础知识</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/d3FTfjZYU/" class="ctag ctag-6 ctag-d3FTfjZYU" aria-label="">系统设置</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/p54g6KJSY/" class="ctag ctag-7 ctag-p54g6KJSY" aria-label="">理财</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/WuyCWSu29/" class="ctag ctag-8 ctag-WuyCWSu29" aria-label="">总结</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/awQNAxTv9/" class="ctag ctag-9 ctag-awQNAxTv9" aria-label="">Vue.js</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/72sFOp2qr/" class="ctag ctag-10 ctag-72sFOp2qr" aria-label="">厨记</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/t5FFzq6Cn/" class="ctag ctag-11 ctag-t5FFzq6Cn" aria-label="">算法</a>
-                    
-                      <a href="https://shannonmyang.github.io/tag/ZlcYyfJW3/" class="ctag ctag-12 ctag-ZlcYyfJW3" aria-label="">Gridea</a>
-                    
-                  </div>
-                  <div class="clear"></div>
-                </section>
-              </div>
-
-              <div class="grid-33 tablet-grid-50 mobile-grid-100">
-                <section id="epcl_about-2" class="widget widget_epcl_about underline-effect">
-                  <h4 class="widget-title title white bordered">关于我</h4>
-                  <div class="avatar">
-                    <a href="" class="translate-effect thumb"><span class="fullimage cover" style="background-image: url(https://shannonmyang.github.io/images/avatar.png);"></span></a>
-                  </div>
-                  <div class="info">
-                    <h4 class="title small author-name gradient-effect no-margin"><a href="">木鱼小店</a></h4>
-                    <p class="founder">温故而知新</p>
-                    <div class="social">
-                      
-                          
-                            <a href="https://github.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-github"></i></a>
-                        
-                      
-                          
-                            <a href="https://twitter.com/ShannonMYang" class="translate-effect" target="_blank"><i class="fa fa-twitter"></i></a>
-                        
-                      
-                        
-                      
-                        
-                      
-                        
-                      
-                    </div> 
-                  </div>
-                  <div class="clear"></div>
-                  </section>
-              </div>
-
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="logo">
-          <a href="https://shannonmyang.github.io"><img src="/media/images/custom-footerLogo.jpeg" alt=""></a>
-        </div>
-        <p class="published border-effect">
-          ©2019 共 30 篇文章
-          <br/>
-          Theme <a href="https://gridea.dev/" target="_blank">「breek」</a> Powered by <a href="https://gridea.dev/" target="_blank">「Gridea」</a>
-        </p>
-        
-        <a href="javascript:void(0)" id="back-to-top" class="epcl-button dark" style="display:none">
-          <i class="fa fa-arrow"></i>
-        </a>
-    </footer>
-    
-    <div class="clear"></div>
-
-        
-
-      
-    <script src="https://shannonmyang.github.io/media/js/functions-post.js"></script>
-
+<figure class="prose-figure"><img class="prose-img" src="/post-images/1588129952014.jpg" alt="修改Build System" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>修改Build System</figcaption></figure>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#error如下">Error如下</a></li><li class="toc__item toc__item--h3"><a href="#原因如下">原因如下</a></li><li class="toc__item toc__item--h3"><a href="#解决办法">解决办法</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
     </div>
-    <!-- end: #wrapper -->
-  </body>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/post/npm-guan-li-yi-lai-bao-ban-ben/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">npm 管理依赖包版本</span><span class="postnav__meta">2019.07.17 · 文章</span></a><a class="postnav__item postnav__item--next" href="/post/ios-da-po-nstimer-xun-huan-yin-yong/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">iOS 打破 NSTimer 循环引用</span><span class="postnav__meta">2019.06.26 · 文章</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/post/ios-da-po-nstimer-xun-huan-yin-yong/">
+            <span class="mini-card__kind">文章</span>
+            <span class="mini-card__title">iOS 打破 NSTimer 循环引用</span>
+            <span class="mini-card__meta">2019.06.26 · 2 分钟</span>
+          </a><a class="mini-card" href="/post/ios-chi-ping-xuan-ran-you-hua-jian-dan-fen-xi/">
+            <span class="mini-card__kind">文章</span>
+            <span class="mini-card__title">iOS 离屏渲染优化简单分析</span>
+            <span class="mini-card__meta">2019.06.18 · 4 分钟</span>
+          </a><a class="mini-card" href="/post/xcode10-zhong-yong-dao-libstdc609tbd-dao-zhi-de-wen-ti/">
+            <span class="mini-card__kind">文章</span>
+            <span class="mini-card__title">Xcode10 中用到 libstdc++6.0.9.tbd 导致的问题</span>
+            <span class="mini-card__meta">2019.06.17 · 2 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2019.07.03</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Xcode 10 升级后的 Error: Multiple commands produce","datePublished":"2019-07-03T04:00:00.000Z","dateModified":"2019-07-03T04:00:00.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"之前一直没有更新 Xcode，最近 2019WWDC 也结束了，SwiftUI 刷爆了 iOS 圈。 遂，更新了 Xcode ，然后，再打开自己的项目，点击 Command+R，华丽丽得扑街。 于是，Google 搜索一番，解决了问题，顺带记录一下。","mainEntityOfPage":"https://shannonmyang.github.io/post/xcode-10-sheng-ji-hou-de-error-multiple-commands-produce/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
 </html>

@@ -1,0 +1,8 @@
+node_modules/
+.tmp/
+.npmcache/
+.DS_Store
+*.log
+.trash/
+studio/.state.json
+*.app/

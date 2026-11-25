@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>iOS 钥匙串 证书不受信任 · 木鱼小店</title>
+<meta name="description" content="记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-46/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 钥匙串 证书不受信任 · 木鱼小店">
+<meta property="og:description" content="记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-46/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="iOS 钥匙串 证书不受信任 · 木鱼小店">
+<meta name="twitter:description" content="记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-11-24T09:42:21.000Z">2021年11月24日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">iOS 钥匙串 证书不受信任</h1>
+      <p class="article__lead">记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/macos/">macOS</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-46.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#46</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/46" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #46</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#2B138E">iOS</span><span class="label-chip" style="--label-accent:#2B138E">macOS</span><span class="label-chip" style="--label-accent:#2B138E">错误解决</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/46" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>记于2021年11月24日。</p>
+</blockquote>
+<blockquote>
+<p>由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。</p>
+<p>今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了<code>「证书不受信任」</code>几个大字。
+得，查查吧，看看如何解决。</p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h2 id="错误" class="prose-h prose-h2"><a class="h-anchor" href="#错误" aria-hidden="true" tabindex="-1">#</a>错误</h2></li>
+</ul>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-46-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<ul>
+<li>
+<h2 id="如何解决" class="prose-h prose-h2"><a class="h-anchor" href="#如何解决" aria-hidden="true" tabindex="-1">#</a>如何解决</h2></li>
+</ul>
+<p>解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。）</p>
+<p><a href="https://developer.apple.com/cn/support/code-signing/" target="_blank" rel="noopener noreferrer" class="ext-link">Worldwide Developer Relations 认证媒介证书更新</a></p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-46-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p><a href="https://developer.apple.com/cn/support/expiration/" target="_blank" rel="noopener noreferrer" class="ext-link">Apple Worldwide Developer Relations Intermediate Certificate Expiration</a></p>
+<p>点击如图箭头指示地方，下载文件；而后，双击安装；</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-46-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-46-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>安装后，新旧两款都安装上了。</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-46-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>之后，你再从开发者网站下载你配置好的证书，双击安装，就变成了正常的。</p>
+<p>随后，打包就可以一如既往进行了。</p>
+<hr>
+<p><strong>参考链接</strong></p>
+<p><a href="https://www.jianshu.com/p/04448b2324a4" target="_blank" rel="noopener noreferrer" class="ext-link">iOS开发证书不受信任</a></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#错误">错误</a></li><li class="toc__item toc__item--h2"><a href="#如何解决">如何解决</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/macos/">macOS</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-47/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">记一下被Javascript时间转换折磨的历程</span><span class="postnav__meta">2021.12.23 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-45/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">让uni-app中的style动态变化</span><span class="postnav__meta">2021.11.24 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-37/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 真机调试，总要求需要输入管理员账号和密码</span>
+            <span class="mini-card__meta">2021.08.23 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-32/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xocde编译项目所遇问题·小记</span>
+            <span class="mini-card__meta">2021.07.01 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.11.24</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"iOS 钥匙串 证书不受信任","datePublished":"2021-11-24T09:42:21.000Z","dateModified":"2021-11-24T09:42:21.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"记于2021年11月24日。 由于之前给电脑重装了系统，所以Xcode之前配置的证书什么的，全都没了。 今天，要给一个老的app打包，于是，配置完证书，双击安装发现，赫然出现了「证书不受信任」几个大字。 得，查查吧，看看如何解决。 --------- - ### 错误 - ### 如何解决 解决问题的办法，就是，两个证书都需要安装的。（一个是默认就已经安装好的，另一个，则需要自己手动下载安装。） …","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-46/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>Vue/uni-app 实现不同值展示不同CSS样式 · 木鱼小店</title>
+<meta name="description" content="笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。 于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。 --- 如下所示 方案① 方案② 根据个人使用情况，建议使用方法②，兼顾内容更为全面。 --- 具体示例代码 Vue代码 uni-app代码">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-48/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue/uni-app 实现不同值展示不同CSS样式 · 木鱼小店">
+<meta property="og:description" content="笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。 于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。 --- 如下所示 方案① 方案② 根据个人使用情况，建议使用方法②，兼顾内容更为全面。 --- 具体示例代码 Vue代码 uni-app代码">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-48/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vue/uni-app 实现不同值展示不同CSS样式 · 木鱼小店">
+<meta name="twitter:description" content="笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。 于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。 --- 如下所示 方案① 方案② 根据个人使用情况，建议使用方法②，兼顾内容更为全面。 --- 具体示例代码 Vue代码 uni-app代码">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2022-02-10T02:02:48.000Z">2022年2月10日</time><span class="article__kicker-dot">·</span><span>约 4 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2022.05.07</span></div>
+      <h1 class="article__title">Vue/uni-app 实现不同值展示不同CSS样式</h1>
+      <p class="article__lead">笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。 于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。 --- 如下所示 方案① 方案② 根据个人使用情况，建议使用方法②，兼顾内容更为全面。 --- 具体示例代码 Vue代码 uni-app代码</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/vue-js/">Vue.js</a><a class="tag-pill " href="/tag/css/">CSS</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-48.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#48</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/48" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #48</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#68DC68">Vue.js</span><span class="label-chip" style="--label-accent:#68DC68">CSS</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/48" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。</p>
+<p>于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。</p>
+</blockquote>
+<hr>
+<h2 id="如下所示" class="prose-h prose-h2"><a class="h-anchor" href="#如下所示" aria-hidden="true" tabindex="-1">#</a>如下所示</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;box-style&quot;</span> :<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;changeClass(skin)&quot;</span>&gt;
+&lt;/div&gt;
+ 
+<span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) {
+ <span class="hljs-keyword">return</span> {
+  <span class="hljs-attr">skin</span>:<span class="hljs-string">&#x27;&#x27;</span>
+ }
+}
+<span class="hljs-title function_">onchooseSkin</span>(<span class="hljs-params">attr</span>) {
+ <span class="hljs-variable language_">this</span>.<span class="hljs-property">skin</span>=attr
+}, 
+</code></pre></figure><h2 id="方案①" class="prose-h prose-h2"><a class="h-anchor" href="#方案①" aria-hidden="true" tabindex="-1">#</a>方案①</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-title function_">addclass</span>(<span class="hljs-params">i</span>) {
+ <span class="hljs-keyword">switch</span> (i) {
+  <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+   <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;skinA&#x27;</span>;
+  <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+   <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;skinB&#x27;</span>;
+  <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+   <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;skinC&#x27;</span>;
+ }
+}
+</code></pre></figure><h2 id="方案②" class="prose-h prose-h2"><a class="h-anchor" href="#方案②" aria-hidden="true" tabindex="-1">#</a>方案②</h2><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-title function_">addclass</span>(<span class="hljs-params">i</span>){
+ <span class="hljs-keyword">var</span> arr = [<span class="hljs-string">&#x27;skinA&#x27;</span>,<span class="hljs-string">&#x27;skinB&#x27;</span>,<span class="hljs-string">&#x27;skinC&#x27;</span>];
+ <span class="hljs-keyword">if</span>(i==-<span class="hljs-number">1</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;skinA&#x27;</span>
+ } <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">return</span> arr[i];
+ }
+}
+</code></pre></figure><blockquote>
+<p>根据个人使用情况，建议使用方法②，兼顾内容更为全面。</p>
+</blockquote>
+<hr>
+<h2 id="具体示例代码" class="prose-h prose-h2"><a class="h-anchor" href="#具体示例代码" aria-hidden="true" tabindex="-1">#</a>具体示例代码</h2><p><strong>Vue代码</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">XML · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;main-box&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;begin-box&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">van-icon</span> <span class="hljs-attr">:name</span>=<span class="hljs-string">&quot;calendarIcon&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;location-icon&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">van-icon</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;date-day&quot;</span>&gt;</span>2021-11-07 (周五)<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;end-box&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;exam-name-box&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;exam-name-label&quot;</span>&gt;</span>英语<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">YTag</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-left: 0.16rem&quot;</span> <span class="hljs-attr">:info</span>=<span class="hljs-string">&quot;tagName&quot;</span> <span class="hljs-attr">:item</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">YTag</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;exam-time-box&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">van-icon</span> <span class="hljs-attr">:name</span>=<span class="hljs-string">&quot;clockIcon&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;time-icon&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">van-icon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;time-detail-label-box&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;time-label&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;changeCSS(0)&quot;</span>&gt;</span>09:00 ~ 11:00<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;how-long-label&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;changeCSS(1)&quot;</span>&gt;</span>(120 分钟)<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;line-style&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">YTag</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../base/YTag&quot;</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;examDetailCard&quot;</span>,
+  <span class="hljs-attr">components</span>: {<span class="hljs-title class_">YTag</span>},
+  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">calendarIcon</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../../assets/images/exam_icon/calendar.png&#x27;</span>),
+      <span class="hljs-attr">clockIcon</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../../assets/images/exam_icon/time.png&#x27;</span>),
+      <span class="hljs-attr">clockGrayIcon</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../../assets/images/exam_icon/time_gray.png&#x27;</span>),
+      <span class="hljs-attr">tagName</span>: <span class="hljs-string">&#x27;进行中&#x27;</span>,
+      <span class="hljs-attr">item</span>: {
+        <span class="hljs-attr">tagStatus</span>: <span class="hljs-string">&#x27;2&#x27;</span>
+      }
+    };
+  },
+  <span class="hljs-attr">methods</span>: {
+    <span class="hljs-title function_">changeCSS</span>(<span class="hljs-params">i</span>) {
+      <span class="hljs-comment">/* 0 进行中 1 未开始 2 已结束 */</span>
+      <span class="hljs-keyword">let</span> cssArr = [<span class="hljs-string">&#x27;how-long-label-default&#x27;</span>, <span class="hljs-string">&#x27;how-long-label-gray&#x27;</span>];
+      <span class="hljs-keyword">if</span> (cssArr.<span class="hljs-property">length</span> + <span class="hljs-number">1</span> &gt;= i) {
+        <span class="hljs-keyword">return</span> cssArr[i];
+      }
+    },
+  }
+};
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;less&quot;</span>&gt;</span><span class="language-css">
+<span class="hljs-selector-class">.main-box</span> {
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">2.6rem</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: column;
+}
+<span class="hljs-comment">/*---------栅---------栏---------*/</span>
+<span class="hljs-selector-class">.begin-box</span> {
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">0.36rem</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: row;
+  <span class="hljs-attribute">align-items</span>: center;
+}
+<span class="hljs-selector-class">.location-icon</span> <span class="hljs-selector-class">.van-icon__image</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.32rem</span>;
+}
+<span class="hljs-selector-class">.date-day</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.28rem</span>;
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.1rem</span>;
+}
+<span class="hljs-comment">/*---------栅---------栏---------*/</span>
+
+<span class="hljs-comment">/*---------栅---------栏---------*/</span>
+<span class="hljs-selector-class">.end-box</span> {
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">0.76rem</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: row;
+  <span class="hljs-attribute">justify-content</span>: space-between;
+  <span class="hljs-attribute">align-items</span>: center;
+}
+<span class="hljs-selector-class">.exam-name-box</span> {
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.32rem</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: row;
+  <span class="hljs-attribute">align-items</span>: center;
+}
+<span class="hljs-selector-class">.exam-name-label</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.33rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">500</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.33rem</span>;
+}
+<span class="hljs-selector-class">.van-tag--default</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">0.88rem</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.34rem</span>;
+  <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">270deg</span>, <span class="hljs-number">#FDB61E</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#FDB719</span> <span class="hljs-number">100%</span>);
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0.17rem</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.2rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">500</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFFFFF</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.22rem</span>;
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.14rem</span>;
+}
+<span class="hljs-selector-class">.error-style</span> <span class="hljs-selector-class">.van-tag--default</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">0.88rem</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.34rem</span>;
+  <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">270deg</span>, <span class="hljs-number">#FDB61E</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#FDB719</span> <span class="hljs-number">100%</span>);
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0.17rem</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">500</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFFFFF</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.22rem</span>;
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.14rem</span>;
+}
+<span class="hljs-comment">/*---------栅---------栏---------*/</span>
+<span class="hljs-selector-class">.exam-time-box</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: row;
+  <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">0.32rem</span>;
+}
+<span class="hljs-selector-class">.time-detail-label-box</span> {
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: column;
+}
+<span class="hljs-selector-class">.time-icon</span> <span class="hljs-selector-class">.van-icon__image</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.32rem</span>;
+  <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">0.1rem</span>;
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">0.01rem</span>;
+}
+<span class="hljs-selector-class">.time-label-default</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.38rem</span>;
+}
+<span class="hljs-selector-class">.time-label-gray</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#999999</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.38rem</span>;
+}
+<span class="hljs-selector-class">.how-long-label-default</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.38rem</span>;
+}
+<span class="hljs-selector-class">.how-long-label-gray</span> {
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.24rem</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">400</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#999999</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">0.38rem</span>;
+}
+<span class="hljs-comment">/*---------------------------*/</span>
+<span class="hljs-selector-class">.line-style</span> {
+  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">0.02rem</span>;
+  <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">0.02rem</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">0.01rem</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#F3F3F3</span>;
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">0.41rem</span>;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre></figure><p><strong>uni-app代码</strong></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">handlebars · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-box&quot;</span>&gt;</span>
+			
+			<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-left&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[item.status===0?class1:&#x27;&#x27;, item.status===1?class2:&#x27;&#x27;]&quot;</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-left-number&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[item.status===-1?classInfo:&#x27;&#x27;]&quot;</span>&gt;</span></span><span class="hljs-template-variable">{{<span class="hljs-name">itemSeat.orderNumber</span>}}</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-left-default&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;[item.status===-1?classInfo:&#x27;&#x27;]&quot;</span>&gt;</span>座号<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+			<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+			<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right&quot;</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-top&quot;</span>&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-top-left&quot;</span>&gt;</span></span><span class="hljs-template-variable">{{<span class="hljs-name">itemSeat.studentName</span>}}</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+					
+					<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-top-right&quot;</span>&gt;</span></span><span class="hljs-template-variable">{{<span class="hljs-name">itemSeat.sex</span>===<span class="hljs-number">0</span>?<span class="hljs-string">&#x27;女&#x27;</span>:(<span class="hljs-name">itemSeat.sex</span>===<span class="hljs-number">1</span>?<span class="hljs-string">&#x27;男&#x27;</span>:<span class="hljs-string">&#x27;未知&#x27;</span>)}}</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+				<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-bottom&quot;</span>&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-bottom-left&quot;</span>&gt;</span></span><span class="hljs-template-variable">{{<span class="hljs-name">itemSeat.outid</span>}}</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+					<span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body-right-bottom-right&quot;</span>&gt;</span></span><span class="hljs-template-variable">{{<span class="hljs-name">itemSeat.deptName</span>}}</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+				<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+			<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+		<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+		
+		<span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;end-line&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+	<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+		<span class="hljs-attr">props</span>: [
+			<span class="hljs-string">&#x27;itemSeat&#x27;</span>,
+			<span class="hljs-string">&#x27;item&#x27;</span>
+		],
+		<span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) {
+			<span class="hljs-keyword">return</span> {
+				<span class="hljs-attr">class1</span>: <span class="hljs-string">&quot;body-left-second&quot;</span>,
+				<span class="hljs-attr">class2</span>: <span class="hljs-string">&quot;body-left-thrid&quot;</span>,
+				<span class="hljs-attr">classInfo</span>: <span class="hljs-string">&quot;unusual-text&quot;</span>
+			}
+		},
+	}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css">
+	<span class="hljs-selector-class">.body-box</span> {
+		<span class="hljs-attribute">display</span>: flex;
+		<span class="hljs-attribute">flex-direction</span>: row;
+		<span class="hljs-attribute">flex-wrap</span>: wrap;
+		<span class="hljs-attribute">height</span>: <span class="hljs-number">156</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-left</span> {
+		<span class="hljs-attribute">display</span>: flex;
+		<span class="hljs-attribute">flex-direction</span>: column;
+		<span class="hljs-attribute">flex-wrap</span>: wrap;
+		<span class="hljs-attribute">align-items</span>: center;
+		<span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(to right, <span class="hljs-number">#F4F4F4</span>, <span class="hljs-number">#F4F4F4</span>);
+		<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">8</span>rpx;
+		<span class="hljs-attribute">height</span>: <span class="hljs-number">108</span>rpx;
+		<span class="hljs-attribute">width</span>: <span class="hljs-number">108</span>rpx;
+	}
+	
+	<span class="hljs-selector-class">.body-left-second</span> {
+		<span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(to right, <span class="hljs-number">#FFA42E</span>, <span class="hljs-number">#FFB94F</span>);
+	}
+	
+	<span class="hljs-selector-class">.body-left-thrid</span> {
+		<span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(to bottom, <span class="hljs-number">#EB546C</span>, <span class="hljs-number">#E72D4B</span>);
+	}
+
+	<span class="hljs-selector-class">.body-left-number</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#ffffff</span>;
+		<span class="hljs-attribute">margin-top</span>: <span class="hljs-number">10</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-left-default</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#ffffff</span>;
+	}
+	
+	<span class="hljs-selector-class">.unusual-text</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#999999</span>;
+	}
+
+	<span class="hljs-selector-class">.body-right</span> {
+		<span class="hljs-attribute">display</span>: flex;
+		<span class="hljs-attribute">flex-wrap</span>: wrap;
+		<span class="hljs-attribute">flex-direction</span>: column;
+		<span class="hljs-attribute">justify-items</span>: center;
+		<span class="hljs-attribute">margin-left</span>: <span class="hljs-number">16</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-right-top</span> {
+		<span class="hljs-attribute">margin-top</span>: <span class="hljs-number">10</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-right-bottom</span> {
+		<span class="hljs-attribute">display</span>: flex;
+		<span class="hljs-attribute">flex-wrap</span>: wrap;
+		<span class="hljs-attribute">justify-content</span>: space-between;
+		<span class="hljs-attribute">margin-top</span>: <span class="hljs-number">16</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-right-bottom-left</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#999999</span>;
+		<span class="hljs-attribute">font-size</span>: <span class="hljs-number">24</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-right-bottom-right</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#999999</span>;
+		<span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20</span>rpx;
+		<span class="hljs-attribute">font-size</span>: <span class="hljs-number">24</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.body-right-top-left</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+		<span class="hljs-attribute">font-size</span>: <span class="hljs-number">32</span>rpx;
+		<span class="hljs-attribute">font-weight</span>: bold;
+	}
+
+	<span class="hljs-selector-class">.body-right-top-right</span> {
+		<span class="hljs-attribute">color</span>: <span class="hljs-number">#222222</span>;
+		<span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20</span>rpx;
+		<span class="hljs-attribute">font-size</span>: <span class="hljs-number">24</span>rpx;
+	}
+
+	<span class="hljs-selector-class">.end-line</span> {
+		<span class="hljs-attribute">background-color</span>: <span class="hljs-number">#F3F3F3</span>;
+		<span class="hljs-attribute">height</span>: <span class="hljs-number">2</span>rpx;
+		// <span class="hljs-attribute">width</span>: <span class="hljs-number">100</span>rpx;
+		<span class="hljs-attribute">margin-top</span>: -<span class="hljs-number">30</span>rpx;
+		<span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">16</span>rpx;
+	}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</span></code></pre></figure></div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#如下所示">如下所示</a></li><li class="toc__item toc__item--h2"><a href="#方案①">方案①</a></li><li class="toc__item toc__item--h2"><a href="#方案②">方案②</a></li><li class="toc__item toc__item--h2"><a href="#具体示例代码">具体示例代码</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/vue-js/">Vue.js</a><a class="tag-pill " href="/tag/css/">CSS</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-49/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">iOS 9.0 之后 NSString encode 方法替换</span><span class="postnav__meta">2022.03.14 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-47/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">记一下被Javascript时间转换折磨的历程</span><span class="postnav__meta">2021.12.23 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-45/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">让uni-app中的style动态变化</span>
+            <span class="mini-card__meta">2021.11.24 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-9/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 Flex 布局</span>
+            <span class="mini-card__meta">2021.04.21 · 3 分钟</span>
+          </a><a class="mini-card" href="/note/gh-8/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 CSS 布局</span>
+            <span class="mini-card__meta">2021.04.21 · 2 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2022.05.07</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue/uni-app 实现不同值展示不同CSS样式","datePublished":"2022-02-10T02:02:48.000Z","dateModified":"2022-05-07T14:13:21.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"笔者最近在做一些Vue相关的开发。涉及到赋予不同值，展示不同样式效果的问题。 于是，有了一通查资料和实践。遂，作此篇总结，以备查找之需。 --- 如下所示 方案① 方案② 根据个人使用情况，建议使用方法②，兼顾内容更为全面。 --- 具体示例代码 Vue代码 uni-app代码","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-48/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

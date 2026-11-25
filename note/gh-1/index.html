@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>OC 内省 (反射) 机制的理解 · 木鱼小店</title>
+<meta name="description" content="笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-1/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OC 内省 (反射) 机制的理解 · 木鱼小店">
+<meta property="og:description" content="笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-1/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OC 内省 (反射) 机制的理解 · 木鱼小店">
+<meta name="twitter:description" content="笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-03-30T13:40:15.000Z">2021年3月30日</time><span class="article__kicker-dot">·</span><span>约 7 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.07.25</span></div>
+      <h1 class="article__title">OC 内省 (反射) 机制的理解</h1>
+      <p class="article__lead">笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-1.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#1</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/1" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #1</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#2B138E">iOS</span><span class="label-chip" style="--label-accent:#2B138E">Objective-C</span><span class="label-chip" style="--label-accent:#2B138E">底层知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/1" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。</p>
+<p>遂，查资料琢磨一番，有此记录一篇。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Objective-C 中基于 RunTime 实现的反射</p>
+</blockquote>
+<h4 id="一反射" class="prose-h prose-h4"><a class="h-anchor" href="#一反射" aria-hidden="true" tabindex="-1">#</a>一、反射</h4><blockquote>
+<p>反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。</p>
+</blockquote>
+<h4 id="二objective-c-中的反射" class="prose-h prose-h4"><a class="h-anchor" href="#二objective-c-中的反射" aria-hidden="true" tabindex="-1">#</a>二、Objective-C 中的反射</h4><h4 id="oc-的反射是基于其-runtime-实现的" class="prose-h prose-h4"><a class="h-anchor" href="#oc-的反射是基于其-runtime-实现的" aria-hidden="true" tabindex="-1">#</a>OC 的反射是基于其 Runtime 实现的。</h4><h4 id="反射机制的基本概念" class="prose-h prose-h4"><a class="h-anchor" href="#反射机制的基本概念" aria-hidden="true" tabindex="-1">#</a>反射机制的基本概念：</h4><blockquote>
+<p>找了好久 oc 的反射机制，只能朦胧的得到一句：跟 java 的反射机制相似
+那么笔者就先贴上 java 语言的反射机制基本概念：在运行状态下，对于任意一个类，都能够知道这个类的所有属性和方法，对于任意一个对象，都能调用它的任意一个方法，这种动态获取信息，以及动态调用对象方法的功能叫 java 语言的反射机制；</p>
+<p>那么 oc 语言的反射机制与之类似是什么样的呢：在 oc 语言的反射机制跟 java 反射机制很相似，在 oc 中所有 oc 对象都继承 NSObject 类，这个类为我们提供了基础的方法和协议，我们可以直接调用这个类继承过来的方法，这个对象的基本信息，这大概就是 oc 语言的反射机制；</p>
+</blockquote>
+<blockquote>
+<p>以执行某个函数为例，我们知道在 OC 中执行 [pyPerson doSomething] 函数，实质上是发送了一个消息给 Runtime, 然后 Runtime 再根据这个 Class 的字符串名和这个函数的字符串名，去匹配真正相应的方法的地址，然后再执行的。所以中间我们可以利用字符串去动态的检测，甚至动态的修改（之前说到的 Method Swizzling）。</p>
+</blockquote>
+<blockquote>
+<p><code>理解：</code>反射机制是指方法名、类名、属性名等可以和字符串相互转化（反射），而这些转化是发生在运行时的，所以我们可以用这个机制来动态的获取类、方法或属性，从而动态的创建类对象、调用方法、或给属性赋值、判断类型等。</p>
+</blockquote>
+<blockquote>
+<p>现在基本有了反射机制的概念，我们平时开发过程中都怎么利用这种机制呢？</p>
+</blockquote>
+<h4 id="反射机制的应用" class="prose-h prose-h4"><a class="h-anchor" href="#反射机制的应用" aria-hidden="true" tabindex="-1">#</a>反射机制的应用</h4><h4 id="获取-class-对象" class="prose-h prose-h4"><a class="h-anchor" href="#获取-class-对象" aria-hidden="true" tabindex="-1">#</a>获取 Class 对象</h4><blockquote>
+<p>Class 对象其实本质上就是一个结构体，这个结构体中的成员变量还是自己，这种设计方式非常像链表的数据结构。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> objc_class *Class;
+<span class="hljs-keyword">struct</span> objc_class {
+    Class isa  OBJC_ISA_AVAILABILITY;                                  
+}
+</code></pre></figure><blockquote>
+<p>直接用一个实例对象或类对象，直接调用 Class 方法，都可以获取 Class 对象。我们调用下面三个方法，都可以获得 Class 对象。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 在实例方法中通过self调用class实例方法获取类对象</span>
+[<span class="hljs-keyword">self</span> <span class="hljs-keyword">class</span>]
+<span class="hljs-comment">// 通过ViewController类直接调用class类方法获取类对象</span>
+[ViewController <span class="hljs-keyword">class</span>]
+<span class="hljs-comment">// 在类方法中使用类对象调用class方法获取类对象</span>
++ (Class)classMethod {
+    <span class="hljs-keyword">return</span> [<span class="hljs-keyword">self</span> <span class="hljs-keyword">class</span>];
+}
+</code></pre></figure><p>我们发现调用这三个方法，获取到的类对象是同一个类对象，内存地址也是一样的：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-1-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这是因为这三个方法调用 class 方法，打印的都是类对象的 isa 指针。</p>
+<h4 id="反射方法" class="prose-h prose-h4"><a class="h-anchor" href="#反射方法" aria-hidden="true" tabindex="-1">#</a>反射方法</h4><blockquote>
+<p>系统 Foundation 框架为我们提供了一些方法反射的 API，我们可以通过这些 API 执行将字符串转为 SEL 等操作。由于 OC 语言的动态性，这些操作都是发生在运行时的。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// SEL和字符串转换</span>
+FOUNDATION_EXPORT <span class="hljs-built_in">NSString</span> *<span class="hljs-built_in">NSStringFromSelector</span>(SEL aSelector);
+FOUNDATION_EXPORT SEL <span class="hljs-built_in">NSSelectorFromString</span>(<span class="hljs-built_in">NSString</span> *aSelectorName);
+<span class="hljs-comment">// Class和字符串转换</span>
+FOUNDATION_EXPORT <span class="hljs-built_in">NSString</span> *<span class="hljs-built_in">NSStringFromClass</span>(Class aClass);
+FOUNDATION_EXPORT Class __<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">NSClassFromString</span>(<span class="hljs-built_in">NSString</span> *aClassName);
+<span class="hljs-comment">// Protocol和字符串转换</span>
+FOUNDATION_EXPORT <span class="hljs-built_in">NSString</span> *<span class="hljs-built_in">NSStringFromProtocol</span>(Protocol *proto) <span class="hljs-built_in">NS_AVAILABLE</span>(<span class="hljs-number">10</span>_5, <span class="hljs-number">2</span>_0);
+FOUNDATION_EXPORT Protocol * __<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">NSProtocolFromString</span>(<span class="hljs-built_in">NSString</span> *namestr) <span class="hljs-built_in">NS_AVAILABLE</span>(<span class="hljs-number">10</span>_5, <span class="hljs-number">2</span>_0);
+</code></pre></figure><p>通过这些方法，我们可以在运行时选择创建那个实例，并动态选择调用哪个方法。这些操作甚至可以由服务器传回来的参数来控制，我们可以将服务器传回来的类名和方法名，实例为我们的对象。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 假设从服务器获取JSON串，通过这个JSON串获取需要创建的类为FBViewController，</span>
+<span class="hljs-comment">// 并且调用这个类的getList方法。</span>
+Class <span class="hljs-keyword">class</span> = <span class="hljs-built_in">NSClassFromString</span>(<span class="hljs-string">@&quot;FBViewController&quot;</span>);
+FBViewController *vc = [[<span class="hljs-keyword">class</span> alloc] init];
+SEL selector = <span class="hljs-built_in">NSSelectorFromString</span>(<span class="hljs-string">@&quot;getList&quot;</span>);
+[vc performSelector:selector];
+</code></pre></figure><h4 id="1-字符串和-class-转换" class="prose-h prose-h4"><a class="h-anchor" href="#1-字符串和-class-转换" aria-hidden="true" tabindex="-1">#</a>1. 字符串和 Class 转换</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">Class __<span class="hljs-keyword">nullable</span> <span class="hljs-built_in">NSClassFromString</span>(<span class="hljs-built_in">NSString</span> *aClassName);
+<span class="hljs-comment">// 当前对象是否这个类或其子类的实例</span>
+- (<span class="hljs-type">BOOL</span>)isKindOfClass:(Class)aClass;
+<span class="hljs-comment">// 当前对象是否是这个类的实例</span>
+- (<span class="hljs-type">BOOL</span>)isMemberOfClass:(Class)aClass; 
+
+example:
+
+<span class="hljs-comment">//通过这样的方式获取class</span>
+Class Person = <span class="hljs-built_in">NSClassFromString</span>(<span class="hljs-string">@&quot;FBPerson&quot;</span>);  
+FBPerson *person= [[Person alloc] init]; 
+<span class="hljs-comment">//判断是否为其子类的对象</span>
+FBPerson *person= [[FBPerson alloc] init]; 
+<span class="hljs-keyword">if</span>([person isKindOfClass:[FBStudent <span class="hljs-keyword">class</span>]])
+{ 
+   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;person是FBStudent类型或其子类&quot;</span>);
+}<span class="hljs-keyword">else</span>{
+   <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;person不是FBStudent类型或其子类&quot;</span>);
+ } 
+<span class="hljs-comment">//判断是否是该class的对象</span>
+<span class="hljs-keyword">if</span>([person isMemberOfClass:[FBStudent <span class="hljs-keyword">class</span>]]){
+  <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;person是FBStudent类型&quot;</span>); 
+}<span class="hljs-keyword">else</span>{ 
+  <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;person不是FBStudent类型&quot;</span>);
+}  
+</code></pre></figure><h4 id="2-字符串和内部方法转换" class="prose-h prose-h4"><a class="h-anchor" href="#2-字符串和内部方法转换" aria-hidden="true" tabindex="-1">#</a>2. 字符串和内部方法转换</h4><blockquote>
+<p>在 NSObject 类中为我们提供了一些基础方法，用来做一些判断操作，这些方法都是发生在运行时动态判断的。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">- (<span class="hljs-type">BOOL</span>)respondsToSelector:(SEL)aSelector  <span class="hljs-comment">//判断类型或对象有没有某个方法</span>
++ (<span class="hljs-type">BOOL</span>)instancesRespondToSelector:(SEL)aSelector; <span class="hljs-comment">//判断静态方法</span>
+- (<span class="hljs-type">id</span>)performSelector:(SEL)aSelector  <span class="hljs-comment">//动态调用对象的方法</span>
+- (<span class="hljs-type">BOOL</span>)conformsToProtocol:(Protocol *)aProtocol; <span class="hljs-comment">//判断对象是否实现某个Protocol协议</span>
+
+example:
+
+<span class="hljs-comment">//动态生成方法选择器</span>
+SEL sel =  <span class="hljs-built_in">NSSelectorFromString</span>(<span class="hljs-string">@&quot;setAge:&quot;</span>);   
+
+<span class="hljs-comment">//检测是否存在某方法</span>
+FBStudent *stu = [[FBStudent alloc]init];  
+<span class="hljs-keyword">if</span>([stu respondsToSelector:<span class="hljs-keyword">@selector</span>(setAge)]){  
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;stu 有setAge这个方法&quot;</span>);  
+}<span class="hljs-keyword">else</span>{  
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;没有&quot;</span>);  
+}  
+
+<span class="hljs-comment">//动态动用方法</span>
+FBStudent *stu = [[FBStudent alloc]initAge:<span class="hljs-number">1</span>];  
+<span class="hljs-type">int</span> age = [stu performSelector:<span class="hljs-keyword">@selector</span>(age)];  
+<span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;%i&quot;</span>,age);<span class="hljs-comment">//输出1  </span>
+</code></pre></figure><h4 id="3-字符串和属性的转换" class="prose-h prose-h4"><a class="h-anchor" href="#3-字符串和属性的转换" aria-hidden="true" tabindex="-1">#</a>3. 字符串和属性的转换</h4><blockquote>
+<p>OC 中属性的反射通过 KVC（Key-Value Coding）机制实现，KVC 是一种间接访问对象属性的机制，不直接调用 getter 和 setter 方法，而使用 valueForKey 来替代 getter 方法，setValue:forKey 来代替 setter 方法。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">Example：
+
+FBBattery *persion = [[FBBattery alloc] init];
+
+<span class="hljs-comment">//不使用KVC</span>
+persion.name = <span class="hljs-string">@&quot;yu&quot;</span> ;
+
+<span class="hljs-comment">//使用KVC的写法</span>
+[persion  setValue:<span class="hljs-string">@&quot;yu&quot;</span> forKey:<span class="hljs-string">@&quot;name&quot;</span>];
+<span class="hljs-comment">//上面是利用KVC访问类里的某个属性，下面利用KVC直接访问类里的类里的某个属性</span>
+
+<span class="hljs-comment">//不使用KVC</span>
+FBPersion *persion = [[FBPersion alloc] init];
+FBPhone *phone = persion.phone;
+FBBattery *battery = phone.battery;
+
+<span class="hljs-comment">//使用KVC</span>
+FBBattery *battery = [persion valueForKeyPath: <span class="hljs-string">@&quot;phone.battery&quot;</span> ]; 
+</code></pre></figure><h4 id="反射机制使用技巧" class="prose-h prose-h4"><a class="h-anchor" href="#反射机制使用技巧" aria-hidden="true" tabindex="-1">#</a>反射机制使用技巧</h4><blockquote>
+<p>首先需要和后台商量好返回的数据结构，以及数据格式、类型等，返回后我们按照和后台约定的格式，根据后台返回的信息，直接进行反射和调用即可。</p>
+</blockquote>
+<p>假设约定格式如下：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">@{
+     <span class="hljs-comment">// 类名</span>
+     <span class="hljs-string">@&quot;className&quot;</span> : <span class="hljs-string">@&quot;UserViewController&quot;</span>, 
+     <span class="hljs-comment">// 数据参数</span>
+     <span class="hljs-string">@&quot;propertys&quot;</span> : @{ <span class="hljs-string">@&quot;name&quot;</span>: <span class="hljs-string">@&quot;lishan&quot;</span>, 
+                       <span class="hljs-string">@&quot;age&quot;</span>: @<span class="hljs-number">17</span> },
+     <span class="hljs-comment">// 调用方法名</span>
+     <span class="hljs-string">@&quot;method&quot;</span> : <span class="hljs-string">@&quot;refreshUserInfor&quot;</span>
+ };
+</code></pre></figure><blockquote>
+<p>定义一个 UserViewController 类，这个类用于测试，在实际使用中可能会有多个这样的控制器类。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+
+<span class="hljs-comment">// 由于使用的KVC赋值，如果不想把这两个属性暴露出来，把这两个属性写在.m文件也可以</span>
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">UserViewController</span> : <span class="hljs-title">UIViewController</span></span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>) <span class="hljs-built_in">NSString</span> *name;<span class="hljs-comment">/*!&lt; 用户名 */</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>) <span class="hljs-built_in">NSNumber</span> *age;<span class="hljs-comment">/*!&lt; 用户年龄 */</span>
+<span class="hljs-comment">/** 使用反射机制反射为SEL后，调用的方法 */</span>
+
+- (<span class="hljs-type">void</span>)refreshUserInfo;
+
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><blockquote>
+<p>通过反射机制简单实现了控制器跳转的方法：</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 简单封装的页面跳转方法，只是做演示，代码都是没问题的，使用时可以根据业务需求进行修改。</span>
+- (<span class="hljs-type">void</span>)remoteNotificationDictionary:(<span class="hljs-built_in">NSDictionary</span> *)dict {
+    <span class="hljs-comment">// 根据字典字段反射出我们想要的类，并初始化控制器</span>
+    Class <span class="hljs-keyword">class</span> = <span class="hljs-built_in">NSClassFromString</span>(dict[<span class="hljs-string">@&quot;className&quot;</span>]);
+    <span class="hljs-built_in">UIViewController</span> *vc = [[<span class="hljs-keyword">class</span> alloc] init];
+    <span class="hljs-comment">// 获取参数列表，使用枚举的方式，对控制器进行KVC赋值</span>
+    <span class="hljs-built_in">NSDictionary</span> *parameter = dict[<span class="hljs-string">@&quot;propertys&quot;</span>];
+    [parameter enumerateKeysAndObjectsUsingBlock:^(<span class="hljs-type">id</span>  _Nonnull key, <span class="hljs-type">id</span>  _Nonnull obj, <span class="hljs-type">BOOL</span> * _Nonnull stop) {
+        <span class="hljs-keyword">if</span> ([[parameter allKeys] containsObject:key]) {
+    <span class="hljs-comment">//对于setValue forKey，需要小心的是，假如类型匹配错误的情况下，编译会通过，但运行会报错</span>
+            [vc setValue:obj forKey:key];
+        }
+    }];
+    [<span class="hljs-keyword">self</span>.navigationController pushViewController:vc animated:<span class="hljs-literal">YES</span>];
+    <span class="hljs-comment">// 从字典中获取方法名，并调用对应的方法</span>
+    SEL selector = <span class="hljs-built_in">NSSelectorFromString</span>(dict[<span class="hljs-string">@&quot;method&quot;</span>]);
+    [vc performSelector:selector];
+}
+</code></pre></figure></div>
+      
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86/">底层知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-2/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">iOS 开发多线程之队列组 —— 下载合并图片</span><span class="postnav__meta">2021.03.30 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/post/mac-shang-homebrew-chang-yong-ming-ling/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">macOS 中 常用 Homebrew 命令</span><span class="postnav__meta">2021.03.22 · 文章</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-2/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">iOS 开发多线程之队列组 —— 下载合并图片</span>
+            <span class="mini-card__meta">2021.03.30 · 5 分钟</span>
+          </a><a class="mini-card" href="/note/gh-19/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+            <span class="mini-card__meta">2021.05.07 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.07.25</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"OC 内省 (反射) 机制的理解","datePublished":"2021-03-30T13:40:15.000Z","dateModified":"2021-07-25T15:17:27.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"笔记缘由：在一次远程在线面试过程中，一位远在杭州的哥们儿问，OC中的反射机制，有做过了解或者使用么？而我，只能无奈的表示，自己仅仅是听说过这么个东西的存在。 遂，查资料琢磨一番，有此记录一篇。 ------ Objective-C 中基于 RunTime 实现的反射 一、反射 反射，一般表现在字符串和 Class 转换，字符串和内部方法转换，字符串和属性的转换（取值和赋值）。 二、Objectiv…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-1/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

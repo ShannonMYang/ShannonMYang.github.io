@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>由OC的DES加密衍生的NSData学习 · 木鱼小店</title>
+<meta name="description" content="NSData用于保存字节数组。 读取url内容初始化对象。 读取成功则返回对象，如果失败则返回nil。 - (nullable instancetype)initWithContentsOfURL:(NSURL )url options:(NSDataReadingOptions)readOptionsMask error:(NSError )errorPtr; 读取url内容初始化对象。 读取成…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-27/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="由OC的DES加密衍生的NSData学习 · 木鱼小店">
+<meta property="og:description" content="NSData用于保存字节数组。 读取url内容初始化对象。 读取成功则返回对象，如果失败则返回nil。 - (nullable instancetype)initWithContentsOfURL:(NSURL )url options:(NSDataReadingOptions)readOptionsMask error:(NSError )errorPtr; 读取url内容初始化对象。 读取成…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-27/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="由OC的DES加密衍生的NSData学习 · 木鱼小店">
+<meta name="twitter:description" content="NSData用于保存字节数组。 读取url内容初始化对象。 读取成功则返回对象，如果失败则返回nil。 - (nullable instancetype)initWithContentsOfURL:(NSURL )url options:(NSDataReadingOptions)readOptionsMask error:(NSError )errorPtr; 读取url内容初始化对象。 读取成…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-06-16T09:56:27.000Z">2021年6月16日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.06.23</span></div>
+      <h1 class="article__title">由OC的DES加密衍生的NSData学习</h1>
+      <p class="article__lead">NSData用于保存字节数组。 读取url内容初始化对象。 读取成功则返回对象，如果失败则返回nil。 - (nullable instancetype)initWithContentsOfURL:(NSURL )url options:(NSDataReadingOptions)readOptionsMask error:(NSError )errorPtr; 读取url内容初始化对象。 读取成…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-27.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#27</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/27" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #27</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#E5A766">Objective-C</span><span class="label-chip" style="--label-accent:#E5A766">基础知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/27" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h3 id="nsdata用于保存字节数组" class="prose-h prose-h3"><a class="h-anchor" href="#nsdata用于保存字节数组" aria-hidden="true" tabindex="-1">#</a>NSData用于保存字节数组。</h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 初始化</span>
+- (<span class="hljs-keyword">instancetype</span>)initWithBytesNoCopy:(<span class="hljs-type">void</span> *)bytes length:(<span class="hljs-built_in">NSUInteger</span>)length freeWhenDone:(<span class="hljs-type">BOOL</span>)b;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 初始化对象。</span>
+<span class="hljs-comment">// 不进行复制字节数组操作，直接设置字节指针为bytes，长度为length。</span>
+- (<span class="hljs-keyword">instancetype</span>)initWithBytesNoCopy:(<span class="hljs-type">void</span> *)bytes length:(<span class="hljs-built_in">NSUInteger</span>)length;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 初始化对象。</span>
+<span class="hljs-comment">// 不进行复制字节数组操作，直接设置字节指针为bytes，长度为length。</span>
+- (<span class="hljs-keyword">instancetype</span>)initWithBytes:(<span class="hljs-keyword">nullable</span> <span class="hljs-keyword">const</span> <span class="hljs-type">void</span> *)bytes length:(<span class="hljs-built_in">NSUInteger</span>)length;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 初始化对象。</span>
+<span class="hljs-comment">// 复制字节数组，设置字节指针指向复制的字节数组，长度为length。</span>
+- (<span class="hljs-keyword">nullable</span> <span class="hljs-keyword">instancetype</span>)initWithContentsOfFile:(<span class="hljs-built_in">NSString</span> *)path;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 读取文件内容初始化对象。</span>
+<span class="hljs-comment">// 读取成功则返回对象，如果失败则返回nil。</span>
+- (<span class="hljs-keyword">nullable</span> <span class="hljs-keyword">instancetype</span>)initWithContentsOfFile:(<span class="hljs-built_in">NSString</span> *)path options:(<span class="hljs-built_in">NSDataReadingOptions</span>)readOptionsMask error:(<span class="hljs-built_in">NSError</span> **)errorPtr;
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// 读取文件内容初始化对象。</span>
+<span class="hljs-comment">// 读取成功则返回对象。如果失败则返回nil，错误信息保存在errorPtr中。</span>
+<span class="hljs-comment">// 参数readOptionsMask 指定文件读取选项。</span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-built_in">NS_OPTIONS</span>(<span class="hljs-built_in">NSUInteger</span>, <span class="hljs-built_in">NSDataReadingOptions</span>) {
+    <span class="hljs-built_in">NSDataReadingMappedIfSafe</span> =   <span class="hljs-number">1</span>UL &lt;&lt; <span class="hljs-number">0</span>, 
+    <span class="hljs-built_in">NSDataReadingUncached</span> = <span class="hljs-number">1</span>UL &lt;&lt; <span class="hljs-number">1</span>,   
+    <span class="hljs-built_in">NSDataReadingMappedAlways</span>  = <span class="hljs-number">1</span>UL &lt;&lt; <span class="hljs-number">3</span>,
+
+    <span class="hljs-built_in">NSDataReadingMapped</span> = <span class="hljs-built_in">NSDataReadingMappedIfSafe</span>,
+    <span class="hljs-built_in">NSMappedRead</span> = <span class="hljs-built_in">NSDataReadingMapped</span>,
+    <span class="hljs-built_in">NSUncachedRead</span> = <span class="hljs-built_in">NSDataReadingUncached</span>
+};
+
+- (<span class="hljs-keyword">nullable</span> <span class="hljs-keyword">instancetype</span>)initWithContentsOfURL:(<span class="hljs-built_in">NSURL</span> *)url;
+</code></pre></figure><p>读取url内容初始化对象。
+读取成功则返回对象，如果失败则返回nil。</p>
+<ul>
+<li>(nullable instancetype)initWithContentsOfURL:(NSURL *)url options:(NSDataReadingOptions)readOptionsMask error:(NSError **)errorPtr;</li>
+</ul>
+<p>读取url内容初始化对象。
+读取成功则返回对象。如果失败则返回nil，错误信息保存在errorPtr中。
+参数readOptionsMask 指定文件读取选项。</p>
+<ul>
+<li>(instancetype)initWithData:(NSData *)data;</li>
+</ul>
+<p>根据NSData对象初始化对象。</p>
+<ul>
+<li>(nullable id)initWithContentsOfMappedFile:(NSString *)path</li>
+</ul>
+<p>根据文件内容初始化对象。读取文件内容的方式不是read系统调用，而是mmap系统调用。</p>
+<p>构造</p>
+<ul>
+<li>(instancetype)data;</li>
+</ul>
+<p>构造空的NSData对象。</p>
+<ul>
+<li>(instancetype)dataWithBytesNoCopy:(void *)bytes length:(NSUInteger)length freeWhenDone:(BOOL)b;</li>
+</ul>
+<p>根据字节数组构造对象。不复制字节数组。</p>
+<ul>
+<li>(instancetype)dataWithBytesNoCopy:(void *)bytes length:(NSUInteger)length;</li>
+</ul>
+<p>根据字节数组构造对象。不复制字节数组。</p>
+<ul>
+<li>(instancetype)dataWithBytes:(nullable const void *)bytes length:(NSUInteger)length;</li>
+</ul>
+<p>根据字节数组构造对象。复制字节数组。</p>
+<ul>
+<li>(nullable instancetype)dataWithContentsOfFile:(NSString *)path;</li>
+</ul>
+<p>根据文件内容构造对象。</p>
+<ul>
+<li>(nullable instancetype)dataWithContentsOfFile:(NSString *)path options:(NSDataReadingOptions)readOptionsMask error:(NSError **)errorPtr;</li>
+</ul>
+<p>根据文件内容构造对象。</p>
+<ul>
+<li>(nullable instancetype)dataWithContentsOfURL:(NSURL *)url;</li>
+</ul>
+<p>根据url内容构造对象。</p>
+<ul>
+<li>(nullable instancetype)dataWithContentsOfURL:(NSURL *)url options:(NSDataReadingOptions)readOptionsMask error:(NSError **)errorPtr;</li>
+</ul>
+<p>根据url内容构造对象。</p>
+<ul>
+<li>(instancetype)dataWithData:(NSData *)data;</li>
+</ul>
+<p>根据NSData对象构造对象。</p>
+<ul>
+<li>(nullable id)dataWithContentsOfMappedFile:(NSString *)path</li>
+</ul>
+<p>根据文件内容构造对象。读取文件内容的方式不是read系统调用，而是mmap系统调用。</p>
+<p>返回长度</p>
+<p>@property (readonly) NSUInteger length;</p>
+<p>返回数据</p>
+<p>@property (readonly) const void *bytes</p>
+<p>返回区间内的数据</p>
+<ul>
+<li>(void)getBytes:(void *)buffer range:(NSRange)range;</li>
+</ul>
+<p>参数buffer保存获取的数据，参数range指定获取数据的区间。</p>
+<ul>
+<li>(void)getBytes:(void *)buffer length:(NSUInteger)length;</li>
+</ul>
+<p>获取指定长度的数据。如果length大于数据长度，则使用数据长度作为指定长度。</p>
+<ul>
+<li>(void)getBytes:(void *)buffer</li>
+</ul>
+<p>获取所有数据。</p>
+<p>截取数据</p>
+<ul>
+<li>(NSData *)subdataWithRange:(NSRange)range;</li>
+</ul>
+<p>参数range指定截取区间。</p>
+<p>是否相等</p>
+<ul>
+<li>(BOOL)isEqualToData:(NSData *)other;</li>
+</ul>
+<p>比较数据是否相等。</p>
+<p>写入文件</p>
+<ul>
+<li>(BOOL)writeToFile:(NSString *)path options:(NSDataWritingOptions)writeOptionsMask error:(NSError **)errorPtr;</li>
+</ul>
+<p>参数path指定文件路径。参数errorPtr在写入失败时保存出错信息。参数writeOptionsMask 表示写入文件时的可选项，可使用或运算符连接。其可能值为</p>
+<p>typedef NS_OPTIONS(NSUInteger, NSDataWritingOptions) {
+NSDataWritingAtomic = 1UL &lt;&lt; 0,
+NSDataWritingWithoutOverwriting NS_ENUM_AVAILABLE(10_8, 6_0) = 1UL &lt;&lt; 1,</p>
+<p>NSDataWritingFileProtectionNone NS_ENUM_AVAILABLE_IOS(4_0)  = 0x10000000,
+NSDataWritingFileProtectionComplete NS_ENUM_AVAILABLE_IOS(4_0)  = 0x20000000,
+NSDataWritingFileProtectionCompleteUnlessOpen NS_ENUM_AVAILABLE_IOS(5_0)  = 0x30000000,
+NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication NS_ENUM_AVAILABLE_IOS(5_0)  = 0x40000000,
+NSDataWritingFileProtectionMask NS_ENUM_AVAILABLE_IOS(4_0)  = 0xf0000000,
+NSAtomicWrite = NSDataWritingAtomic<br>
+};</p>
+<p>NSDataWritingAtomic 表示使用辅助文件完成原子操作。
+NSDataWritingWithoutOverwriting 表示防止覆盖现有文件，不能与NSDataWritingAtomic 结合使用。</p>
+<ul>
+<li>(BOOL)writeToFile:(NSString *)path atomically:(BOOL)useAuxiliaryFile;</li>
+</ul>
+<p>写入文件。参数path指定文件路径，参数useAuxiliaryFile使用辅助文件完成原子操作。</p>
+<p>写入url</p>
+<ul>
+<li>(BOOL)writeToURL:(NSURL *)url options:(NSDataWritingOptions)writeOptionsMask error:(NSError **)errorPtr;</li>
+</ul>
+<p>参数path指定url路径。参数errorPtr在写入失败时保存出错信息。参数writeOptionsMask 表示写入时的可选项，可使用或运算符连接。</p>
+<ul>
+<li>(BOOL)writeToURL:(NSURL *)url atomically:(BOOL)atomically;</li>
+</ul>
+<p>写入url。参数path指定文件路径，参数atomically完成原子操作。</p>
+<p>搜索</p>
+<ul>
+<li>(NSRange)rangeOfData:(NSData *)dataToFind options:(NSDataSearchOptions)mask range:(NSRange)searchRange</li>
+</ul>
+<p>搜索数据。参数dataToFind为搜索的数据。参数searchRange为搜索的区间。参数mask 为搜索的方式。搜索方式可使用或运算符连接。
+搜索方式有：</p>
+<p>typedef NS_OPTIONS(NSUInteger, NSDataSearchOptions) {
+NSDataSearchBackwards = 1UL &lt;&lt; 0,
+NSDataSearchAnchored = 1UL &lt;&lt; 1
+}</p>
+<p>NSDataSearchBackwards表示从后向前搜索。
+NSDataSearchAnchored表示只是搜索头部或尾部（与NSDataSearchBackwards连用）。</p>
+<p>与Base64编码相关</p>
+<ul>
+<li>(nullable instancetype)initWithBase64EncodedString:(NSString *)base64String options:(NSDataBase64DecodingOptions)options</li>
+</ul>
+<p>解码字符串。options为解码方式。</p>
+<p>typedef NS_OPTIONS(NSUInteger, NSDataBase64DecodingOptions) {
+NSDataBase64DecodingIgnoreUnknownCharacters = 1UL &lt;&lt; 0
+} NS_ENUM_AVAILABLE(10_9, 7_0);</p>
+<p>NSDataBase64DecodingIgnoreUnknownCharacters 表示忽略不知道的字符。</p>
+<ul>
+<li>(NSString *)base64EncodedStringWithOptions:(NSDataBase64EncodingOptions)options</li>
+</ul>
+<p>编码为字符串。参数options为编码方式。</p>
+<p>typedef NS_OPTIONS(NSUInteger, NSDataBase64EncodingOptions) {
+NSDataBase64Encoding64CharacterLineLength = 1UL &lt;&lt; 0,
+NSDataBase64Encoding76CharacterLineLength = 1UL &lt;&lt; 1,
+NSDataBase64EncodingEndLineWithCarriageReturn = 1UL &lt;&lt; 4,
+NSDataBase64EncodingEndLineWithLineFeed = 1UL &lt;&lt; 5,</p>
+<p>} NS_ENUM_AVAILABLE(10_9, 7_0);</p>
+<ul>
+<li>(nullable instancetype)initWithBase64EncodedData:(NSData *)base64Data options:(NSDataBase64DecodingOptions)options</li>
+</ul>
+<p>解码数据。</p>
+<ul>
+<li>(NSData *)base64EncodedDataWithOptions:(NSDataBase64EncodingOptions)options</li>
+</ul>
+<p>编码数据。</p>
+<ul>
+<li>(nullable id)initWithBase64Encoding:(NSString *)base64String</li>
+</ul>
+<p>解码字符串。</p>
+<ul>
+<li>(NSString *)base64Encoding</li>
+</ul>
+<p>编码为字符串。
+NSMutableData用于保存可变字节数组。</p>
+<p>返回数据</p>
+<p>@property (readonly) void *mutableBytes</p>
+<p>返回长度</p>
+<p>@property NSUInteger length;</p>
+<p>初始化</p>
+<ul>
+<li>(nullable instancetype)initWithCapacity:(NSUInteger)capacity;</li>
+</ul>
+<p>根据容量大小初始化对象。</p>
+<ul>
+<li>(nullable instancetype)initWithLength:(NSUInteger)length;</li>
+</ul>
+<p>根据长度初始化对象。数组全部清空为0。</p>
+<p>构造</p>
+<ul>
+<li>(nullable instancetype)dataWithCapacity:(NSUInteger)aNumItems;</li>
+</ul>
+<p>根据容量大小构造对象。</p>
+<ul>
+<li>(nullable instancetype)dataWithLength:(NSUInteger)length;</li>
+</ul>
+<p>根据长度构造对象。</p>
+<p>添加</p>
+<ul>
+<li>(void)appendBytes:(const void *)bytes length:(NSUInteger)length;</li>
+</ul>
+<p>添加数组。</p>
+<ul>
+<li>(void)appendData:(NSData *)other;</li>
+</ul>
+<p>添加数据。</p>
+<p>替换</p>
+<ul>
+<li>(void)replaceBytesInRange:(NSRange)range withBytes:(const void *)bytes;</li>
+</ul>
+<p>替换字节数组。</p>
+<ul>
+<li>(void)replaceBytesInRange:(NSRange)range withBytes:(nullable const void *)replacementBytes length:(NSUInteger)replacementLength;</li>
+</ul>
+<p>替换字节数组。参数replacementLength指定替换数组的长度。</p>
+<p>增加长度</p>
+<ul>
+<li>(void)increaseLengthBy:(NSUInteger)extraLength;</li>
+</ul>
+<p>重置</p>
+<ul>
+<li>(void)resetBytesInRange:(NSRange)range;</li>
+</ul>
+<p>重置区间内数据为0。</p>
+<p>设置</p>
+<ul>
+<li>(void)setData:(NSData *)data;</li>
+</ul>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#nsdata用于保存字节数组">NSData用于保存字节数组。</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-28/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">Xcode 给工程添加 .gitignore 文件</span><span class="postnav__meta">2021.06.17 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-26/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">iOS 打包类型和推送操作</span><span class="postnav__meta">2021.06.16 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-28/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 给工程添加 .gitignore 文件</span>
+            <span class="mini-card__meta">2021.06.17 · 2 分钟</span>
+          </a><a class="mini-card" href="/note/gh-25/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">由 DES加密 衍生的 数据类型 转换问题 · 小记</span>
+            <span class="mini-card__meta">2021.06.11 · 2 分钟</span>
+          </a><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.06.23</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"由OC的DES加密衍生的NSData学习","datePublished":"2021-06-16T09:56:27.000Z","dateModified":"2021-06-23T07:14:27.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"NSData用于保存字节数组。 读取url内容初始化对象。 读取成功则返回对象，如果失败则返回nil。 - (nullable instancetype)initWithContentsOfURL:(NSURL )url options:(NSDataReadingOptions)readOptionsMask error:(NSError )errorPtr; 读取url内容初始化对象。 读取成…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-27/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

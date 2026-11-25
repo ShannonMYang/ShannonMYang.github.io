@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Native 与 iOS OC 的混合开发 · 木鱼小店</title>
+<meta name="description" content="本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-22/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 与 iOS OC 的混合开发 · 木鱼小店">
+<meta property="og:description" content="本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-22/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Native 与 iOS OC 的混合开发 · 木鱼小店">
+<meta name="twitter:description" content="本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-05-18T09:12:44.000Z">2021年5月18日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span></div>
+      <h1 class="article__title">React Native 与 iOS OC 的混合开发</h1>
+      <p class="article__lead">本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-22.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#22</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/22" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #22</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">iOS</span><span class="label-chip" style="--label-accent:#C6391F">Objective-C</span><span class="label-chip" style="--label-accent:#C6391F">基础知识</span><span class="label-chip" style="--label-accent:#C6391F">错误解决</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/22" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>本文意在示例 <code>React-Native</code> 与 <code>iOS 原生</code> <code>混合开发</code> 从创建 <code>demo</code> 到成功运行的过程，以及在这之间遇到的问题，其解决方案。</p>
+<p>RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。</p>
+<p>所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。</p>
+<p>所以，有此篇记录。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>本篇记录前提是，你已经安装好了所有的RN开发所依赖环境。如果你没有安装好，可参照RN中文网进行配置。</p>
+</blockquote>
+<h3 id="1-创建一个rn-初始demo" class="prose-h prose-h3"><a class="h-anchor" href="#1-创建一个rn-初始demo" aria-hidden="true" tabindex="-1">#</a>1. 创建一个<code>RN</code> <code>初始Demo</code></h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Shell</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npx react-native init BaseRNDemo
+</code></pre></figure><blockquote>
+<p>为了保证是创建一个 <code>没有</code> <code>Android</code> 和 <code>iOS</code> <code>模块</code> 的 <code>React Native</code> 项目。可以如上执行命令创建后，将里面的 android 和 ios 目录删除，<code>替换</code> 成已存在 Android 和 iOS 项目。</p>
+<p>在尝试过程中发现，如果是自己创建<code>package.json</code> 来创建没有 <code>android</code> 和 <code>ios</code> 模块的RN项目，会出现错误。（可能是我这里网速不好的缘故）</p>
+</blockquote>
+<h3 id="2-创建一个ios空demo" class="prose-h prose-h3"><a class="h-anchor" href="#2-创建一个ios空demo" aria-hidden="true" tabindex="-1">#</a>2. 创建一个iOS空Demo</h3><blockquote>
+<p>打开Xcode，选择 <code>Create A New Xcode Project</code>，然后就是你日常创建iOS空项目那一套流程。</p>
+<p>打开命令行，<code>cd</code> 到 iOS demo所在目录，然后进行 <code>pod</code> 初始化和导入。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Shell</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">// 初始化
+pod init
+// 导入依赖库
+pod install
+</code></pre></figure><h3 id="3-编辑-podfile-文件内容" class="prose-h prose-h3"><a class="h-anchor" href="#3-编辑-podfile-文件内容" aria-hidden="true" tabindex="-1">#</a>3. 编辑 podfile 文件内容</h3><p>用 VSCode 打开 RN初始Demo —— <code>BaseRNDemo</code> ，然后，将 ios 目录下的 podfile 文件打开，复制不相同的部分，也就是需要导入的依赖包。粘贴到iOS demo 的 podfile 文件内，保存。执行 <code>pod install</code>。</p>
+<p><em><strong>复制前的</strong></em></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">elixir · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment"># Uncomment the next line to define a global platform for your project</span>
+<span class="hljs-comment"># platform :ios, &#x27;9.0&#x27;</span>
+
+target <span class="hljs-string">&#x27;baseRNDemo&#x27;</span> <span class="hljs-keyword">do</span>
+  <span class="hljs-comment"># Comment the next line if you don&#x27;t want to use dynamic frameworks</span>
+  use_frameworks!
+
+  <span class="hljs-comment"># Pods for baseRNDemo</span>
+
+<span class="hljs-keyword">end</span>
+</code></pre></figure><p><em><strong>复制后的</strong></em></p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">elixir · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">require_relative <span class="hljs-string">&#x27;../node_modules/react-native/scripts/react_native_pods&#x27;</span>
+require_relative <span class="hljs-string">&#x27;../node_modules/@react-native-community/cli-platform-ios/native_modules&#x27;</span>
+
+platform <span class="hljs-symbol">:ios</span>, <span class="hljs-string">&#x27;10.0&#x27;</span>
+
+target <span class="hljs-string">&#x27;baseRNDemo&#x27;</span> <span class="hljs-keyword">do</span>
+  config = use_native_modules!
+
+  use_react_native!(
+    <span class="hljs-symbol">:path</span> =&gt; config[<span class="hljs-symbol">:reactNativePath</span>],
+    <span class="hljs-comment"># to enable hermes on iOS, change `false` to `true` and then install pods</span>
+    <span class="hljs-symbol">:hermes_enabled</span> =&gt; <span class="hljs-literal">false</span>
+  )
+
+  <span class="hljs-comment"># Enables Flipper.</span>
+  <span class="hljs-comment">#</span>
+  <span class="hljs-comment"># Note that if you have use_frameworks! enabled, Flipper will not work and</span>
+  <span class="hljs-comment"># you should disable the next line.</span>
+  use_flipper!()
+
+  post_install <span class="hljs-keyword">do</span> |installer|
+    react_native_post_install(installer)
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre></figure><h3 id="4-移动拷贝文件执行命令行" class="prose-h prose-h3"><a class="h-anchor" href="#4-移动拷贝文件执行命令行" aria-hidden="true" tabindex="-1">#</a>4. 移动、拷贝文件，执行命令行</h3><blockquote>
+<p>将 <code>BaseRNDemo</code>下的 <code>ios目录</code> 内的文件，全部删除，将 <code>iOS demo</code> 内的文件全部拷贝过来。</p>
+<p>在 <code>BaseRNDemo</code> 文件内，执行 <code>npm install</code>；</p>
+<p>在iOS目录内执行 <code>pod install </code>。</p>
+</blockquote>
+<p>此时的目录结构大概是这样子的：
+<img class="prose-img" src="/post-images/issues/gh-22-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+<h3 id="5-编写rn部分的代码" class="prose-h prose-h3"><a class="h-anchor" href="#5-编写rn部分的代码" aria-hidden="true" tabindex="-1">#</a>5. 编写RN部分的代码</h3><blockquote>
+<p>在打开的 <code>VSCode</code> 中在 <code>app.js</code> 内编写代码。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"> <span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, { <span class="hljs-title class_">Component</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+ <span class="hljs-keyword">import</span> {
+   <span class="hljs-title class_">Platform</span>,
+   <span class="hljs-title class_">StyleSheet</span>,
+   <span class="hljs-title class_">Text</span>,
+   <span class="hljs-title class_">View</span>
+ } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-native&#x27;</span>;
+ 
+ <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> {
+   <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) {
+     <span class="hljs-keyword">return</span> (
+       <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">View</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.container}</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{styles.welcome}</span>&gt;</span>
+           this is App, this is RN Page
+         <span class="hljs-tag">&lt;/<span class="hljs-name">Text</span>&gt;</span>
+       <span class="hljs-tag">&lt;/<span class="hljs-name">View</span>&gt;</span></span>
+     );
+   }
+ }
+ 
+ <span class="hljs-keyword">const</span> styles = <span class="hljs-title class_">StyleSheet</span>.<span class="hljs-title function_">create</span>({
+   <span class="hljs-attr">container</span>: {
+     <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,
+     <span class="hljs-attr">justifyContent</span>: <span class="hljs-string">&#x27;center&#x27;</span>,
+     <span class="hljs-attr">alignItems</span>: <span class="hljs-string">&#x27;center&#x27;</span>,
+     <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">&#x27;#F5FCFF&#x27;</span>,
+   },
+   <span class="hljs-attr">welcome</span>: {
+     <span class="hljs-attr">fontSize</span>: <span class="hljs-number">20</span>,
+     <span class="hljs-attr">textAlign</span>: <span class="hljs-string">&#x27;center&#x27;</span>,
+     <span class="hljs-attr">margin</span>: <span class="hljs-number">10</span>,
+   }
+  });
+</code></pre></figure><h3 id="6-编写ios部分的代码" class="prose-h prose-h3"><a class="h-anchor" href="#6-编写ios部分的代码" aria-hidden="true" tabindex="-1">#</a>6. 编写iOS部分的代码</h3><blockquote>
+<p>在用 <code>Xcode</code> 打开的 <code>iOS项目</code> 里， 在 <code>viewcontroller.m</code> 内编写如下代码。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">dart · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// ViewController.m</span>
+#<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;ViewController.h&quot;</span>
+
+#<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;RNPageController.h&quot;</span>
+
+<span class="hljs-meta">@interface</span> <span class="hljs-title class_">ViewController</span> ()
+
+<span class="hljs-meta">@end</span>
+
+<span class="hljs-meta">@implementation</span> <span class="hljs-title class_">ViewController</span>
+
+- (<span class="hljs-keyword">void</span>)viewDidLoad {
+    [<span class="hljs-keyword">super</span> viewDidLoad];
+    <span class="hljs-comment">// Do any additional setup after loading the view.</span>
+}
+
+<span class="hljs-comment">// 此处是拖拽按钮生成的方法</span>
+- (<span class="hljs-title class_">IBAction</span>)pushRNPage:(id)sender {
+    <span class="hljs-title class_">RNPageController</span> *rnPage = [[<span class="hljs-title class_">RNPageController</span> alloc] init];
+    [self.navigationController pushViewController:rnPage animated:YES];
+}
+
+<span class="hljs-meta">@end</span>
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// RNPageController.h</span>
+<span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+
+<span class="hljs-built_in">NS_ASSUME_NONNULL_BEGIN</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">RNPageController</span> : <span class="hljs-title">UIViewController</span></span>
+
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-built_in">NS_ASSUME_NONNULL_END</span>
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// RNPageController.m</span>
+<span class="hljs-meta">#import <span class="hljs-string">&quot;RNPageController.h&quot;</span></span>
+
+<span class="hljs-meta">#import <span class="hljs-string">&lt;React/RCTRootView.h&gt;</span></span>
+
+<span class="hljs-meta">#import <span class="hljs-string">&lt;React/RCTBundleURLProvider.h&gt;</span></span>
+
+<span class="hljs-meta">#import <span class="hljs-string">&lt;React/RCTEventEmitter.h&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">RNPageController</span> ()</span>
+
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">RNPageController</span></span>
+
+- (<span class="hljs-type">void</span>)viewDidLoad {
+    [<span class="hljs-variable language_">super</span> viewDidLoad];
+    
+    [<span class="hljs-keyword">self</span> initRCTRootView];
+}
+
+- (<span class="hljs-type">void</span>)initRCTRootView{
+    
+    <span class="hljs-keyword">self</span>.title = <span class="hljs-string">@&quot;RN Hybrid&quot;</span>;
+    
+    <span class="hljs-built_in">NSURL</span> *jsCodeLocation;
+
+     jsCodeLocation = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://localhost:8081/index.bundle?platform=ios&quot;</span>];
+    <span class="hljs-comment">//手动拼接jsCodeLocation用于开发环境</span>
+    
+<span class="hljs-comment">//    jsCodeLocation = [[NSBundle mainBundle] URLForResource:@&quot;main&quot; withExtension:@&quot;jsbundle&quot;];</span>
+<span class="hljs-comment">//    release之后从包中读取名为main的静态js bundle</span>
+
+<span class="hljs-comment">//    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@&quot;index&quot; fallbackResource:nil];</span>
+<span class="hljs-comment">//     通过RCTBundleURLProvider生成，用于开发环境</span>
+
+    <span class="hljs-comment">// 这个 moduleName参数的名字 一定要和我们在index.js中注册的名字保持一致</span>
+    <span class="hljs-comment">// 也就是项目名。否则会报错。</span>
+
+    RCTRootView *rootView =[[RCTRootView alloc] initWithBundleURL:jsCodeLocation moduleName: <span class="hljs-string">@&quot;baseRNDemo&quot;</span> initialProperties:<span class="hljs-literal">nil</span>
+                                                    launchOptions: <span class="hljs-literal">nil</span>];
+    <span class="hljs-keyword">self</span>.view=rootView;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><h3 id="7-运行解决完如下错误后即可运行" class="prose-h prose-h3"><a class="h-anchor" href="#7-运行解决完如下错误后即可运行" aria-hidden="true" tabindex="-1">#</a>7. 运行（解决完如下错误后，即可运行）</h3><blockquote>
+<p>在VSCode中，执行 <code>npm start</code> 开启本地 <code>node 服务</code> 。</p>
+</blockquote>
+<blockquote>
+<p>在Xocde中，点击运行按钮，即可运行起来。但是，你会收到如下的一个个错误，需要一个个解决。</p>
+</blockquote>
+<h3 id="8-解决错误" class="prose-h prose-h3"><a class="h-anchor" href="#8-解决错误" aria-hidden="true" tabindex="-1">#</a>8. 解决错误</h3><h3 id="错误解决1-未添加桥接文件的报错" class="prose-h prose-h3"><a class="h-anchor" href="#错误解决1-未添加桥接文件的报错" aria-hidden="true" tabindex="-1">#</a>错误解决1: 未添加桥接文件的报错</h3><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">dart · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// error </span>
+<span class="hljs-string">&quot;linker command failed with exit code 1 (use -v to see invocation)&quot;</span>
+
+<span class="hljs-comment">// warnings:</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftFoundation&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftDarwin&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftCoreFoundation&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftCore&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftCoreGraphics&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftObjectiveC&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftDispatch&#x27;</span>
+ld: warning: <span class="hljs-title class_">Could</span> not find auto-linked <span class="hljs-keyword">library</span> <span class="hljs-string">&#x27;swiftSwiftOnoneSupport&#x27;</span>
+</code></pre></figure><blockquote>
+<p>未添加桥接文件时的报错</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-22-2.png" alt="未添加桥接文件时的报错" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>未添加桥接文件时的报错</figcaption></figure>
+<p><em><strong>解决方法：</strong></em></p>
+<blockquote>
+<p>原因：用了Swift的库，所以需要添加桥接文件
+In my case it was a React-Native project after adding a Swift Pods library. Maybe just the step 2 can work:</p>
+</blockquote>
+<blockquote>
+<p>添加具体步骤如下：
+Adding a new Swift file and a Brigde header:</p>
+</blockquote>
+<ol>
+<li>
+<p>File -&gt; New -&gt; File <code>File -&gt; New -&gt; File</code>
+<img class="prose-img" src="/post-images/issues/gh-22-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</li>
+<li>
+<p>Select Swift File Select <code>Swift File</code>
+<img class="prose-img" src="/post-images/issues/gh-22-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</li>
+<li>
+<p>Confirm Create Bridging Header enter image description here
+<img class="prose-img" src="/post-images/issues/gh-22-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</li>
+</ol>
+<p>Go to Build Settings and set Always Embed Swift Standard Libraries to YES Always Embed Swift Standard Libraries
+<img class="prose-img" src="/post-images/issues/gh-22-6.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+<hr>
+<h3 id="错误解决2-网络不设置前的报错" class="prose-h prose-h3"><a class="h-anchor" href="#错误解决2-网络不设置前的报错" aria-hidden="true" tabindex="-1">#</a>错误解决2:  网络不设置前的报错</h3><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-22-7.png" alt="网络不设置前的报错" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>网络不设置前的报错</figcaption></figure>
+<p><em><strong>解决方法：</strong></em></p>
+<blockquote>
+<p>当 <code>Xcode</code> 内的 <code>info.plist</code> ，添加如下配置，允许网络访问</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-22-8.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<hr>
+<h3 id="错误解决3-modulem名字不正确时报错" class="prose-h prose-h3"><a class="h-anchor" href="#错误解决3-modulem名字不正确时报错" aria-hidden="true" tabindex="-1">#</a>错误解决3:  modulem名字不正确时报错</h3><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-22-9.png" alt="modulem名字不正确时报错" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>modulem名字不正确时报错</figcaption></figure>
+<p><em><strong>解决方法：</strong></em></p>
+<blockquote>
+<p>改成正确的RN项目名字</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">    RCTRootView *rootView =[[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                       moduleName: @&quot;baseRNDemo&quot;
+                                                initialProperties:nil
+                                                    launchOptions: nil];
+</code></pre></figure><hr>
+<blockquote>
+<p>pod install持续报错</p>
+</blockquote>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-22-10.png" alt="pod install持续报错" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>pod install持续报错</figcaption></figure>
+<p><em><strong>解决方法：</strong></em></p>
+<blockquote>
+<p>网络原因，持续执行 <code>pod install</code> 命令即可。</p>
+</blockquote>
+<hr>
+<h3 id="当解决完所有错误后即可成功运行跳转页面" class="prose-h prose-h3"><a class="h-anchor" href="#当解决完所有错误后即可成功运行跳转页面" aria-hidden="true" tabindex="-1">#</a>当解决完所有错误后，即可成功运行、跳转页面</h3><p><img class="prose-img" src="/post-images/issues/gh-22-11.png" alt="成功后的截图1" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<img class="prose-img" src="/post-images/issues/gh-22-12.png" alt="成功后的截图2" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#1-创建一个rn-初始demo">1. 创建一个RN 初始Demo</a></li><li class="toc__item toc__item--h3"><a href="#2-创建一个ios空demo">2. 创建一个iOS空Demo</a></li><li class="toc__item toc__item--h3"><a href="#3-编辑-podfile-文件内容">3. 编辑 podfile 文件内容</a></li><li class="toc__item toc__item--h3"><a href="#4-移动拷贝文件执行命令行">4. 移动、拷贝文件，执行命令行</a></li><li class="toc__item toc__item--h3"><a href="#5-编写rn部分的代码">5. 编写RN部分的代码</a></li><li class="toc__item toc__item--h3"><a href="#6-编写ios部分的代码">6. 编写iOS部分的代码</a></li><li class="toc__item toc__item--h3"><a href="#7-运行解决完如下错误后即可运行">7. 运行（解决完如下错误后，即可运行）</a></li><li class="toc__item toc__item--h3"><a href="#8-解决错误">8. 解决错误</a></li><li class="toc__item toc__item--h3"><a href="#错误解决1-未添加桥接文件的报错">错误解决1: 未添加桥接文件的报错</a></li><li class="toc__item toc__item--h3"><a href="#错误解决2-网络不设置前的报错">错误解决2: 网络不设置前的报错</a></li><li class="toc__item toc__item--h3"><a href="#错误解决3-modulem名字不正确时报错">错误解决3: modulem名字不正确时报错</a></li><li class="toc__item toc__item--h3"><a href="#当解决完所有错误后即可成功运行跳转页面">当解决完所有错误后，即可成功运行、跳转页面</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-23/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">react-native 项目启动时报错：Module AppRegistry is not registered callable module (calling runApplication)</span><span class="postnav__meta">2021.05.25 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-21/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 报错 undefined is not an object (evaluating &#39;this.props.navigation.navigate&#39;)</span><span class="postnav__meta">2021.05.12 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-19/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+            <span class="mini-card__meta">2021.05.07 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-29/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native项目编译调试过程所遇错误·小记</span>
+            <span class="mini-card__meta">2021.06.24 · 5 分钟</span>
+          </a><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.05.19</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Native 与 iOS OC 的混合开发","datePublished":"2021-05-18T09:12:44.000Z","dateModified":"2021-05-19T08:36:27.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"本文意在示例 React-Native 与 iOS 原生 混合开发 从创建 demo 到成功运行的过程，以及在这之间遇到的问题，其解决方案。 RN 也是由来已久，所以很多网上的文章或者源码，都已经很老旧了。有的甚至在RN 0.64这个版本下，直接就是错误的。 所以，别人说的怎样，都是不真实的，只有自己能跑起来的，才是最有效的。 所以，有此篇记录。 ------ 本篇记录前提是，你已经安装好了所有的…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-22/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

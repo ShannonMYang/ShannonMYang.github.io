@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>iOS 开发多线程之队列组 —— 下载合并图片 · 木鱼小店</title>
+<meta name="description" content="- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-2/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 开发多线程之队列组 —— 下载合并图片 · 木鱼小店">
+<meta property="og:description" content="- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-2/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="iOS 开发多线程之队列组 —— 下载合并图片 · 木鱼小店">
+<meta name="twitter:description" content="- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-03-30T14:20:50.000Z">2021年3月30日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.04.25</span></div>
+      <h1 class="article__title">iOS 开发多线程之队列组 —— 下载合并图片</h1>
+      <p class="article__lead">- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-2.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#2</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/2" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #2</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#2B138E">iOS</span><span class="label-chip" style="--label-accent:#2B138E">Objective-C</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/2" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><ul>
+<li>
+<h3 id="如何用-gcd-同步若干个异步调用如根据若干个-url-异步加载多张图片然后在都下载完成后合成一张整图" class="prose-h prose-h3"><a class="h-anchor" href="#如何用-gcd-同步若干个异步调用如根据若干个-url-异步加载多张图片然后在都下载完成后合成一张整图" aria-hidden="true" tabindex="-1">#</a>如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图）</h3></li>
+</ul>
+<p>使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);
+dispatch_group_t group = dispatch_group_create();
+dispatch_group_async(group, queue, ^{ <span class="hljs-comment">/*加载图片1 */</span> });
+dispatch_group_async(group, queue, ^{ <span class="hljs-comment">/*加载图片2 */</span> });
+dispatch_group_async(group, queue, ^{ <span class="hljs-comment">/*加载图片3 */</span> }); 
+dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        <span class="hljs-comment">// 合并图片</span>
+});
+</code></pre></figure><hr>
+<h3 id="ios-开发多线程之队列组-下载合并图片" class="prose-h prose-h3"><a class="h-anchor" href="#ios-开发多线程之队列组-下载合并图片" aria-hidden="true" tabindex="-1">#</a>iOS 开发多线程之队列组 —— 下载合并图片</h3><h4 id="1-设计思路" class="prose-h prose-h4"><a class="h-anchor" href="#1-设计思路" aria-hidden="true" tabindex="-1">#</a>1. 设计思路</h4><p>要合并两张图片，用 Quartz2D 的知识，则要先要搞一个空的大图片，然后再把两张小图片画到那张大图片上面
+<img class="prose-img" src="/post-images/issues/gh-2-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></p>
+<h4 id="2-实现由一般实现再过度到队列组" class="prose-h prose-h4"><a class="h-anchor" href="#2-实现由一般实现再过度到队列组" aria-hidden="true" tabindex="-1">#</a>2. 实现（由一般实现再过度到队列组）</h4><h4 id="21-方法1先下载第-1-张图片然后下载第-2-张图片最后合并图片弊病由于图片比较耗时一张一张的下载图片更耗时" class="prose-h prose-h4"><a class="h-anchor" href="#21-方法1先下载第-1-张图片然后下载第-2-张图片最后合并图片弊病由于图片比较耗时一张一张的下载图片更耗时" aria-hidden="true" tabindex="-1">#</a>2.1 方法1⃣️（先下载第 1 张图片，然后下载第 2 张图片，最后合并图片）弊病：由于图片比较耗时，一张一张的下载图片更耗时。</h4><h4 id="211-首先创建一个-project然后拖一个-imageview" class="prose-h prose-h4"><a class="h-anchor" href="#211-首先创建一个-project然后拖一个-imageview" aria-hidden="true" tabindex="-1">#</a>2.1.1 首先创建一个 project，然后拖一个 imageview</h4><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-2-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h4 id="212-连线监听-imageview" class="prose-h prose-h4"><a class="h-anchor" href="#212-连线监听-imageview" aria-hidden="true" tabindex="-1">#</a>2.1.2 连线监听 imageview</h4><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-2-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h4 id="213-代码" class="prose-h prose-h4"><a class="h-anchor" href="#213-代码" aria-hidden="true" tabindex="-1">#</a>2.1.3 代码</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">//  htingViewController.h</span>
+ 
+<span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> : <span class="hljs-title">UIViewController</span></span>
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">//</span>
+<span class="hljs-comment">//  htingViewController.m</span>
+ 
+ 
+<span class="hljs-meta">#import <span class="hljs-string">&quot;htingViewController.h&quot;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> ()</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">weak</span>, <span class="hljs-keyword">nonatomic</span>) <span class="hljs-keyword">IBOutlet</span> <span class="hljs-built_in">UIImageView</span> *imageView;
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *image1;
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *image2;
+<span class="hljs-keyword">@end</span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">htingViewController</span></span>
+ 
+- (<span class="hljs-type">void</span>)viewDidLoad
+{
+    [<span class="hljs-variable language_">super</span> viewDidLoad];
+	<span class="hljs-comment">// Do any additional setup after loading the view, typically from a nib.</span>
+}
+ 
+- (<span class="hljs-type">void</span>)touchesBegan:(<span class="hljs-built_in">NSSet</span> *)touches withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
+{
+    <span class="hljs-comment">// 异步下载</span>
+    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^{
+        <span class="hljs-comment">// 1.下载第1张</span>
+        <span class="hljs-built_in">NSURL</span> *url1 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://g.hiphotos.baidu.com/image/pic/item/f2deb48f8c5494ee460de6182ff5e0fe99257e80.jpg&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data1 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url1];
+        <span class="hljs-built_in">UIImage</span> *image1 = [<span class="hljs-built_in">UIImage</span> imageWithData:data1];
+        
+        <span class="hljs-comment">// 2.下载第2张</span>
+        <span class="hljs-built_in">NSURL</span> *url2 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://su.bdimg.com/static/superplus/img/logo_white_ee663702.png&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data2 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url2];
+        <span class="hljs-built_in">UIImage</span> *image2 = [<span class="hljs-built_in">UIImage</span> imageWithData:data2];
+        
+        <span class="hljs-comment">// 3.合并图片</span>
+        <span class="hljs-comment">// 开启一个位图上下文</span>
+        <span class="hljs-built_in">UIGraphicsBeginImageContextWithOptions</span>(image1.size, <span class="hljs-literal">NO</span>, <span class="hljs-number">0.0</span>);
+        
+        <span class="hljs-comment">// 绘制第1张图片</span>
+        <span class="hljs-built_in">CGFloat</span> image1W = image1.size.width;
+        <span class="hljs-built_in">CGFloat</span> image1H = image1.size.height;
+        [image1 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, image1W, image1H)];
+        
+        <span class="hljs-comment">// 绘制第2张图片</span>
+        <span class="hljs-built_in">CGFloat</span> image2W = image2.size.width * <span class="hljs-number">0.5</span>;
+        <span class="hljs-built_in">CGFloat</span> image2H = image2.size.height * <span class="hljs-number">0.5</span>;
+        <span class="hljs-built_in">CGFloat</span> image2Y = image1H - image2H;
+        [image2 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, image2Y, image2W, image2H)];
+        
+        <span class="hljs-comment">// 得到上下文中的图片</span>
+        <span class="hljs-built_in">UIImage</span> *fullImage = <span class="hljs-built_in">UIGraphicsGetImageFromCurrentImageContext</span>();
+        
+        <span class="hljs-comment">// 结束上下文</span>
+        <span class="hljs-built_in">UIGraphicsEndImageContext</span>();
+        
+        <span class="hljs-comment">// 4.回到主线程显示图片</span>
+        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^{
+            <span class="hljs-keyword">self</span>.imageView.image = fullImage;
+        });
+    });
+}
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><h4 id="214-运行结果" class="prose-h prose-h4"><a class="h-anchor" href="#214-运行结果" aria-hidden="true" tabindex="-1">#</a>2.1.4 运行结果</h4><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-2-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h4 id="22-方法2由于上面的设计中下载图片比较耗时可以同事开启两个线程同事下载两张图片-弊病要搞两个额外的属性" class="prose-h prose-h4"><a class="h-anchor" href="#22-方法2由于上面的设计中下载图片比较耗时可以同事开启两个线程同事下载两张图片-弊病要搞两个额外的属性" aria-hidden="true" tabindex="-1">#</a>2.2. 方法2⃣️（由于上面的设计中下载图片比较耗时，可以同事开启两个线程同事下载两张图片  ）弊病：要搞两个额外的属性</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> : <span class="hljs-title">UIViewController</span></span>
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">//</span>
+<span class="hljs-comment">//  htingViewController.m</span>
+ 
+ 
+<span class="hljs-meta">#import <span class="hljs-string">&quot;htingViewController.h&quot;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> ()</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">weak</span>, <span class="hljs-keyword">nonatomic</span>) <span class="hljs-keyword">IBOutlet</span> <span class="hljs-built_in">UIImageView</span> *imageView;
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *image1;
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *image2;
+<span class="hljs-keyword">@end</span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">htingViewController</span></span>
+ 
+- (<span class="hljs-type">void</span>)viewDidLoad
+{
+    [<span class="hljs-variable language_">super</span> viewDidLoad];
+	<span class="hljs-comment">// Do any additional setup after loading the view, typically from a nib.</span>
+}
+ 
+- (<span class="hljs-type">void</span>)touchesBegan:(<span class="hljs-built_in">NSSet</span> *)touches withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
+{
+    
+    <span class="hljs-comment">// 异步下载</span>
+    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^{
+        <span class="hljs-comment">// 1.下载第1张</span>
+        <span class="hljs-built_in">NSURL</span> *url1 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://g.hiphotos.baidu.com/image/pic/item/f2deb48f8c5494ee460de6182ff5e0fe99257e80.jpg&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data1 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url1];
+        <span class="hljs-keyword">self</span>.image1 = [<span class="hljs-built_in">UIImage</span> imageWithData:data1];
+        
+        [<span class="hljs-keyword">self</span> bindImages];
+    });
+    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>), ^{
+        <span class="hljs-comment">// 2.下载第2张</span>
+        <span class="hljs-built_in">NSURL</span> *url2 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://su.bdimg.com/static/superplus/img/logo_white_ee663702.png&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data2 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url2];
+        <span class="hljs-keyword">self</span>.image2 = [<span class="hljs-built_in">UIImage</span> imageWithData:data2];
+        
+        [<span class="hljs-keyword">self</span> bindImages];
+    });
+    
+}
+- (<span class="hljs-type">void</span>)bindImages
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>.image1 == <span class="hljs-literal">nil</span> || <span class="hljs-keyword">self</span>.image2 == <span class="hljs-literal">nil</span>) <span class="hljs-keyword">return</span>;
+    
+    <span class="hljs-comment">// 3.合并图片</span>
+    <span class="hljs-comment">// 开启一个位图上下文  （相当于创建了一个空的图片）</span>
+    <span class="hljs-comment">// UIGraphicsBeginImageContextWithOptions(&lt;#CGSize size#&gt;（新的图片有多大）, &lt;#BOOL opaque#&gt;（NO代表透明，YES代表不透明）, &lt;#CGFloat scale#&gt; （缩放比例）)</span>
+    <span class="hljs-built_in">UIGraphicsBeginImageContextWithOptions</span>(<span class="hljs-keyword">self</span>.image1.size, <span class="hljs-literal">NO</span>, <span class="hljs-number">0.0</span>);
+    
+    <span class="hljs-comment">// 绘制第1张图片 （绘制到上面创建的那个位图上下文上面 也就是那张空的图片上面）</span>
+    <span class="hljs-built_in">CGFloat</span> image1W = <span class="hljs-keyword">self</span>.image1.size.width;
+    <span class="hljs-built_in">CGFloat</span> image1H = <span class="hljs-keyword">self</span>.image1.size.height;
+    [<span class="hljs-keyword">self</span>.image1 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, image1W, image1H)];
+    
+    <span class="hljs-comment">// 绘制第2张图片</span>
+    <span class="hljs-built_in">CGFloat</span> image2W = <span class="hljs-keyword">self</span>.image2.size.width * <span class="hljs-number">0.5</span>;
+    <span class="hljs-built_in">CGFloat</span> image2H = <span class="hljs-keyword">self</span>.image2.size.height * <span class="hljs-number">0.5</span>;
+    <span class="hljs-built_in">CGFloat</span> image2Y = image1H - image2H;
+    <span class="hljs-comment">//把image2 绘制到后面的那个区域</span>
+    [<span class="hljs-keyword">self</span>.image2 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, image2Y, image2W, image2H)];
+    
+    <span class="hljs-comment">// 得到上下文中的图片</span>
+    <span class="hljs-built_in">UIImage</span> *fullImage = <span class="hljs-built_in">UIGraphicsGetImageFromCurrentImageContext</span>();
+    
+    <span class="hljs-comment">// 结束上下文</span>
+    <span class="hljs-built_in">UIGraphicsEndImageContext</span>();
+    
+    <span class="hljs-comment">// 4.回到主线程显示图片</span>
+    <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^{
+        <span class="hljs-keyword">self</span>.imageView.image = fullImage;
+    });
+}
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><h4 id="23-方法3-队列组" class="prose-h prose-h4"><a class="h-anchor" href="#23-方法3-队列组" aria-hidden="true" tabindex="-1">#</a>2.3 方法3⃣️  队列组</h4><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-meta">#import <span class="hljs-string">&lt;UIKit/UIKit.h&gt;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> : <span class="hljs-title">UIViewController</span></span>
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">//</span>
+<span class="hljs-comment">//  htingViewController.m</span>
+ 
+ 
+<span class="hljs-meta">#import <span class="hljs-string">&quot;htingViewController.h&quot;</span></span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">htingViewController</span> ()</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">weak</span>, <span class="hljs-keyword">nonatomic</span>) <span class="hljs-keyword">IBOutlet</span> <span class="hljs-built_in">UIImageView</span> *imageView;
+<span class="hljs-comment">//@property (nonatomic, strong) UIImage *image1;</span>
+<span class="hljs-comment">//@property (nonatomic, strong) UIImage *image2;</span>
+<span class="hljs-keyword">@end</span>
+ 
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">htingViewController</span></span>
+ 
+- (<span class="hljs-type">void</span>)viewDidLoad
+{
+    [<span class="hljs-variable language_">super</span> viewDidLoad];
+	<span class="hljs-comment">// Do any additional setup after loading the view, typically from a nib.</span>
+}
+ 
+- (<span class="hljs-type">void</span>)touchesBegan:(<span class="hljs-built_in">NSSet</span> *)touches withEvent:(<span class="hljs-built_in">UIEvent</span> *)event
+{
+    
+    <span class="hljs-comment">// 1.队列组</span>
+    dispatch_group_t group = dispatch_group_create();
+    <span class="hljs-built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="hljs-number">0</span>);
+    
+    <span class="hljs-comment">// 2.下载图片1</span>
+    __block <span class="hljs-built_in">UIImage</span> *image1 = <span class="hljs-literal">nil</span>;  <span class="hljs-comment">//要加一个 __block因为 block代码默认不能改外面的东西（记住语法即可）</span>
+    dispatch_group_async(group, queue, ^{
+        <span class="hljs-built_in">NSURL</span> *url1 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://g.hiphotos.baidu.com/image/pic/item/f2deb48f8c5494ee460de6182ff5e0fe99257e80.jpg&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data1 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url1];
+        image1 = [<span class="hljs-built_in">UIImage</span> imageWithData:data1];
+    });
+    
+    <span class="hljs-comment">// 3.下载图片2</span>
+    __block <span class="hljs-built_in">UIImage</span> *image2 = <span class="hljs-literal">nil</span>;
+    dispatch_group_async(group, queue, ^{
+        <span class="hljs-built_in">NSURL</span> *url2 = [<span class="hljs-built_in">NSURL</span> URLWithString:<span class="hljs-string">@&quot;http://su.bdimg.com/static/superplus/img/logo_white_ee663702.png&quot;</span>];
+        <span class="hljs-built_in">NSData</span> *data2 = [<span class="hljs-built_in">NSData</span> dataWithContentsOfURL:url2];
+        image2 = [<span class="hljs-built_in">UIImage</span> imageWithData:data2];
+    });
+    
+    <span class="hljs-comment">// 4.合并图片 用Quartz2D的知识，则要先要搞一个空的大图片，然后再把小图片画上去(保证执行完组里面的所有任务之后，再执行notify函数里面的block)</span>
+    <span class="hljs-comment">//队列组：要把队列组里面的所有任务都执行完后调用dispatch_group_notify(group, queue, ^{ }</span>
+    dispatch_group_notify(group, queue, ^{
+        <span class="hljs-comment">// 开启一个位图上下文</span>
+        <span class="hljs-built_in">UIGraphicsBeginImageContextWithOptions</span>(image1.size, <span class="hljs-literal">NO</span>, <span class="hljs-number">0.0</span>);
+        
+        <span class="hljs-comment">// 绘制第1张图片</span>
+        <span class="hljs-built_in">CGFloat</span> image1W = image1.size.width;
+        <span class="hljs-built_in">CGFloat</span> image1H = image1.size.height;
+        [image1 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, image1W, image1H)];
+        
+        <span class="hljs-comment">// 绘制第2张图片</span>
+        <span class="hljs-built_in">CGFloat</span> image2W = image2.size.width * <span class="hljs-number">0.5</span>;
+        <span class="hljs-built_in">CGFloat</span> image2H = image2.size.height * <span class="hljs-number">0.5</span>;
+        <span class="hljs-built_in">CGFloat</span> image2Y = image1H - image2H;
+        [image2 drawInRect:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, image2Y, image2W, image2H)];
+        
+        <span class="hljs-comment">// 得到上下文中的图片</span>
+        <span class="hljs-built_in">UIImage</span> *fullImage = <span class="hljs-built_in">UIGraphicsGetImageFromCurrentImageContext</span>();
+        
+        <span class="hljs-comment">// 结束上下文</span>
+        <span class="hljs-built_in">UIGraphicsEndImageContext</span>();
+        
+        <span class="hljs-comment">// 5.回到主线程显示图片</span>
+        <span class="hljs-built_in">dispatch_async</span>(dispatch_get_main_queue(), ^{
+            <span class="hljs-keyword">self</span>.imageView.image = fullImage;
+        });
+    });
+    
+}
+ 
+<span class="hljs-keyword">@end</span>
+</code></pre></figure><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-2-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<h4 id="24-方法4-队列组信号量" class="prose-h prose-h4"><a class="h-anchor" href="#24-方法4-队列组信号量" aria-hidden="true" tabindex="-1">#</a>2.4 方法4⃣️  队列组、信号量</h4><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-2-6.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#如何用-gcd-同步若干个异步调用如根据若干个-url-异步加载多张图片然后在都下载完成后合成一张整图">如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图）</a></li><li class="toc__item toc__item--h3"><a href="#ios-开发多线程之队列组-下载合并图片">iOS 开发多线程之队列组 —— 下载合并图片</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-4/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">Vue.js项目npm install错误解析</span><span class="postnav__meta">2021.04.12 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-1/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">OC 内省 (反射) 机制的理解</span><span class="postnav__meta">2021.03.30 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-1/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">OC 内省 (反射) 机制的理解</span>
+            <span class="mini-card__meta">2021.03.30 · 7 分钟</span>
+          </a><a class="mini-card" href="/note/gh-19/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span>
+            <span class="mini-card__meta">2021.05.07 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.04.25</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"iOS 开发多线程之队列组 —— 下载合并图片","datePublished":"2021-03-30T14:20:50.000Z","dateModified":"2021-04-25T15:17:21.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"- #### 如何用 GCD 同步若干个异步调用？（如根据若干个 url 异步加载多张图片，然后在都下载完成后合成一张整图） 使用 Dispatch Group 追加 block 到 Global Group Queue, 这些 block 如果全部执行完毕，就会执行 Main Dispatch Queue 中的结束处理的 block。 ------ iOS 开发多线程之队列组 —— 下载合并图片…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-2/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

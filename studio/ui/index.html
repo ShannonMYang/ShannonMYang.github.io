@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>木鱼书店 · 写作台</title>
+<link rel="icon" href="/theme/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="seal">木</span>
+      <div class="topbar__name"><strong>木鱼书店</strong><small>写作台 · STUDIO</small></div>
+    </div>
+    <div class="topbar__status">
+      <span class="git-pill" id="git-pill" title="Git 状态"><i></i><span id="git-text">读取中…</span></span>
+    </div>
+    <div class="topbar__actions">
+      <button class="btn btn--ghost" type="button" data-action="sync" title="从 GitHub Issues 拉取最新笔记" aria-label="同步笔记">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 6.3"></path><path d="M20 4v7h-7"></path></svg>
+        <span>同步笔记</span>
+      </button>
+      <button class="btn btn--ghost" type="button" data-action="open-site" title="在浏览器中预览构建后的站点" aria-label="预览站点">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 4h6v6M20 4l-8 8"></path><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg>
+        <span>预览站点</span>
+      </button>
+      <button class="btn btn--primary" type="button" data-action="publish" aria-label="发布站点">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+        <span>发布…</span>
+      </button>
+      <button class="icon-btn" type="button" data-action="theme" aria-label="切换深浅色">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.6 4.6 6 6M18 18l1.4 1.4M2 12h2M20 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg>
+      </button>
+      <button class="icon-btn sidebar-toggle" type="button" data-action="toggle-sidebar" aria-label="收起/展开侧栏">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="workspace" id="workspace">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__actions">
+        <button class="btn btn--solid" type="button" data-action="new-post">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+          新建文章
+        </button>
+        <button class="btn btn--plain" type="button" data-action="new-page" title="新建独立页面">页面</button>
+      </div>
+      <label class="list-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+        <input id="list-search" type="search" placeholder="搜索标题、标签…" autocomplete="off" aria-label="搜索文章">
+        <kbd>⌘K</kbd>
+      </label>
+      <div class="tabs" id="kind-tabs" role="group" aria-label="内容类型">
+        <button class="tab is-active" type="button" data-kind="all">全部</button>
+        <button class="tab" type="button" data-kind="post">文章</button>
+        <button class="tab" type="button" data-kind="note">笔记</button>
+        <button class="tab" type="button" data-kind="page">页面</button>
+        <button class="tab" type="button" data-kind="draft">草稿</button>
+      </div>
+      <ul class="item-list" id="item-list" aria-label="内容列表"></ul>
+      <div class="sidebar__foot" id="sidebar-foot">载入中…</div>
+    </aside>
+
+    <main class="main" id="main">
+      <section class="empty" id="empty">
+        <div class="empty__art">
+          <span class="empty__seal">木</span>
+          <span class="empty__line"></span>
+          <span class="empty__word">温故而知新</span>
+        </div>
+        <h1>从一篇文章开始</h1>
+        <p>左侧选择一篇内容，或者新建一篇文章。内容会直接写进仓库的 <code>content/</code> 目录。</p>
+        <div class="empty__keys">
+          <span><kbd>⌘</kbd><kbd>N</kbd> 新建</span>
+          <span><kbd>⌘</kbd><kbd>K</kbd> 搜索</span>
+          <span><kbd>⌘</kbd><kbd>S</kbd> 保存</span>
+        </div>
+        <button class="btn btn--primary" type="button" data-action="new-post">新建第一篇文章</button>
+      </section>
+
+      <section class="editor" id="editor" hidden>
+        <div class="editor__scroll" id="editor-scroll">
+          <div class="editor__head">
+            <div class="editor__badges">
+              <span class="kind-badge" id="kind-badge">文章</span>
+              <span class="draft-badge" id="draft-badge" hidden>草稿</span>
+              <span class="readonly-badge" id="readonly-badge" hidden>只读 · 来自 GitHub Issues</span>
+              <span class="editor__path" id="editor-path"></span>
+            </div>
+            <div class="note-banner" id="note-banner" hidden>
+              <span class="note-banner__mark" id="note-number">#</span>
+              <p>这篇笔记由 <a id="note-link" target="_blank" rel="noopener">GitHub Issue</a> 同步而来，在写作台里只读；修改请到原 Issue 进行，下次同步会覆盖本地内容。</p>
+            </div>
+            <input class="title-input" id="title" placeholder="文章标题" aria-label="标题" autocomplete="off">
+            <div class="meta-grid">
+              <label class="field"><span>slug</span><input id="slug" autocomplete="off" spellcheck="false"></label>
+              <label class="field"><span>日期</span><input id="date" type="date"></label>
+              <label class="field field--grow"><span>标签</span><input id="tags" list="tag-list" placeholder="iOS, 算法, 杂谈" autocomplete="off"></label>
+              <label class="field field--check"><input id="draft" type="checkbox"><span>草稿</span></label>
+            </div>
+            <details class="advanced" id="advanced">
+              <summary>摘要与封面</summary>
+              <div class="advanced__grid">
+                <label class="field"><span>封面路径</span><input id="cover" placeholder="/post-images/xxx.jpg" autocomplete="off"></label>
+                <button class="btn btn--plain btn--sm" type="button" id="cover-upload">上传封面</button>
+                <label class="field field--wide"><span>摘要（留空自动截取）</span><textarea id="excerpt" rows="2"></textarea></label>
+              </div>
+            </details>
+          </div>
+
+          <div class="toolbar" id="toolbar">
+            <div class="toolbar__group" role="group" aria-label="标题">
+              <button class="tool" type="button" data-md="h2" title="二级标题">H2</button>
+              <button class="tool" type="button" data-md="h3" title="三级标题">H3</button>
+            </div>
+            <div class="toolbar__group" role="group" aria-label="文字样式">
+              <button class="tool" type="button" data-md="bold" title="加粗 (⌘B)"><b>B</b></button>
+              <button class="tool" type="button" data-md="italic" title="斜体"><i>I</i></button>
+              <button class="tool" type="button" data-md="code" title="行内代码">&lt;/&gt;</button>
+              <button class="tool" type="button" data-md="strike" title="删除线"><s>S</s></button>
+            </div>
+            <div class="toolbar__group" role="group" aria-label="块级元素">
+              <button class="tool" type="button" data-md="quote" title="引用">❝</button>
+              <button class="tool" type="button" data-md="ul" title="无序列表">•</button>
+              <button class="tool" type="button" data-md="ol" title="有序列表">1.</button>
+              <button class="tool" type="button" data-md="table" title="表格">▦</button>
+              <button class="tool" type="button" data-md="hr" title="分隔线">—</button>
+            </div>
+            <div class="toolbar__group" role="group" aria-label="插入">
+              <button class="tool" type="button" data-md="link" title="链接">链接</button>
+              <button class="tool" type="button" data-md="image" title="插入图片">图片</button>
+            </div>
+            <div class="toolbar__view" role="group" aria-label="视图">
+              <button class="view-btn is-active" type="button" data-view="split" title="分栏">分栏</button>
+              <button class="view-btn" type="button" data-view="write" title="仅编辑">编辑</button>
+              <button class="view-btn" type="button" data-view="preview" title="仅预览">预览</button>
+            </div>
+          </div>
+
+          <div class="panes view-split" id="panes">
+            <div class="write-pane">
+              <textarea id="markdown" spellcheck="false" placeholder="用 Markdown 开始写作… 可以直接粘贴或拖入图片。"></textarea>
+            </div>
+            <div class="preview-pane">
+              <iframe id="preview" title="实时预览" sandbox="allow-same-origin"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <footer class="editor__foot">
+          <div class="foot__stats"><span id="word-count">0 字</span><span class="dot">·</span><span id="save-state">已保存</span></div>
+          <div class="foot__hint">Markdown · 图片自动上传到 post-images/</div>
+          <div class="foot__actions">
+            <button class="btn btn--danger btn--sm" type="button" id="delete-item">删除</button>
+            <button class="btn btn--primary btn--sm" type="button" id="save-item">保存 <kbd>⌘S</kbd></button>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </div>
+</div>
+
+<datalist id="tag-list"></datalist>
+<input type="file" id="cover-input" accept="image/*" hidden>
+<input type="file" id="image-input" accept="image/*" hidden>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<dialog class="dialog" id="publish-dialog">
+  <form method="dialog" class="dialog__body">
+    <header class="dialog__head">
+      <div><p class="dialog__eyebrow">PUBLISH</p><h2>发布站点</h2></div>
+      <button class="icon-btn" type="button" data-close-dialog aria-label="关闭">✕</button>
+    </header>
+    <p class="dialog__desc">构建静态站点 → 提交 Git → 推送 GitHub。推送成功后约 1 分钟线上生效。</p>
+    <div class="publish-summary" id="publish-summary">读取改动…</div>
+    <label class="field field--dialog"><span>提交信息</span><input id="commit-message" autocomplete="off"></label>
+    <label class="switch"><input id="push-toggle" type="checkbox" checked><span class="switch__track"></span><span>推送到 GitHub（线上生效）</span></label>
+    <footer class="dialog__foot">
+      <button class="btn btn--ghost" type="button" data-close-dialog>取消</button>
+      <button class="btn btn--primary" type="button" id="confirm-publish">构建并发布</button>
+    </footer>
+  </form>
+</dialog>
+
+<dialog class="dialog" id="sync-dialog">
+  <form method="dialog" class="dialog__body">
+    <header class="dialog__head">
+      <div><p class="dialog__eyebrow">SYNC</p><h2>同步 GitHub 笔记</h2></div>
+      <button class="icon-btn" type="button" data-close-dialog aria-label="关闭">✕</button>
+    </header>
+    <p class="dialog__desc">从 <code id="sync-repo">ShannonMYang/MyPersonalBlog</code> 拉取全部 Issues，下载正文图片，然后重新构建站点。已有同名旧文章会自动跳过。</p>
+    <div class="sync-note">只读取公开数据。若遇到 GitHub API 限流，可设置 <code>GITHUB_TOKEN</code> 环境变量后重启写作台。</div>
+    <footer class="dialog__foot">
+      <button class="btn btn--ghost" type="button" data-close-dialog>取消</button>
+      <button class="btn btn--primary" type="button" id="confirm-sync">开始同步</button>
+    </footer>
+  </form>
+</dialog>
+
+<dialog class="dialog dialog--progress" id="progress-dialog">
+  <div class="dialog__body">
+    <header class="dialog__head">
+      <div><p class="dialog__eyebrow" id="progress-eyebrow">WORKING</p><h2 id="progress-title">处理中…</h2></div>
+      <button class="icon-btn" type="button" id="progress-close" aria-label="关闭" hidden>✕</button>
+    </header>
+    <div class="progress-line" id="progress-line"><span></span></div>
+    <pre class="progress-log" id="progress-log"></pre>
+    <footer class="dialog__foot">
+      <button class="btn btn--ghost" type="button" id="progress-done" hidden>完成</button>
+    </footer>
+  </div>
+</dialog>
+
+<script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>由POST 400引出的错误 · 木鱼小店</title>
+<meta name="description" content="缘起 前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。 400 (Bad request) 400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -&gt; 后 的数据中字段类型不一致。在有效沟通的前提下，类型不…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-42/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="由POST 400引出的错误 · 木鱼小店">
+<meta property="og:description" content="缘起 前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。 400 (Bad request) 400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -&gt; 后 的数据中字段类型不一致。在有效沟通的前提下，类型不…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-42/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="由POST 400引出的错误 · 木鱼小店">
+<meta name="twitter:description" content="缘起 前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。 400 (Bad request) 400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -&gt; 后 的数据中字段类型不一致。在有效沟通的前提下，类型不…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-10-20T07:18:43.000Z">2021年10月20日</time><span class="article__kicker-dot">·</span><span>约 4 分钟</span></div>
+      <h1 class="article__title">由POST 400引出的错误</h1>
+      <p class="article__lead">缘起 前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。 400 (Bad request) 400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -&gt; 后 的数据中字段类型不一致。在有效沟通的前提下，类型不…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-42.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#42</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/42" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #42</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/42" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h2 id="缘起" class="prose-h prose-h2"><a class="h-anchor" href="#缘起" aria-hidden="true" tabindex="-1">#</a>缘起</h2><p>　　前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。</p>
+<h2 id="400-bad-request" class="prose-h prose-h2"><a class="h-anchor" href="#400-bad-request" aria-hidden="true" tabindex="-1">#</a>400 (Bad request)</h2><p>　　400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -&gt; 后 的数据中字段类型不一致。在有效沟通的前提下，类型不一致的概率很小，那么这个问题就主要集中在头部信息与请求体数据格式不一致上面了。</p>
+<p>　　先看一个正确的请求：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">$.<span class="hljs-title function_">ajax</span>({
+  url : <span class="hljs-string">&quot;http://localhost:8080/xxx/xxxx&quot;</span>,
+  type : <span class="hljs-string">&quot;POST&quot;</span>,
+  contentType : <span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>,
+  data : <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>({ name, passwd }), <span class="hljs-comment">// { name, passwd } es6 的一个语法  </span>
+  success : <span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) {
+       ...
+    },
+    error : <span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) {
+       ...
+    }
+  })
+</code></pre></figure><p>　　目前都是前后端分离的开发模式，两端通信全靠 json，所以，在发送 post 请求时必须得约定并设置请求头 contentType: &quot;application/json;charset=utf-8&quot;。如果不设置的话，这个请求的 contentType 默认 application/x-www-form-urlencoded，一个 415 + 大红叉 顶给你。</p>
+<p>　　接着，需要设置 data。在发送请求时，如果写成：data: {name, pwd} 的话，服务器还是会返回 400 错误。其实理由也很简单， http 通信过程中，要么就是字符串，要么就是二进制流 ，而 { name, pwd } 是一个对象，必须先转化成字符串或者流，才能传输。于是在请求中，首先得用 JSON.stringify 将 json 对象转换成字符串，这样，服务器才能正确理解请求并拿到数据。</p>
+<p>　　综上，在 post 请求中，一定要对这两个属性进行设置和处理。</p>
+<h2 id="jsonparse-和-jsonstringify" class="prose-h prose-h2"><a class="h-anchor" href="#jsonparse-和-jsonstringify" aria-hidden="true" tabindex="-1">#</a>JSON.parse 和 JSON.stringify</h2><p>　　这两个 api 在前端的应用频率也是相当高的，不过，因为某些原因，对 JSON.stringify 这个 api 理解上有些误差。直到最近在查资料时才有了不一样的领悟。</p>
+<p>　　JSON.parse 将一个 (json) 字符串转换成 (json) 对象，它有个名字是 反序列化；</p>
+<p>　　JSON.stringify 作用与 JSON.parse 相反，将对象转化成字符串，所以它也有个名字是 序列化。</p>
+<blockquote>
+<p>　　序列化 (Serialization) 是将对象的状态信息转换为可以 <em><strong>存储</strong></em> 或 <em><strong>传输</strong></em> 的形式的过程。在序列化期间，对象将其当前状态写入到临时或持久性存储区。以后，可以通过从存储区中读取或反序列化对象的状态，重新创建该对象。</p>
+</blockquote>
+<p>　　尤想起，当年写 class 的时候，序列化与反序列化齐飞，直至今日才明白官方定义... 溜了溜了...</p>
+<h2 id="post-常见的数据提交类型-content-type" class="prose-h prose-h2"><a class="h-anchor" href="#post-常见的数据提交类型-content-type" aria-hidden="true" tabindex="-1">#</a>POST 常见的数据提交类型 - Content-Type</h2><h3 id="applicationx-www-form-urlencoded" class="prose-h prose-h3"><a class="h-anchor" href="#applicationx-www-form-urlencoded" aria-hidden="true" tabindex="-1">#</a>application/x-www-form-urlencoded</h3><p>　　最常见的 POST 提交数据的方式，原生 form 表单默认的提交方式，同时，如果在 ajax 中不设置的话，同样以这种方式提交。</p>
+<p>　　这种方式提交的数据会转换成键值对并按照 key1=val1&amp;key2=val2 的方式进行编码，key 和 val 都会进行 url 编码。如：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-variable constant_">POST</span> <span class="hljs-attr">http</span>:<span class="hljs-comment">//www.example.com HTTP/1.1</span>
+<span class="hljs-title class_">Content</span>-<span class="hljs-title class_">Type</span>: application/x-www-form-urlencoded;charset=utf-<span class="hljs-number">8</span>
+
+name=test&amp;val1=<span class="hljs-number">1</span>&amp;val2=%<span class="hljs-variable constant_">E6</span>%<span class="hljs-variable constant_">B5</span>%8B%<span class="hljs-variable constant_">E8</span>%<span class="hljs-variable constant_">AF</span>%<span class="hljs-number">95</span>&amp;val3%5B%5D=<span class="hljs-number">2</span>
+</code></pre></figure><h3 id="multipartform-data" class="prose-h prose-h3"><a class="h-anchor" href="#multipartform-data" aria-hidden="true" tabindex="-1">#</a>multipart/form-data</h3><p>　　常用于多文件上传。这种方式将表单数据处理成一条消息，以标签为单元，用分隔符 (常见的是 boundary) 分开。因为这种方式将数据分割为多个部分，所以它既可以上传键值对，也可以上传文件、多文件。当上传的字段是文件时，会有 Content - Type 来说明文件类型；Content-disposition，用来说明字段的一些信息。每部分以 -boundary 开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容 (字段、文本或二进制等)。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以 -boundary- 标识结束。</p>
+<p>　　如：(没太看明白)</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-variable constant_">POST</span> <span class="hljs-attr">http</span>:<span class="hljs-comment">//www.example.com HTTP/1.1Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span>
+
+------<span class="hljs-title class_">WebKitFormBoundaryrGKCBY7</span>qhFd3TrwA
+<span class="hljs-title class_">Content</span>-<span class="hljs-title class_">Disposition</span>: form-data; name=<span class="hljs-string">&quot;text&quot;</span>
+
+title
+------<span class="hljs-title class_">WebKitFormBoundaryrGKCBY7</span>qhFd3TrwA
+<span class="hljs-title class_">Content</span>-<span class="hljs-title class_">Disposition</span>: form-data; name=<span class="hljs-string">&quot;file&quot;</span>; filename=<span class="hljs-string">&quot;chrome.png&quot;</span>
+<span class="hljs-title class_">Content</span>-<span class="hljs-title class_">Type</span>: image/png
+
+<span class="hljs-variable constant_">PNG</span> ... content <span class="hljs-keyword">of</span> chrome.<span class="hljs-property">png</span> ...
+------<span class="hljs-title class_">WebKitFormBoundaryrGKCBY7</span>qhFd3TrwA--
+</code></pre></figure><h3 id="applicationjson" class="prose-h prose-h3"><a class="h-anchor" href="#applicationjson" aria-hidden="true" tabindex="-1">#</a>application/json</h3><p>　　这个头应该会很熟悉，这也是日常用的比较多的请求 / 响应头。这个消息头的作用是告诉服务端消息主体是序列化后的 JSON 字符串。</p>
+<p>　　顺手也贴一个：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">JavaScript</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-variable constant_">POST</span> <span class="hljs-attr">http</span>:<span class="hljs-comment">//www.example.com HTTP/1.1</span>
+<span class="hljs-title class_">Content</span>-<span class="hljs-title class_">Type</span>: application/json;charset=utf-<span class="hljs-number">8</span>
+
+{<span class="hljs-string">&quot;title&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;sub&quot;</span>:[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]}
+</code></pre></figure><h3 id="textplain" class="prose-h prose-h3"><a class="h-anchor" href="#textplain" aria-hidden="true" tabindex="-1">#</a>text/plain</h3><p>　　这个消息类型是文件已被设置为纯文本形式，浏览器、服务器收到这种类型的数据不会进行进一步的处理，开发者需要自行判断处理。也支持发送 JSON 字符串。</p>
+<p>　　这个类型意味着消息自由性变大。</p>
+<h3 id="textxml-和-applicationxml" class="prose-h prose-h3"><a class="h-anchor" href="#textxml-和-applicationxml" aria-hidden="true" tabindex="-1">#</a>text/xml 和 application/xml</h3><p>　　这两消息类型年代久远... 至少在 web 前端领域做实际项目的时候完全没有碰到过。以 xml 文档的形式发送数据。不过因为 xml 严谨结构，对 web 前端来说，这会产生更多的流量，基本被弃用。</p>
+<p>　　然后这两者的区别是前者默认使用 ‘us-ascii’ 字符集编解码，后者默认 'utf-8' 字符集编解码；前者只能在消息头 content-type 中设置编解码格式才有效，后者在消息头或者在文档内部中设置均可以。</p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#缘起">缘起</a></li><li class="toc__item toc__item--h2"><a href="#400-bad-request">400 (Bad request)</a></li><li class="toc__item toc__item--h2"><a href="#jsonparse-和-jsonstringify">JSON.parse 和 JSON.stringify</a></li><li class="toc__item toc__item--h2"><a href="#post-常见的数据提交类型-content-type">POST 常见的数据提交类型 - Content-Type</a></li><li class="toc__item toc__item--h3"><a href="#applicationx-www-form-urlencoded">application/x-www-form-urlencoded</a></li><li class="toc__item toc__item--h3"><a href="#multipartform-data">multipart/form-data</a></li><li class="toc__item toc__item--h3"><a href="#applicationjson">application/json</a></li><li class="toc__item toc__item--h3"><a href="#textplain">text/plain</a></li><li class="toc__item toc__item--h3"><a href="#textxml-和-applicationxml">text/xml 和 application/xml</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-43/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">Chrome 通过设置解决跨域问题</span><span class="postnav__meta">2021.10.20 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-41/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">Postman 模拟 Request Payload 发送 Post</span><span class="postnav__meta">2021.10.15 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.10.20</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"由POST 400引出的错误","datePublished":"2021-10-20T07:18:43.000Z","dateModified":"2021-10-20T07:18:43.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"缘起 前段时间仿写老项目，好不容易拿到了token的数据，结果调用接口登录时弹了个 400 (Bad request) 给我，匆匆找了点资料补充后，忐忑的心也可以安分点。然后，顺着这个 400 的错误，挖出了大大小小一堆的坑。 400 (Bad request) 400 错误的原因很简单，请求头部信息与请求体中的数据格式不匹配，或者 前 -> 后 的数据中字段类型不一致。在有效沟通的前提下，类型不…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-42/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

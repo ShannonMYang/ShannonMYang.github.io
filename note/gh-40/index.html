@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>RN 0.62 升级遇到的pod &quot;React/Core&quot;错误 · 木鱼小店</title>
+<meta name="description" content="最近在做项目RN版本的升级，目前升级到0.62。 期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。 在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。 下面时完整的异常信息： 可将目录切换到工程根目录后，执行以下命令即可解决问题： 解决参照思路">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-40/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RN 0.62 升级遇到的pod &quot;React/Core&quot;错误 · 木鱼小店">
+<meta property="og:description" content="最近在做项目RN版本的升级，目前升级到0.62。 期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。 在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。 下面时完整的异常信息： 可将目录切换到工程根目录后，执行以下命令即可解决问题： 解决参照思路">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-40/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RN 0.62 升级遇到的pod &quot;React/Core&quot;错误 · 木鱼小店">
+<meta name="twitter:description" content="最近在做项目RN版本的升级，目前升级到0.62。 期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。 在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。 下面时完整的异常信息： 可将目录切换到工程根目录后，执行以下命令即可解决问题： 解决参照思路">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-09-10T01:46:00.000Z">2021年9月10日</time><span class="article__kicker-dot">·</span><span>约 1 分钟</span></div>
+      <h1 class="article__title">RN 0.62 升级遇到的pod &quot;React/Core&quot;错误</h1>
+      <p class="article__lead">最近在做项目RN版本的升级，目前升级到0.62。 期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。 在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。 下面时完整的异常信息： 可将目录切换到工程根目录后，执行以下命令即可解决问题： 解决参照思路</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-40.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#40</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/40" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #40</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">Objective-C</span><span class="label-chip" style="--label-accent:#C6391F">错误解决</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/40" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>最近在做项目RN版本的升级，目前升级到0.62。
+期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。
+在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。</p>
+</blockquote>
+<p>下面时完整的异常信息：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">dart · 推断</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">[!] <span class="hljs-title class_">CocoaPods</span> could not find compatible versions <span class="hljs-keyword">for</span> pod <span class="hljs-string">&quot;React/Core&quot;</span>:
+  <span class="hljs-title class_">In</span> <span class="hljs-title class_">Podfile</span>:
+    react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`) was resolved to <span class="hljs-number">0.10</span>.<span class="hljs-number">6</span>, which depends <span class="hljs-keyword">on</span>
+      <span class="hljs-title class_">React</span>/<span class="hljs-title class_">Core</span>
+
+<span class="hljs-title class_">None</span> of your spec sources contain a spec satisfying the dependency: `<span class="hljs-title class_">React</span>/<span class="hljs-title class_">Core</span>`.
+
+<span class="hljs-title class_">You</span> have either:
+ * out-of-date source repos which you can update <span class="hljs-keyword">with</span> `pod repo update` or <span class="hljs-keyword">with</span> `pod install --repo-update`.
+ * mistyped the name or version.
+ * not added the source repo that hosts the <span class="hljs-title class_">Podspec</span> to your <span class="hljs-title class_">Podfile</span>.
+
+[!] use_native_modules! skipped the react-native dependency <span class="hljs-string">&#x27;react-native-imui&#x27;</span>. <span class="hljs-title class_">No</span> podspec file was found.
+    - <span class="hljs-title class_">Check</span> to see <span class="hljs-keyword">if</span> there <span class="hljs-keyword">is</span> an updated version that contains the necessary podspec file
+    - <span class="hljs-title class_">Contact</span> the <span class="hljs-keyword">library</span> maintainers or send them a PR to add a podspec. <span class="hljs-title class_">The</span> react-native-webview podspec <span class="hljs-keyword">is</span> a good example of a package.json driven podspec. <span class="hljs-title class_">See</span>
+    https:<span class="hljs-comment">//github.com/react-native-community/react-native-webview/blob/master/react-native-webview.podspec</span>
+    - <span class="hljs-title class_">If</span> necessary, you can disable autolinking <span class="hljs-keyword">for</span> the dependency and link it manually. <span class="hljs-title class_">See</span>
+    https:<span class="hljs-comment">//github.com/react-native-community/cli/blob/master/docs/autolinking.md#how-can-i-disable-autolinking-for-unsupported-library</span>
+</code></pre></figure><p>可将目录切换到工程根目录后，执行以下命令即可解决问题：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"> grep -rl &quot;s.dependency &#39;React/Core&#39;&quot; node_modules/ | xargs sed -i &#39;&#39; &#39;s=React/Core=React-Core=g&#39;
+</code></pre></figure><p><a href="https://stackoverflow.com/questions/58305191/react-native-fetch-blob-issue-pod-not-installing-for-ios" target="_blank" rel="noopener noreferrer" class="ext-link">解决参照思路</a></p>
+</div>
+      
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">错误解决</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-41/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">Postman 模拟 Request Payload 发送 Post</span><span class="postnav__meta">2021.10.15 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-39/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">RN 0.62 关于 Animated 的警告和报错</span><span class="postnav__meta">2021.09.07 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-33/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Xcode编译OC和RN混合开发所遇错误·小记</span>
+            <span class="mini-card__meta">2021.07.02 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-29/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native项目编译调试过程所遇错误·小记</span>
+            <span class="mini-card__meta">2021.06.24 · 5 分钟</span>
+          </a><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.09.10</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"RN 0.62 升级遇到的pod \"React/Core\"错误","datePublished":"2021-09-10T01:46:00.000Z","dateModified":"2021-09-10T02:02:42.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"最近在做项目RN版本的升级，目前升级到0.62。 期间出现了，确实库文件的问题。后来引入后，发现执行pod命令时有问题。 在以React Native框架开发的项目中，在 ios 文件夹下执行 pod install 命令时出现的问题如下。 下面时完整的异常信息： 可将目录切换到工程根目录后，执行以下命令即可解决问题： 解决参照思路","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-40/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

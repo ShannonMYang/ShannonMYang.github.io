@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>如何在 Vim/Vi 中保存文件并退出编辑器 · 木鱼小店</title>
+<meta name="description" content="------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-20/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Vim/Vi 中保存文件并退出编辑器 · 木鱼小店">
+<meta property="og:description" content="------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-20/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="如何在 Vim/Vi 中保存文件并退出编辑器 · 木鱼小店">
+<meta name="twitter:description" content="------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-05-10T01:24:39.000Z">2021年5月10日</time><span class="article__kicker-dot">·</span><span>约 2 分钟</span></div>
+      <h1 class="article__title">如何在 Vim/Vi 中保存文件并退出编辑器</h1>
+      <p class="article__lead">------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/macos/">macOS</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-20.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#20</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/20" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #20</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#193900">macOS</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/20" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-20-1.png" alt="Vim Save and Quit" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Vim Save and Quit</figcaption></figure>
+<hr>
+<p>Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。</p>
+<p>Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。</p>
+<p>本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。</p>
+<hr>
+<h2 id="vim-模式" class="prose-h prose-h2"><a class="h-anchor" href="#vim-模式" aria-hidden="true" tabindex="-1">#</a>Vim 模式</h2><p>启动 Vim 编辑器时，您处于正常模式。在这种模式下，您可以使用 vim 命令并浏览文件。</p>
+<p>要输入文字，您需要按 <code>i</code> 键进入插入模式。使用此模式，您可以像在常规<a href="https://www.myfreax.com/how-to-use-nano-text-editor/" target="_blank" rel="noopener noreferrer" class="ext-link">文本编辑器</a>中一样插入和删除字符。</p>
+<p>要从其他任何模式返回正常模式，只需按 <code>Esc</code> 键。</p>
+<h2 id="在-vim-vi-中打开文件" class="prose-h prose-h2"><a class="h-anchor" href="#在-vim-vi-中打开文件" aria-hidden="true" tabindex="-1">#</a>在 Vim / Vi 中打开文件</h2><p>要使用 Vim 打开文件，请键入 <code>vim</code>，然后输入要编辑或创建的文件的名称：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Shell</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">vim file.text
+</code></pre></figure><p>另一种打开文件的方法是启动编辑器，然后键入<code>:e file_name</code>，其中 <code>file_name</code> 是要打开的文件的名称。</p>
+<h2 id="在-vim-vi-中保存文件" class="prose-h prose-h2"><a class="h-anchor" href="#在-vim-vi-中保存文件" aria-hidden="true" tabindex="-1">#</a>在 Vim / Vi 中保存文件</h2><p>在 Vim 中保存文件的命令是<code>:w</code>。</p>
+<p>要保存文件而不退出编辑器，请按 <code>Esc</code>，键入<code>:w</code>，然后按 <code>Enter</code>，切换回普通模式。</p>
+<ol>
+<li>按 <code>Esc</code></li>
+<li>类型<code>:w</code></li>
+<li>按 <code>Enter</code></li>
+</ol>
+<p>还有一个更新命令<code>:up</code>，该命令仅在未保存更改的情况下才将缓冲区写入文件。</p>
+<p>要使用其他名称保存文件，请键入<code>:w new_filename</code> 并点击 <code>Enter</code>。</p>
+<h2 id="保存文件并退出-vim-vi" class="prose-h prose-h2"><a class="h-anchor" href="#保存文件并退出-vim-vi" aria-hidden="true" tabindex="-1">#</a>保存文件并退出 Vim / Vi</h2><p>在 Vim 中保存文件并退出编辑器的命令是<code>:wq</code>。</p>
+<p>要保存文件并同时退出编辑器，请按 <code>Esc</code> 切换到普通模式，键入<code>:wq</code> 并按 <code>Enter</code>。</p>
+<ol>
+<li>按 <code>Esc</code></li>
+<li>类型<code>:wq</code></li>
+<li>按 <code>Enter</code></li>
+</ol>
+<p>另一个保存文件并退出 Vim 的命令是<code>:x</code>。</p>
+<p>这两个命令之间的区别是<code>:x</code> 仅在未保存更改时才将缓冲区写入文件，而<code>:wq</code> 总是将缓冲区写入文件并更新文件修改时间。</p>
+<h2 id="退出-vim-vi-而不保存文件" class="prose-h prose-h2"><a class="h-anchor" href="#退出-vim-vi-而不保存文件" aria-hidden="true" tabindex="-1">#</a>退出 Vim / Vi 而不保存文件</h2><p>要退出编辑器而不保存更改，请按 <code>Esc</code>，键入<code>:q!</code>，然后按 <code>Enter</code>，切换到普通模式。</p>
+<ol>
+<li>按 <code>Esc</code></li>
+<li>键入<code>:q!</code></li>
+<li>按 <code>Enter</code></li>
+</ol>
+<h2 id="结论" class="prose-h prose-h2"><a class="h-anchor" href="#结论" aria-hidden="true" tabindex="-1">#</a>结论</h2><p>在本篇笔记中，展示了如何在 Vim 中保存文件并退出编辑器。如果你不熟悉 Vim，可以访问<a href="https://www.openvim.com/" target="_blank" rel="noopener noreferrer" class="ext-link"> Open Vim </a>网站，你可以在此通过交互式教程练习 Vim。</p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#vim-模式">Vim 模式</a></li><li class="toc__item toc__item--h2"><a href="#在-vim-vi-中打开文件">在 Vim / Vi 中打开文件</a></li><li class="toc__item toc__item--h2"><a href="#在-vim-vi-中保存文件">在 Vim / Vi 中保存文件</a></li><li class="toc__item toc__item--h2"><a href="#保存文件并退出-vim-vi">保存文件并退出 Vim / Vi</a></li><li class="toc__item toc__item--h2"><a href="#退出-vim-vi-而不保存文件">退出 Vim / Vi 而不保存文件</a></li><li class="toc__item toc__item--h2"><a href="#结论">结论</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/macos/">macOS</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-21/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">React Native 报错 undefined is not an object (evaluating &#39;this.props.navigation.navigate&#39;)</span><span class="postnav__meta">2021.05.12 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-19/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">Xcode 11 遇见 React Native 启动报错问题 的 解决方案</span><span class="postnav__meta">2021.05.07 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-46/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">iOS 钥匙串 证书不受信任</span>
+            <span class="mini-card__meta">2021.11.24 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.05.10</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何在 Vim/Vi 中保存文件并退出编辑器","datePublished":"2021-05-10T01:24:39.000Z","dateModified":"2021-05-10T01:24:39.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-20/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

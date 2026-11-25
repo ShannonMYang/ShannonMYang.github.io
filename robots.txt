@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /content/
+Disallow: /site/
+Disallow: /studio/
+Disallow: /scripts/
+Disallow: /node_modules/
+Disallow: /.tmp/
+
+Sitemap: https://shannonmyang.github.io/sitemap.xml

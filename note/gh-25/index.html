@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>由 DES加密 衍生的 数据类型 转换问题 · 小记 · 木鱼小店</title>
+<meta name="description" content="OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-25/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="由 DES加密 衍生的 数据类型 转换问题 · 小记 · 木鱼小店">
+<meta property="og:description" content="OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-25/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="由 DES加密 衍生的 数据类型 转换问题 · 小记 · 木鱼小店">
+<meta name="twitter:description" content="OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-06-11T08:40:40.000Z">2021年6月11日</time><span class="article__kicker-dot">·</span><span>约 2 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.06.16</span></div>
+      <h1 class="article__title">由 DES加密 衍生的 数据类型 转换问题 · 小记</h1>
+      <p class="article__lead">OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-25.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#25</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/25" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #25</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#2B138E">iOS</span><span class="label-chip" style="--label-accent:#2B138E">Objective-C</span><span class="label-chip" style="--label-accent:#2B138E">基础知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/25" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h3 id="oc-nsstring-和-char-类型数组-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-nsstring-和-char-类型数组-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC NSString 和 char 类型数组 之间的转换</h3><blockquote>
+<p>NSString 转 char 类型数组</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">NSString</span> *aaa = <span class="hljs-string">@&quot;abcdefg&quot;</span>;
+<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> css[aaa.length];
+memcpy(css, [aaa cStringUsingEncoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>], aaa.length);
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">sizeof</span>(css); i++) {
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;%d======%c&quot;</span>,i,css[i]);
+}
+</code></pre></figure><blockquote>
+<p>char 数组转 NSString，这里就直接遍历拼接</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">NSMutableString</span> *mustr = [<span class="hljs-built_in">NSMutableString</span> string];
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">sizeof</span>(css); i++) {
+    [mustr appendFormat:<span class="hljs-string">@&quot;%c&quot;</span>,css[i] ];
+}
+<span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;%@&quot;</span>,mustr);
+</code></pre></figure><hr>
+<h3 id="oc-nsstring-和-nsdata-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-nsstring-和-nsdata-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC NSString 和 NSData 之间的转换</h3><blockquote>
+<p>NSString 转 NSData</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">NSString</span> *aString = <span class="hljs-string">@&quot;1234abcd&quot;</span>;
+<span class="hljs-built_in">NSData</span> *aData = [aString dataUsingEncoding: <span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</code></pre></figure><blockquote>
+<p>NSData 转 NSString</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">NSString</span> *aString = [[<span class="hljs-built_in">NSString</span> alloc] initWithData:adata encoding:<span class="hljs-built_in">NSUTF8StringEncoding</span>];
+</code></pre></figure><hr>
+<h3 id="oc-nsdata-和-byte-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-nsdata-和-byte-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC NSData 和 Byte 之间的转换</h3><blockquote>
+<p>NSData 转 Byte</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-built_in">NSString</span> *testString = <span class="hljs-string">@&quot;1234567890&quot;</span>;
+<span class="hljs-built_in">NSData</span> *testData = [testString dataUsingEncoding: <span class="hljs-built_in">NSUTF8StringEncoding</span>];
+Byte *testByte = (Byte *)[testData bytes];
+</code></pre></figure><blockquote>
+<p>Byte 转 NSData</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">Byte byte[] = {<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span>,<span class="hljs-number">21</span>,<span class="hljs-number">22</span>,<span class="hljs-number">23</span>};
+<span class="hljs-built_in">NSData</span> *adata = [[<span class="hljs-built_in">NSData</span> alloc] initWithBytes:byte length:<span class="hljs-keyword">sizeof</span>(byte)];
+</code></pre></figure><blockquote>
+<p>NSData 与 Byte 数组</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// [NSData bytes] 返回的是 Byte 类型的，Byte 是 unsigned char，Byte 可以是个数组，打印 Byte 需要遍历打印</span>
+Byte *byte = (Byte *)[cipher bytes];
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; [cipher length]; i ++) {
+    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;data转字节byte = %d&quot;</span>, byte[i]);
+}
+</code></pre></figure><figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-comment">// OC 创建字节数组的方式</span>
+<span class="hljs-comment">// 1. 只读</span>
+[data bytes];
+
+<span class="hljs-comment">// 2. 需要编辑，并且关于 data</span>
+<span class="hljs-built_in">NSUInteger</span> length = [data length]; 
+<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> *bytes = malloc( length * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>) ); <span class="hljs-comment">// 使用malloc创建字节数组</span>
+[data getBytes:bytes length:length]; <span class="hljs-comment">// 将data中数据copy到字节数组中</span>
+</code></pre></figure><hr>
+<h3 id="oc-nsstring-和-char-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-nsstring-和-char-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC NSString 和 char 之间的转换</h3><blockquote>
+<p>NSString 转 char</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">const</span> <span class="hljs-type">char</span> * filePathChar = [filePath UTF8String];
+</code></pre></figure><blockquote>
+<p>char 转 nsstring</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-type">char</span> myChar = <span class="hljs-string">&#x27;a&#x27;</span>;
+<span class="hljs-built_in">NSString</span> * string = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@&quot;%c&quot;</span>, myChar];
+</code></pre></figure><hr>
+<h3 id="oc-nsstring-和-short-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-nsstring-和-short-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC NSString 和 short 之间的转换</h3><blockquote>
+<p>NSString 转 unsigned short</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> * utfString = [nsString cStringUsingEncoding:<span class="hljs-built_in">NSUTF16StringEncoding</span>];  
+</code></pre></figure><hr>
+<h3 id="oc-16-进制字符串和-nsdata-之间的转换" class="prose-h prose-h3"><a class="h-anchor" href="#oc-16-进制字符串和-nsdata-之间的转换" aria-hidden="true" tabindex="-1">#</a>OC 16 进制字符串和 NSData 之间的转换</h3><blockquote>
+<p>将 16 进制的字符串转换成 NSData</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">+ (<span class="hljs-built_in">NSMutableData</span> *)convertHexStrToData:(<span class="hljs-built_in">NSString</span> *)str {
+    <span class="hljs-keyword">if</span> (!str || [str length] == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>;
+    }
+
+    <span class="hljs-built_in">NSMutableData</span> *hexData = [[<span class="hljs-built_in">NSMutableData</span> alloc] initWithCapacity:<span class="hljs-number">8</span>];
+    <span class="hljs-built_in">NSRange</span> range;
+    <span class="hljs-keyword">if</span> ([str length] %<span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+        range = <span class="hljs-built_in">NSMakeRange</span>(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);
+    } <span class="hljs-keyword">else</span> {
+        range = <span class="hljs-built_in">NSMakeRange</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> i = range.location; i &lt; [str length]; i += <span class="hljs-number">2</span>) {
+        <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> anInt;
+        <span class="hljs-built_in">NSString</span> *hexCharStr = [str substringWithRange:range];
+        <span class="hljs-built_in">NSScanner</span> *scanner = [[<span class="hljs-built_in">NSScanner</span> alloc] initWithString:hexCharStr];
+
+        [scanner scanHexInt:&amp;anInt];
+        <span class="hljs-built_in">NSData</span> *entity = [[<span class="hljs-built_in">NSData</span> alloc] initWithBytes:&amp;anInt length:<span class="hljs-number">1</span>];
+        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@&quot;转换数据--%ld：%@&quot;</span>, (<span class="hljs-type">long</span>)i,entity);
+        
+        [hexData appendData:entity];
+        
+        range.location += range.length;
+        range.length = <span class="hljs-number">2</span>;
+    }
+
+    <span class="hljs-keyword">return</span> hexData;
+}
+</code></pre></figure><blockquote>
+<p>将 NSData 转换成 16 进制的字符串</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">Objective-C</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">+ (<span class="hljs-built_in">NSString</span> *)convertDataToHexStr:(<span class="hljs-built_in">NSData</span> *)data {
+    <span class="hljs-keyword">if</span> (!data || [data length] == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">@&quot;&quot;</span>;
+    }
+    <span class="hljs-built_in">NSMutableString</span> *string = [[<span class="hljs-built_in">NSMutableString</span> alloc] initWithCapacity:[data length]];
+
+    [data enumerateByteRangesUsingBlock:^(<span class="hljs-keyword">const</span> <span class="hljs-type">void</span> *bytes, <span class="hljs-built_in">NSRange</span> byteRange,<span class="hljs-type">BOOL</span> *stop) {
+        <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> *dataBytes = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)bytes;
+        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSInteger</span> i =<span class="hljs-number">0</span>; i &lt; byteRange.length; i++) {
+            <span class="hljs-built_in">NSString</span> *hexStr = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@&quot;%x&quot;</span>, (dataBytes[i]) &amp;<span class="hljs-number">0xff</span>];
+            <span class="hljs-keyword">if</span> ([hexStr length] == <span class="hljs-number">2</span>) {
+                [string appendString:hexStr];
+            } <span class="hljs-keyword">else</span> {
+                [string appendFormat:<span class="hljs-string">@&quot;0%@&quot;</span>, hexStr];
+            }
+        }
+    }];
+
+    <span class="hljs-keyword">return</span> string;
+}
+</code></pre></figure><hr>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#oc-nsstring-和-char-类型数组-之间的转换">OC NSString 和 char 类型数组 之间的转换</a></li><li class="toc__item toc__item--h3"><a href="#oc-nsstring-和-nsdata-之间的转换">OC NSString 和 NSData 之间的转换</a></li><li class="toc__item toc__item--h3"><a href="#oc-nsdata-和-byte-之间的转换">OC NSData 和 Byte 之间的转换</a></li><li class="toc__item toc__item--h3"><a href="#oc-nsstring-和-char-之间的转换">OC NSString 和 char 之间的转换</a></li><li class="toc__item toc__item--h3"><a href="#oc-nsstring-和-short-之间的转换">OC NSString 和 short 之间的转换</a></li><li class="toc__item toc__item--h3"><a href="#oc-16-进制字符串和-nsdata-之间的转换">OC 16 进制字符串和 NSData 之间的转换</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/ios/">iOS</a><a class="tag-pill " href="/tag/objective-c/">Objective-C</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-26/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">iOS 打包类型和推送操作</span><span class="postnav__meta">2021.06.16 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-24/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 之原理浅析</span><span class="postnav__meta">2021.06.08 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-22/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 与 iOS OC 的混合开发</span>
+            <span class="mini-card__meta">2021.05.18 · 5 分钟</span>
+          </a><a class="mini-card" href="/note/gh-38/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">Objective-C 中 Byte 、 Byte *、 Byte [] 的区别及转换</span>
+            <span class="mini-card__meta">2021.09.01 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-27/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">由OC的DES加密衍生的NSData学习</span>
+            <span class="mini-card__meta">2021.06.16 · 5 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.06.16</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"由 DES加密 衍生的 数据类型 转换问题 · 小记","datePublished":"2021-06-11T08:40:40.000Z","dateModified":"2021-06-16T09:29:49.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"OC NSString 和 char 类型数组 之间的转换 NSString 转 char 类型数组 char 数组转 NSString，这里就直接遍历拼接 ------ OC NSString 和 NSData 之间的转换 NSString 转 NSData NSData 转 NSString ------ OC NSData 和 Byte 之间的转换 NSData 转 Byte Byte 转 …","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-25/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

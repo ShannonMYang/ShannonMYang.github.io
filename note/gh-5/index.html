@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>vue-cli3 创建项目的正确姿势 · 木鱼小店</title>
+<meta name="description" content="--- --- 前言少叙 在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-5/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli3 创建项目的正确姿势 · 木鱼小店">
+<meta property="og:description" content="--- --- 前言少叙 在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-5/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="vue-cli3 创建项目的正确姿势 · 木鱼小店">
+<meta name="twitter:description" content="--- --- 前言少叙 在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-04-12T13:03:23.000Z">2021年4月12日</time><span class="article__kicker-dot">·</span><span>约 5 分钟</span></div>
+      <h1 class="article__title">vue-cli3 创建项目的正确姿势</h1>
+      <p class="article__lead">--- --- 前言少叙 在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-5.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#5</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/5" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #5</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/5" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<hr>
+<hr>
+<h2 id="前言少叙" class="prose-h prose-h2"><a class="h-anchor" href="#前言少叙" aria-hidden="true" tabindex="-1">#</a>前言少叙</h2><p>在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3.X 版本去搭建自己的项目，通过这篇教程帮大家熟悉使用 vue cli3 去搭建 vue 项目。</p>
+<blockquote>
+<p>基于 vue cli3 开发的后台管理系统，项目地址 <a href="https://github.com/gcddblue/vue-admin-webapp" target="_blank" rel="noopener noreferrer" class="ext-link">vue-admin-webapp</a> 欢迎 star，fork</p>
+</blockquote>
+<hr>
+<h2 id="安装" class="prose-h prose-h2"><a class="h-anchor" href="#安装" aria-hidden="true" tabindex="-1">#</a>安装</h2><ul>
+<li>
+<h4 id="卸载旧版本" class="prose-h prose-h4"><a class="h-anchor" href="#卸载旧版本" aria-hidden="true" tabindex="-1">#</a>卸载旧版本：</h4></li>
+</ul>
+<p>如果你之前都是基于 vue-cli2.X, 你需要先卸载它：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">#卸载vue-cli
+npm uninstall -g vue-cli 
+</code></pre></figure><blockquote>
+<p>Vue CLI 需要 <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="ext-link">Node.js</a> 8.9 或更高版本 (推荐 8.11.0+)。你可以使用 <a href="https://github.com/creationix/nvm" target="_blank" rel="noopener noreferrer" class="ext-link">nvm</a> 或 <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener noreferrer" class="ext-link">nvm-windows</a> 在同一台电脑中管理多个 Node 版本。</p>
+</blockquote>
+<ul>
+<li>
+<h4 id="安装-vue-cli" class="prose-h prose-h4"><a class="h-anchor" href="#安装-vue-cli" aria-hidden="true" tabindex="-1">#</a>安装 vue-cli：</h4></li>
+</ul>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm install -g @vue/cli  // 安装cli3.x
+vue --version 或者 vue -V  //查看版本是否为3.x
+</code></pre></figure><p>Vue CLI &gt;= 3 和旧版使用了相同的 <code>vue</code> 命令，所以 Vue CLI 2 (<code>vue-cli</code>) 被覆盖了。如果你还是想继续使用 2.x 搭建项目，你可以全局安装一个桥接工具：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm install -g @vue/cli-init
+# 然后你就可以继续使用vue init了
+npm init webpack my-project
+</code></pre></figure><h2 id="快速原型开发" class="prose-h prose-h2"><a class="h-anchor" href="#快速原型开发" aria-hidden="true" tabindex="-1">#</a>快速原型开发</h2><p>你可以使用 <code>vue serve</code> 和 <code>vue build</code> 命令对单个 <code>*.vue</code> 文件进行快速原型开发，不过这需要先额外安装一个全局的扩展：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">npm install -g @vue/cli-service-global
+</code></pre></figure><p>安装完成之后，就新建一个文件夹，并创建一个.vue 文件，执行下面命令就跑起来了</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">vue serve app.vue  // 启动服务
+vue build app.vue  //打包出生产环境的包
+</code></pre></figure><p>如下图，只要创建一个 app.vue 文件并执行 <code>vue serve app.vue</code> 就启动服务了</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这是一个很棒的功能，用于<strong>开发一个库、组件，做一些小 demo 等都是非常适合的</strong>！</p>
+<hr>
+<h2 id="创建项目" class="prose-h prose-h2"><a class="h-anchor" href="#创建项目" aria-hidden="true" tabindex="-1">#</a>创建项目</h2><ul>
+<li>
+<h4 id="初始化" class="prose-h prose-h4"><a class="h-anchor" href="#初始化" aria-hidden="true" tabindex="-1">#</a>初始化：</h4></li>
+</ul>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CODE</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"># 创建项目
+vue create my-project // 其中my-project为项目目录名称
+</code></pre></figure><p>点击回车后，就不断有拦路记者访问你</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>此处有两个选择：</p>
+<ul>
+<li><code>default (babel, eslint)</code> 默认配置 提供 babel 和 eslint 支持</li>
+<li><code>Manually select features</code> 自己手动去选择需要的配置</li>
+</ul>
+<p>可以同过上下键，空格来选择，一般会选择手动的配置如下：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>对于每一项的功能，做一下简单阐述：</p>
+<ul>
+<li><code>Babel</code> 主要是对 es6 语法转换成兼容的 js （选上）</li>
+<li><code>TypeScript</code> 支持使用 TypeScript 语法来编写代码</li>
+<li><code>PWA</code> <a href="https://developers.google.com/web/progressive-web-apps/" target="_blank" rel="noopener noreferrer" class="ext-link">PWA</a> 支持</li>
+<li><code>Router</code> 支持 vue 路由配置插件（一般都会选择）</li>
+<li><code>Vuex</code> 支持 vue 程序状态管理模式 (一般都会选择)</li>
+<li><code>CSS Pre-processors</code> 支持 css 预处理器 （一般都会选择）</li>
+<li><code>Linter / Formatter</code> 支持代码风格检查和格式化 （选上）</li>
+<li><code>Unit Testing</code> 单元测试</li>
+<li><code>E2E Testing</code> E2E 测试</li>
+</ul>
+<p>那么基于开发常见的项目，一般选择如下：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>选择完成后回车：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-6.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这的意思是问你本次项目是否采用 history 模式，<strong>如果选择 Y, 需要后台配置具体看 <a href="https://router.vuejs.org/zh/guide/essentials/history-mode.html#%E5%90%8E%E7%AB%AF%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90" target="_blank" rel="noopener noreferrer" class="ext-link">vueRouter</a> 官网解释</strong>，这里我们选择 n</p>
+<p>选择完成后回车：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-7.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这里是问你选择一种 css 预处理，<strong>我项目一般使用 SCSS，所以这块我选择第一个</strong>，回车后：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-8.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这里是问你选择一种格式化代码方式，<strong>我用 VSCode，所以一般选择 <code>ESlint + Prettier</code></strong>, 选择回车：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-9.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这里问你什么时候进行代码规则检测，<strong>一般会选择保存就检测，也就是 <code>Lint on save</code></strong> 选择回车：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-10.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这问将 Babel,PostCSS,ESLint 这些配置文件放哪，<strong>通常我们会选择放到独立位置，让 package.json 文件干净点，所以选择第一个</strong> 点击回车：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-11.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>这里是问你是否记录这次配置选择，选择之后会让你为这次配置起一个名字，这样下次可以直接快速配置选择，最后回车后就会初始化项目了，完成后如下图：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-12.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>根据提示，我们执行指令 <code>cd my-project</code> 然后执行命令 <code>npm run serve</code> 这样就开始启动项目了</p>
+<p>这是打开 <code>http://localhost:8080</code> ：</p>
+<figure class="prose-figure"><img class="prose-img" src="/post-images/issues/gh-5-13.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer"></figure>
+<p>当我们需要自定义 webpack 相关配置的时候需要在项目根目录中创建 <code>vue.config.js</code> 文件，它会被 <code>@vue/cli-server</code> 自动加载，相关配置内容官网将的很详细，可以<a href="https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener noreferrer" class="ext-link">点击查看</a></p>
+<blockquote>
+<p>当我们需要调整 webpac k 配置的时候，可以通过 chainWebpack 属性进行链式操作，这里有个技巧就是通过 <code>vue inspect --mode production product.js</code> 或 <code>vue inspect &gt; development.js</code> 来导处生产和开发环境的配置文件，文件里面包含了链式访问的规则，这样我们就可以通过链式操作来修改添加 webpack 配置。</p>
+</blockquote>
+<p>好了整个初始化项目已经完成，接下来就是编写代码了，有关 vue cli3 还有个新功能就是使用图形化界面创建 / 管理 / 运行项目，这里我就不多做介绍了，大家感兴趣的可以去官网看看具体教程。</p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#前言少叙">前言少叙</a></li><li class="toc__item toc__item--h2"><a href="#安装">安装</a></li><li class="toc__item toc__item--h2"><a href="#快速原型开发">快速原型开发</a></li><li class="toc__item toc__item--h2"><a href="#创建项目">创建项目</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-6/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">npm run dev 和 npm run serve</span><span class="postnav__meta">2021.04.12 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-4/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">Vue.js项目npm install错误解析</span><span class="postnav__meta">2021.04.12 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.04.12</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"vue-cli3 创建项目的正确姿势","datePublished":"2021-04-12T13:03:23.000Z","dateModified":"2021-04-12T13:05:16.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"--- --- 前言少叙 在 19 年 8 月份的时候，vue-cli 更新到了 3.X，新版本的脚手架封装度更高，配置起来简单许多，旨在让用户把精力都放在编写业务代码中，本人从 vue-cli2.X 过渡到 3.X 挺适应的，毕竟 3.X 脚手架已经自动搭建在 webpack4 上，所以不用大家再去从 webpack3 升级到 webpack4, 当然性能也提高了很多，所以推荐大家使用 cli3…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-5/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

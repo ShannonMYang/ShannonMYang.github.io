@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>React Native 的 Flex 布局 · 木鱼小店</title>
+<meta name="description" content="一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。 React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。 首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。 --- - #### Flex 简介 Fl…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-9/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native 的 Flex 布局 · 木鱼小店">
+<meta property="og:description" content="一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。 React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。 首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。 --- - #### Flex 简介 Fl…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-9/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Native 的 Flex 布局 · 木鱼小店">
+<meta name="twitter:description" content="一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。 React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。 首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。 --- - #### Flex 简介 Fl…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-04-21T01:45:56.000Z">2021年4月21日</time><span class="article__kicker-dot">·</span><span>约 3 分钟</span><span class="article__kicker-dot">·</span><span>更新于 2021.04.25</span></div>
+      <h1 class="article__title">React Native 的 Flex 布局</h1>
+      <p class="article__lead">一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。 React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。 首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。 --- - #### Flex 简介 Fl…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/css/">CSS</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-9.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#9</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/9" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #9</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><span class="label-chip" style="--label-accent:#C6391F">React Native</span><span class="label-chip" style="--label-accent:#C6391F">CSS</span><span class="label-chip" style="--label-accent:#C6391F">基础知识</span><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/9" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><blockquote>
+<p>一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。</p>
+</blockquote>
+<blockquote>
+<p>React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。
+首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。</p>
+</blockquote>
+<hr>
+<ul>
+<li>
+<h3 id="flex-简介" class="prose-h prose-h3"><a class="h-anchor" href="#flex-简介" aria-hidden="true" tabindex="-1">#</a>Flex 简介</h3></li>
+</ul>
+<blockquote>
+<p>Flex 又叫弹性布局，会把当前组件看做一个容器，他的所有子组件都是他容器中的成员，通过 Flex，就能迅速的布局容器中的成员。</p>
+<p>使用场景：当想快速布局一个组件中所有子组件的时候，可以使用 Flex 布局</p>
+</blockquote>
+<ul>
+<li>
+<h3 id="flex-主轴和侧轴" class="prose-h prose-h3"><a class="h-anchor" href="#flex-主轴和侧轴" aria-hidden="true" tabindex="-1">#</a>Flex 主轴和侧轴</h3></li>
+</ul>
+<blockquote>
+<p>Flex 中有两个主要的概念：主轴和侧轴
+主轴与侧轴的关系：相互垂直的。
+主轴：决定容器中子组件默认的布局方向：水平，垂直</p>
+<p>侧轴：决定容器中子组件与主轴垂直的布局方向</p>
+<blockquote>
+<p>比如主轴水平，那么子组件默认就是水平布局排布，侧轴就是控制子组件在垂直方向的布局</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>
+<h3 id="flexdirection-属性" class="prose-h prose-h3"><a class="h-anchor" href="#flexdirection-属性" aria-hidden="true" tabindex="-1">#</a>flexDirection 属性</h3></li>
+</ul>
+<blockquote>
+<p>flexDirection: 决定主轴的方向，水平或者垂直，这样子组件就会水平排布或者垂直排布
+flexDirection 共有四个值，在 RN 中默认为 column。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CSS</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">row  <span class="hljs-comment">/* (默认值) 主轴为水平方向，从左向右。依次排列 */</span>
+row-reverse  <span class="hljs-comment">/* 主轴为水平方向，从右向左依次排列 */</span>
+column  <span class="hljs-comment">/* 主轴为垂直方向，默认的排列方式，从上向下排列 */</span>
+column-reverse  <span class="hljs-comment">/* 主轴为垂直方向，从下向上排列 */</span>
+</code></pre></figure><ul>
+<li>
+<h3 id="flexwrap-属性" class="prose-h prose-h3"><a class="h-anchor" href="#flexwrap-属性" aria-hidden="true" tabindex="-1">#</a>flexWrap 属性</h3></li>
+</ul>
+<blockquote>
+<p>flexWrap: 决定子控件在父视图内是否允许多行排列。
+flexWrap 共有两个值，默认为 nowrap。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CSS</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">nowrap  <span class="hljs-comment">/* 组件只排列在一行上，可能导致溢出 */</span>
+wrap   <span class="hljs-comment">/* 组件在一行排列不下时，就进行多行排列 */</span>
+</code></pre></figure><ul>
+<li>
+<h3 id="justifycontent" class="prose-h prose-h3"><a class="h-anchor" href="#justifycontent" aria-hidden="true" tabindex="-1">#</a>justifyContent</h3></li>
+</ul>
+<blockquote>
+<p>justifyContent: 决定子组件在主轴中具体布局，是靠左，还是居中等
+justifyContent 共有五个值，默认为 flex-start</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CSS</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-attribute">flex</span>-start  <span class="hljs-comment">/* 子组件向主轴起点对齐，如果主轴水平，从左开始，主轴垂直，从上开始 */</span>
+<span class="hljs-attribute">flex</span>-end  <span class="hljs-comment">/* 子组件向主轴终点对齐，如果主轴水平，从右开始，主轴垂直，从下开始 */</span>
+center  <span class="hljs-comment">/* 居中显示，注意：并不是让某一个子组件居中，而是整体有居中效果 */</span>
+space-between  <span class="hljs-comment">/* 均匀分配,相邻元素间距离相同。每行第一个组件与行首对齐，每行最后一个组件与行尾对齐 */</span>
+space-around  <span class="hljs-comment">/* 均匀分配,相邻元素间距离相同。每行第一个组件到行首的距离和每行最后一个组件到行尾的距离将会是相邻元素之间距离的一半 */</span>
+</code></pre></figure><ul>
+<li>
+<h3 id="alignitems" class="prose-h prose-h3"><a class="h-anchor" href="#alignitems" aria-hidden="true" tabindex="-1">#</a>alignItems</h3></li>
+</ul>
+<blockquote>
+<p>alignItems: 决定子组件在测轴中具体布局</p>
+<blockquote>
+<p>一直都没有管过侧轴，如果侧轴垂直，决定子组件在上，还是下，或者居中</p>
+</blockquote>
+<p>alignItems 共有四个值，默认为 stretch。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CSS</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-attribute">flex</span>-start  <span class="hljs-comment">/* 子组件向侧轴起点对齐 */</span>
+<span class="hljs-attribute">flex</span>-end  <span class="hljs-comment">/* 子组件向侧轴终点对齐 */</span>
+center  <span class="hljs-comment">/* 子组件在侧轴居中 */</span>
+stretch  <span class="hljs-comment">/* 子组件在侧轴方向被拉伸到与容器相同的高度或宽度 */</span>
+</code></pre></figure><ul>
+<li>
+<h3 id="alignself" class="prose-h prose-h3"><a class="h-anchor" href="#alignself" aria-hidden="true" tabindex="-1">#</a>alignSelf</h3></li>
+</ul>
+<blockquote>
+<p>alignSelf: 自定义自己的侧轴布局，用于一个子组件设置。</p>
+<blockquote>
+<p>注意：当某个子组件不想参照默认的 alignItems 时，可以设置 alignSelf，自定义自己的侧轴布局。</p>
+</blockquote>
+<p>alignSelf 共有五个值，默认为 auto。</p>
+</blockquote>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">CSS</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">auto  <span class="hljs-comment">/* 继承它的父容器的alignItems属性。如果没有父容器则为 &quot;stretch&quot; */</span>
+<span class="hljs-attribute">flex</span>-start  <span class="hljs-comment">/* 子组件向侧轴起点对齐 */</span>
+<span class="hljs-attribute">flex</span>-end  <span class="hljs-comment">/* 子组件向侧轴终点对齐 */</span>
+center  <span class="hljs-comment">/* 子组件在侧轴居中 */</span>
+stretch  <span class="hljs-comment">/* 子组件在侧轴方向被拉伸到与容器相同的高度或宽度 */</span>
+</code></pre></figure><ul>
+<li>
+<h3 id="flex" class="prose-h prose-h3"><a class="h-anchor" href="#flex" aria-hidden="true" tabindex="-1">#</a>flex</h3></li>
+</ul>
+<blockquote>
+<p>flex: 决定子控件在主轴中占据几等分。
+flex: 任意数字，所有子控件 flex 相加，自己 flex 占总共多少，就有多少宽度.</p>
+</blockquote>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h3"><a href="#flex-简介">Flex 简介</a></li><li class="toc__item toc__item--h3"><a href="#flex-主轴和侧轴">Flex 主轴和侧轴</a></li><li class="toc__item toc__item--h3"><a href="#flexdirection-属性">flexDirection 属性</a></li><li class="toc__item toc__item--h3"><a href="#flexwrap-属性">flexWrap 属性</a></li><li class="toc__item toc__item--h3"><a href="#justifycontent">justifyContent</a></li><li class="toc__item toc__item--h3"><a href="#alignitems">alignItems</a></li><li class="toc__item toc__item--h3"><a href="#alignself">alignSelf</a></li><li class="toc__item toc__item--h3"><a href="#flex">flex</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span><a class="tag-pill " href="/tag/react-native/">React Native</a><a class="tag-pill " href="/tag/css/">CSS</a><a class="tag-pill " href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-10/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">ReactNative 的属性 Props、State及父子组件传值</span><span class="postnav__meta">2021.04.21 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-8/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">React Native 的 CSS 布局</span><span class="postnav__meta">2021.04.21 · 笔记</span></a></div>
+      <section class="related" aria-labelledby="related-title">
+      <div class="related__head"><h2 id="related-title">继续阅读</h2><a href="/archives/">全部归档 →</a></div>
+      <div class="related__grid"><a class="mini-card" href="/note/gh-8/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native 的 CSS 布局</span>
+            <span class="mini-card__meta">2021.04.21 · 2 分钟</span>
+          </a><a class="mini-card" href="/note/gh-11/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Naive 的 组件生命周期</span>
+            <span class="mini-card__meta">2021.04.22 · 1 分钟</span>
+          </a><a class="mini-card" href="/note/gh-12/">
+            <span class="mini-card__kind">笔记</span>
+            <span class="mini-card__title">React Native创建初始化项目所遇问题·小记</span>
+            <span class="mini-card__meta">2021.04.25 · 1 分钟</span>
+          </a></div>
+    </section>
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.04.25</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React Native 的 Flex 布局","datePublished":"2021-04-21T01:45:56.000Z","dateModified":"2021-04-25T05:45:09.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"一般使用 ReactNative 开发 App, 一般都采用 Flex 布局，使用这套布局方式可以非常快速的布局。 React Native 中的 Flexbox 的工作原理和 web 上的 CSS 基本一致，当然也存在少许差异。 首先是默认值不同：flexDirection 的默认值是 column 而不是 row，而 flex 也只能指定一个数字值。 --- - #### Flex 简介 Fl…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-9/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>

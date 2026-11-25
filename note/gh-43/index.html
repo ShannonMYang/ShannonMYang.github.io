@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');try{const t=localStorage.getItem('theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<title>Chrome 通过设置解决跨域问题 · 木鱼小店</title>
+<meta name="description" content="前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法 前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示： 本篇博文就来分享一下上述情况的操…">
+<meta name="author" content="ShannonMYang">
+<link rel="canonical" href="https://shannonmyang.github.io/note/gh-43/">
+<meta name="theme-color" content="#f4efe6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="木鱼小店">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome 通过设置解决跨域问题 · 木鱼小店">
+<meta property="og:description" content="前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法 前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示： 本篇博文就来分享一下上述情况的操…">
+<meta property="og:url" content="https://shannonmyang.github.io/note/gh-43/">
+<meta property="og:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chrome 通过设置解决跨域问题 · 木鱼小店">
+<meta name="twitter:description" content="前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法 前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示： 本篇博文就来分享一下上述情况的操…">
+<meta name="twitter:image" content="https://shannonmyang.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="alternate" type="application/atom+xml" title="木鱼小店" href="/atom.xml">
+<link rel="stylesheet" href="/assets/site.css?v=773aa01b">
+
+</head>
+<body class="page-article page-kind-note">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="site-shell">
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/">
+    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__text"><strong>木鱼小店</strong><small>MUYU SHOP</small></span>
+  </a>
+    <nav class="nav" id="site-nav" aria-label="主导航"><a class="nav__link" href="/">首页</a><a class="nav__link" href="/notes/">笔记库</a><a class="nav__link" href="/archives/">归档</a><a class="nav__link" href="/tags/">标签</a><a class="nav__link" href="/about/">关于</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-open-search aria-label="搜索 ⌘K"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg><span class="icon-btn__text">搜索</span><kbd aria-hidden="true">⌘K</kbd></button>
+      <button class="icon-btn icon-btn--theme" type="button" data-toggle-theme aria-label="切换深浅色">
+        <span class="theme-icon theme-icon--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg></span><span class="theme-icon theme-icon--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"></path></svg></span>
+      </button>
+      <a class="icon-btn icon-btn--github" href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.6 22c.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.5 10.5 0 0 1 5.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.3.8 1 .8 2.1v3.1c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"></path></svg></a>
+      <button class="icon-btn icon-btn--menu" type="button" data-toggle-menu aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+</header>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+<span id="top" aria-hidden="true"></span>
+<main id="main" class="article-main">
+  <article class="article">
+    <header class="article__head">
+      <nav class="article__crumbs" aria-label="面包屑"><a href="/">首页</a><span>/</span><a href="/notes/">笔记库</a><span>/</span><span aria-current="page">笔记</span></nav>
+      <div class="article__kicker"><span class="kind-tag kind-tag--note">笔记</span><time datetime="2021-10-20T07:31:10.000Z">2021年10月20日</time><span class="article__kicker-dot">·</span><span>约 3 分钟</span></div>
+      <h1 class="article__title">Chrome 通过设置解决跨域问题</h1>
+      <p class="article__lead">前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法 前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示： 本篇博文就来分享一下上述情况的操…</p>
+      <div class="article__meta">
+        <span class="article__author"><img class="avatar" src="/images/avatar.png" alt="" loading="lazy">ShannonMYang</span>
+        <span class="article__meta-sep">/</span>
+        <div class="article__tags"></div>
+        <a class="article__edit" href="https://github.com/ShannonMYang/ShannonMYang.github.io/edit/master/content/notes/gh-43.md" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-.8.8"></path><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l.8-.8"></path></svg> 编辑此页</a>
+      </div>
+    </header>
+    
+    <aside class="note-source">
+    <div class="note-source__main">
+      <span class="note-source__mark">#43</span>
+      <div><p class="note-source__title">这是一篇来自 GitHub Issues 的笔记</p><p class="note-source__text">原文、修订与讨论都在 <a href="https://github.com/ShannonMYang/MyPersonalBlog/issues/43" target="_blank" rel="noopener noreferrer">ShannonMYang/MyPersonalBlog #43</a>，这里只做归档与阅读优化。</p></div>
+    </div>
+    <div class="note-source__meta"><a class="note-source__link" href="https://github.com/ShannonMYang/MyPersonalBlog/issues/43" target="_blank" rel="noopener noreferrer">在 GitHub 查看讨论 →</a></div>
+  </aside>
+    <div class="article__layout">
+      <div class="prose" id="article-content"><h2 id="前端开发mac-环境的-chrome-浏览器设置跨域请求的-samesite-解决方法" class="prose-h prose-h2"><a class="h-anchor" href="#前端开发mac-环境的-chrome-浏览器设置跨域请求的-samesite-解决方法" aria-hidden="true" tabindex="-1">#</a><a href="https://segmentfault.com/a/1190000039282936" target="_blank" rel="noopener noreferrer" class="ext-link">前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法</a></h2><p>前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">pgsql</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">Access</span> <span class="hljs-keyword">to</span> XMLHttpRequest at <span class="hljs-string">&#x27;https://weixin.xxx.com/ems/login&#x27;</span> (redirected <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;http://localhost:8081/xxx/queryBalance&#x27;</span>) <span class="hljs-keyword">from</span> origin <span class="hljs-string">&#x27;http://localhost:8081&#x27;</span> has been blocked <span class="hljs-keyword">by</span> CORS <span class="hljs-keyword">policy</span>: Response <span class="hljs-keyword">to</span> preflight request doesn<span class="hljs-string">&#x27;t pass access control check: No &#x27;</span><span class="hljs-keyword">Access</span>-Control-Allow-Origin<span class="hljs-string">&#x27; header is present on the requested resource.
+</span></code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-43-1.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+本篇博文就来分享一下上述情况的操作步骤，这里是基于 Mac 环境下来讲解的，其他电脑操作系统（如 Windows 操作系统）的设置方法这里不再过多介绍，如有其他电脑操作系统的设置方法请找度娘。</p>
+<p>在通过 Chrome 浏览器设置跨域配置之前，首先要在 Mac 电脑的终端里面输入以下命令行。
+1、打开 Mac 电脑终端，输入以下命令行：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">awk</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">open -n <span class="hljs-regexp">/Applications/</span>Google\ Chrome.app<span class="hljs-regexp">/ --args --disable-web-security  --user-data-dir=/</span>Users<span class="hljs-regexp">/你的Mac用户名/</span>MyChromeDevUserData/    回车，即可。
+</code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-43-2.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<img class="prose-img" src="/post-images/issues/gh-43-3.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<img class="prose-img" src="/post-images/issues/gh-43-4.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+首次打开 Chrome 浏览器会有黄色背景色的 “您使用的是不受支持的命令行标记：--disable-web-security。稳定性和安全性会有所下降。” 的提示，那就说明浏览器设置跨域成功，若再次重复执行上述命令行时，不会再有相关提示了，但是还是可以跨域。通过命令行设置完 Chrome 之后，需要进行其他选项设置，直接打开 Mac 电脑的谷歌浏览器进行操作即可，具体操作步骤如下所示：
+2、打开 Chrome 浏览器之后，在浏览器地址栏里面输入 chrome://flags 然后回车键，打开；
+<img class="prose-img" src="/post-images/issues/gh-43-5.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+3、直接在浏览器搜索栏里面输入以下内容：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">axapta</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs">SameSite <span class="hljs-keyword">by</span> <span class="hljs-literal">default</span> cookies   然后回车，搜索结果显示以下两项选项，然后直接禁用两项设置，即把状态改为Disabled，然后点击右下角的relaunch重启浏览器即可，如下图所示：
+</code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-43-6.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<img class="prose-img" src="/post-images/issues/gh-43-7.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+4、一般情况下上述操作即可通过浏览器解决跨域问题，但是特殊情况上述步骤依然不能设置跨域问题，那就继续在浏览器搜索框输入以下内容：</p>
+<figure class="code-block"><figcaption class="code-block__bar"><span class="code-block__lang">mipsasm</span><button class="code-block__copy" type="button" data-copy-code>复制</button></figcaption><pre class="code-block__pre" tabindex="0"><code class="hljs"><span class="hljs-keyword">Schemeful </span>Same-Site  回车，同理把该选项禁用，状态设置为<span class="hljs-keyword">Disabled，然后重启浏览器，即可。
+</span></code></pre></figure><p><img class="prose-img" src="/post-images/issues/gh-43-8.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<img class="prose-img" src="/post-images/issues/gh-43-9.png" alt="image" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+经过上述步骤，就完美实现通过 Chrome 浏览器设置解决跨域问题，这种方法也为前端开发过程中遇到的跨域问题提供一种非常有效的解决方式，方便又好用。</p>
+</div>
+      <aside class="toc" aria-label="本文目录">
+      <div class="toc__inner">
+        <p class="toc__title">本文目录</p>
+        <ol class="toc__list"><li class="toc__item toc__item--h2"><a href="#前端开发mac-环境的-chrome-浏览器设置跨域请求的-samesite-解决方法">前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法</a></li></ol>
+        <a class="toc__top" href="#top">回到顶部 ↑</a>
+      </div>
+    </aside>
+    </div>
+    <footer class="article__foot">
+      <div class="article__foot-tags"><span>标签</span></div>
+      <div class="postnav"><a class="postnav__item postnav__item--prev" href="/note/gh-44/"><span class="postnav__label">← 上一篇</span><span class="postnav__title">中文字符 ASCII 码和 NSString 相互转换</span><span class="postnav__meta">2021.10.21 · 笔记</span></a><a class="postnav__item postnav__item--next" href="/note/gh-42/"><span class="postnav__label">下一篇 →</span><span class="postnav__title">由POST 400引出的错误</span><span class="postnav__meta">2021.10.20 · 笔记</span></a></div>
+      
+      <p class="article__license">本文作者 <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">ShannonMYang</a>，转载请注明出处。最后更新：2021.10.20</p>
+    </footer>
+  </article>
+</main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Chrome 通过设置解决跨域问题","datePublished":"2021-10-20T07:31:10.000Z","dateModified":"2021-10-20T07:31:10.000Z","author":{"@type":"Person","name":"ShannonMYang"},"description":"前端开发：Mac 环境的 Chrome 浏览器设置跨域请求的 SameSite 解决方法 前段时间在开发项目的时候，遇到一个比较稀奇古怪的跨域问题，不管怎么写就是解决不了，后来通过 Chrome 浏览器的设置，解决了跨域问题，这样就不需要在项目里通过设置代理来解决跨域问题，直接通过设置修改 Chrome 浏览器的设置就可以解决项目跨域问题。具体的跨域问题如下所示： 本篇博文就来分享一下上述情况的操…","mainEntityOfPage":"https://shannonmyang.github.io/note/gh-43/"}</script></div>
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <div><strong>木鱼小店</strong><p>温故而知新</p></div>
+    </div>
+    <p class="site-footer__line"><br>© 2018–2026 ShannonMYang</p>
+    <nav class="site-footer__links" aria-label="页脚导航">
+      <a href="/archives/">归档</a><a href="/tags/">标签</a><a href="/atom.xml">RSS</a>
+      <a href="https://github.com/ShannonMYang" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/ShannonMYang/ShannonMYang.github.io" target="_blank" rel="noopener noreferrer">源仓库</a>
+    </nav>
+  </div>
+  <p class="site-footer__colophon">用 Markdown 写作，用 Node.js 生成，托管在 GitHub Pages。</p>
+</footer>
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal__backdrop" data-close-search></div>
+  <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <h2 class="sr-only" id="search-title">搜索站内内容</h2>
+    <div class="search-modal__head">
+      <span class="search-modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg></span>
+      <input id="search-input" class="search-modal__input" type="search" placeholder="搜索文章、笔记、标签…" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn icon-btn--sm" type="button" data-close-search aria-label="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+    </div>
+    <div class="search-modal__body" id="search-results" aria-live="polite"></div>
+    <div class="search-modal__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+  </div>
+</div>
+<button class="to-top" type="button" data-to-top aria-label="回到顶部">↑</button>
+<script src="/assets/site.js?v=773aa01b" defer></script>
+</body>
+</html>
