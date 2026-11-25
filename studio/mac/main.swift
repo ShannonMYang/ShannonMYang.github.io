@@ -202,7 +202,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate {
         let process = Process()
         let pipe = Pipe()
         process.executableURL = URL(fileURLWithPath: node)
-        process.arguments = ["studio/server.mjs", "--no-open"]
+        process.arguments = ["studio/server.mjs", "--no-open", "--parent-pid", "\(ProcessInfo.processInfo.processIdentifier)"]
         process.currentDirectoryURL = repoRoot
         process.standardOutput = pipe
         process.standardError = pipe

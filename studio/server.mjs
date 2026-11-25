@@ -28,6 +28,8 @@ const OPEN_BROWSER = !process.argv.includes('--no-open');
 const LOG_REQUESTS = process.env.STUDIO_LOG === '1';
 const portArgIndex = process.argv.indexOf('--port');
 const PREFERRED_PORT = Number(process.env.STUDIO_PORT || (portArgIndex > -1 ? process.argv[portArgIndex + 1] : 0)) || 4400;
+const parentPidIndex = process.argv.indexOf('--parent-pid');
+const parentPid = parentPidIndex > -1 ? Number(process.argv[parentPidIndex + 1]) : 0;
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -534,6 +536,17 @@ async function main() {
   };
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
+
+  // App 被强制退出时，避免留下孤儿 node 进程
+  if (parentPid) {
+    setInterval(() => {
+      try {
+        process.kill(parentPid, 0);
+      } catch {
+        shutdown();
+      }
+    }, 5000).unref();
+  }
 }
 
 main().catch((err) => {
