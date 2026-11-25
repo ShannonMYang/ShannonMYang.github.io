@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 木禾书店 · 写作台（本地服务）
+ * 土禾灶台 · 写作台（本地服务）
  *
  *   npm run studio        → http://127.0.0.1:4400
  *
@@ -516,7 +516,7 @@ async function main() {
   await fsp.writeFile(path.join(ROOT, '.tmp/preview-port'), String(previewPort), 'utf8');
 
   const url = `http://127.0.0.1:${port}/`;
-  console.log(`\n  木禾书店 · 写作台`);
+  console.log(`\n  土禾灶台 · 写作台`);
   console.log(`  ${url}`);
   console.log(`  站点预览  http://127.0.0.1:${previewPort}/`);
   console.log(`  仓库目录  ${ROOT}\n`);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 木禾小店静态站点生成器。
+ * 土禾小店静态站点生成器。
  *
  * 输入：content/（Markdown）、theme/assets/（CSS/JS）、post-images/（图片）
  * 输出：仓库根目录（GitHub Pages 的 master 分支根目录），因此无需修改 Pages 设置。

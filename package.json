@@ -1,9 +1,9 @@
 {
-  "name": "muhe-shop-blog",
+  "name": "tuhe-shop-blog",
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "木禾小店 — 静态博客站点、内容仓库与本地写作工作室",
+  "description": "土禾小店 — 静态博客站点、内容仓库与本地写作工作室",
   "scripts": {
     "build": "node site/build.mjs",
     "dev": "node scripts/dev.mjs",

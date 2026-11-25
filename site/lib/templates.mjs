@@ -41,7 +41,7 @@ export function tagPill(tag, extraClass = '') {
 
 function brand(site) {
   return `<a class="brand" href="/">
-    <span class="brand__seal" aria-hidden="true">木</span>
+    <span class="brand__seal" aria-hidden="true">土</span>
     <span class="brand__text"><strong>${escapeHtml(site.wordmark || site.title)}</strong><small>${escapeHtml(site.latin || '')}</small></span>
   </a>`;
 }
@@ -106,7 +106,7 @@ function footer(site, stats) {
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <span class="brand__seal brand__seal--small" aria-hidden="true">木</span>
+      <span class="brand__seal brand__seal--small" aria-hidden="true">土</span>
       <div><strong>${escapeHtml(site.wordmark || site.title)}</strong><p>${escapeHtml(site.tagline)}</p></div>
     </div>
     <p class="site-footer__line">${stats ? `${stats.posts} 篇文章 · ${stats.notes} 篇笔记 · ${stats.tags} 个标签` : ''}<br>© ${site.since || 2018}–${year} ${escapeHtml(site.author?.name || site.title)}</p>
@@ -157,7 +157,7 @@ function hero(site, stats) {
     <div class="hero__art">
       <div class="hero__book">
         <span class="hero__book-line">${escapeHtml(site.hero?.vertical || '')}</span>
-        <span class="hero__book-mark">木禾</span>
+        <span class="hero__book-mark">土禾</span>
         <span class="hero__book-caption">${escapeHtml(site.hero?.motto || '')}</span>
       </div>
       <span class="hero__stamp">${ICONS.link}</span>

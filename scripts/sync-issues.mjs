@@ -64,7 +64,7 @@ async function github(pathname, token, attempt = 1) {
   const url = pathname.startsWith('http') ? pathname : `https://api.github.com${pathname}`;
   const headers = {
     Accept: 'application/vnd.github+json',
-    'User-Agent': 'muhe-shop-sync',
+    'User-Agent': 'tuhe-shop-sync',
     'X-GitHub-Api-Version': '2022-11-28',
   };
   if (token) headers.Authorization = `Bearer ${token}`;
@@ -114,7 +114,7 @@ async function downloadImage(url, baseName, token, seen) {
   if (url.startsWith('/')) return url;
 
   // GitHub 附件在私有/限流时需要 token
-  const headers = { 'User-Agent': 'muhe-shop-sync' };
+  const headers = { 'User-Agent': 'tuhe-shop-sync' };
   if (token && url.includes('github')) headers.Authorization = `Bearer ${token}`;
   let res;
   try {

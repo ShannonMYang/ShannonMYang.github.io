@@ -1,7 +1,7 @@
 # 站点配置 —— 改这里就能改首页文案、作者信息与导航
-title: 木禾小店
-wordmark: 木禾小店
-latin: MUHE SHOP
+title: 土禾小店
+wordmark: 土禾小店
+latin: SHANNON SHOP
 tagline: 温故而知新
 description: 一个存放开发笔记、菜谱与杂谈的角落。慢慢写，常常看，温故而知新。
 url: https://shannonmyang.github.io
@@ -35,7 +35,7 @@ navigation:
 
 hero:
   eyebrow: SINCE 2018 · 记录与思考
-  vertical: 木禾小院听春雨
+  vertical: 会当水击三千里
   motto: 温故而知新，可以为师矣
   description: 这里存放开发路上踩过的坑、读过的书、做过的菜，以及一些没有结论的念头。慢慢写，常常看。
 
