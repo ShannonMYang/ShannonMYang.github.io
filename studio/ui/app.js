@@ -112,7 +112,14 @@
     } catch (_) {
       /* ignore */
     }
-    const popup = window.open(url, '_blank', 'noopener');
+    const popup = window.open(url, '_blank');
+    if (popup) {
+      try {
+        popup.opener = null;
+      } catch (_) {
+        /* ignore */
+      }
+    }
     return Boolean(popup);
   };
 
