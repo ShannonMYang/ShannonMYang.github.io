@@ -200,3 +200,12 @@ draft: false                  # true 时不会出现在站点上
 ## 技术栈
 
 Node.js 18+（ESM）、markdown-it、highlight.js、KaTeX、gray-matter、turndown（仅迁移用）、Playwright（仅检查用）、Swift + WebKit（macOS 外壳）。没有前端框架，没有数据库，没有第三方博客平台。
+
+---
+
+## 预览
+
+![首页](docs/screenshots/home.jpg)
+![瀑布流](docs/screenshots/home-grid.jpg)
+![文章页](docs/screenshots/article.jpg)
+![写作台](docs/screenshots/studio.jpg)
