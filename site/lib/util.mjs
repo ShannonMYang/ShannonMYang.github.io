@@ -89,6 +89,12 @@ function dateParts(date) {
   }, {});
 }
 
+/** 按 Asia/Shanghai 返回四位年份（避免 zh-CN 输出「2026年」） */
+export function yearInShanghai(date) {
+  const p = dateParts(date);
+  return p ? p.year : '';
+}
+
 export function formatDate(date) {
   const p = dateParts(date);
   return p ? `${p.year}.${p.month}.${p.day}` : '';

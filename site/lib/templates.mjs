@@ -147,7 +147,7 @@ function hero(site, stats) {
       <div class="hero__stats" aria-label="站点统计">
         <span class="hero__stat"><strong>${stats.posts + stats.notes}</strong><em>篇内容</em></span>
         <span class="hero__stat"><strong>${stats.tags}</strong><em>个标签</em></span>
-        <span class="hero__stat"><strong>${stats.firstYear}–${stats.lastYear}</strong><em>持续记录</em></span>
+        <span class="hero__stat"><strong>${stats.firstYear} 至今</strong><em>持续记录</em></span>
       </div>
       <div class="hero__actions">
         <a class="btn btn--primary" href="#all">开始阅读 ${ICONS.arrow}</a>

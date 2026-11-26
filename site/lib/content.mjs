@@ -9,6 +9,7 @@ import {
   readingMinutes,
   stripMarkdown,
   tagSlug,
+  yearInShanghai,
   uniq,
 } from './util.mjs';
 
@@ -64,7 +65,7 @@ async function readDir(dir, kind) {
       legacy: Boolean(data.legacy),
       tone: hashString(`${slug}${title}`) % 6,
       glyph: firstGlyph(title),
-      year: new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric' }).format(date),
+      year: Number(yearInShanghai(date)) || new Date().getFullYear(),
     };
     if (!item.accent) {
       const palette = ['#8a5a3b', '#426b5e', '#7a5a86', '#a8763e', '#3e5c7a', '#7d4b46'];
@@ -204,8 +205,8 @@ export async function loadContent() {
       tags: tags.length,
       words: all.reduce((sum, item) => sum + item.plain.length, 0),
       latest: all[0] || null,
-      firstYear: all.length ? Math.min(...all.map((item) => Number(item.year) || 9999)) : new Date().getFullYear(),
-      lastYear: all.length ? Math.max(...all.map((item) => Number(item.year) || 0)) : new Date().getFullYear(),
+      firstYear: all.length ? Math.min(...all.map((item) => item.year)) : new Date().getFullYear(),
+      lastYear: all.length ? Math.max(...all.map((item) => item.year)) : new Date().getFullYear(),
     },
   };
 }
