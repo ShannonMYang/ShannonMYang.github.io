@@ -597,14 +597,20 @@ body{margin:0;padding:30px 34px 70px;}
       toast('GitHub 笔记是只读的，请到原 Issue 编辑', 'error');
       return;
     }
+    const isDraft = Boolean(state.current.fields.draft);
+    const draftRow = $('#draft-publish-row');
+    if (draftRow) draftRow.hidden = !isDraft;
+    const draftToggle = $('#draft-publish-toggle');
+    if (draftToggle) draftToggle.checked = true;
     const summary = state.git
       ? `分支：${state.git.branch}\n待提交改动：${state.git.changes} 处\n未推送提交：${state.git.ahead || 0} 个\n最近提交：${state.git.lastCommit || '—'}`
       : '读取中…';
+    const draftNote = isDraft ? '当前文章是草稿，默认会随本次发布取消草稿状态。\n\n' : '';
     const prefix = state.dirty ? '当前文章有未保存修改，发布前会先保存。\n\n' : '';
     const nothingToDo = state.git && state.git.changes === 0 && !(state.git.ahead > 0);
     $('#publish-summary').textContent = nothingToDo
-      ? `${prefix}没有未提交的改动，也没有待推送的提交，站点已是最新。`
-      : prefix + summary;
+      ? `${draftNote}${prefix}没有未提交的改动，也没有待推送的提交，站点已是最新。`
+      : draftNote + prefix + summary;
     const now = new Date();
     const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     $('#commit-message').value = state.current ? `发布：${state.current.fields.title}` : `发布：${stamp}`;
@@ -615,6 +621,11 @@ body{margin:0;padding:30px 34px 70px;}
   async function confirmPublish() {
     const message = $('#commit-message').value.trim();
     const push = $('#push-toggle').checked;
+    const unpublishDraft = state.current && state.current.fields.draft && $('#draft-publish-toggle').checked;
+    if (unpublishDraft) {
+      els.draft.checked = false;
+      setDirty(true);
+    }
     if (state.dirty) {
       const saved = await save({ silent: true });
       if (!saved) return;
@@ -625,6 +636,10 @@ body{margin:0;padding:30px 34px 70px;}
       const result = await api('/api/publish', { method: 'POST', body: JSON.stringify({ message, push }) });
       setProgressLog(result.log || '完成。');
       finishProgress(true, result.pushed ? '已发布到 GitHub，约 1 分钟后线上生效' : '构建完成（未推送）');
+      if (state.current && unpublishDraft) {
+        state.current.fields.draft = false;
+        els.draftBadge.hidden = true;
+      }
       await refreshItems();
     } catch (err) {
       setProgressLog(err.message);

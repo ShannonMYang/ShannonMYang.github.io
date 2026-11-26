@@ -177,6 +177,11 @@
     </header>
     <p class="dialog__desc">构建静态站点 → 提交 Git → 推送 GitHub。推送成功后约 1 分钟线上生效。</p>
     <div class="publish-summary" id="publish-summary">读取改动…</div>
+    <label class="switch" id="draft-publish-row" hidden>
+      <input id="draft-publish-toggle" type="checkbox" checked>
+      <span class="switch__track"></span>
+      <span>当前文章仍是草稿，发布时一并取消草稿状态</span>
+    </label>
     <label class="field field--dialog"><span>提交信息</span><input id="commit-message" autocomplete="off"></label>
     <label class="switch"><input id="push-toggle" type="checkbox" checked><span class="switch__track"></span><span>推送到 GitHub（线上生效）</span></label>
     <footer class="dialog__foot">

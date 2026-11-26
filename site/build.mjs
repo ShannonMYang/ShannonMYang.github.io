@@ -114,7 +114,11 @@ function redirectPage(target) {
 async function main() {
   const site = await loadSite();
   const content = await loadContent();
+  const drafts = content.posts.filter((post) => post.draft);
   console.log(`读取内容：${content.posts.length} 篇文章，${content.notes.length} 篇笔记，${content.tags.length} 个标签。`);
+  if (drafts.length) {
+    console.log(`跳过 ${drafts.length} 篇草稿（draft: true）：${drafts.map((post) => `《${post.title}》`).join('、')}`);
+  }
 
   await checkCovers(content.all);
 
