@@ -287,7 +287,9 @@
     els.editor.classList.toggle('is-readonly', readOnly);
     els.saveButton.hidden = readOnly;
     els.deleteButton.hidden = readOnly;
-    els.advanced.open = Boolean(item.fields.cover || item.fields.excerpt);
+    els.advanced.open = true;
+    const coverButton = $('#cover-upload');
+    if (coverButton) coverButton.disabled = readOnly;
     updateWordCount();
     renderPreview(true);
     $('#editor-scroll').scrollTop = 0;

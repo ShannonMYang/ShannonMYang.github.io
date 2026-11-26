@@ -106,7 +106,7 @@
               <summary>摘要与封面</summary>
               <div class="advanced__grid">
                 <label class="field"><span>封面路径</span><input id="cover" placeholder="/post-images/xxx.jpg" autocomplete="off"></label>
-                <button class="btn btn--plain btn--sm" type="button" id="cover-upload">上传封面</button>
+                <button class="btn btn--plain btn--sm" type="button" id="cover-upload" title="从本机选择图片作为封面">上传封面</button>
                 <label class="field field--wide"><span>摘要（留空自动截取）</span><textarea id="excerpt" rows="2"></textarea></label>
               </div>
             </details>
@@ -165,8 +165,8 @@
 </div>
 
 <datalist id="tag-list"></datalist>
-<input type="file" id="cover-input" accept="image/*" hidden>
-<input type="file" id="image-input" accept="image/*" hidden>
+<input type="file" id="cover-input" class="native-file-input" accept="image/*">
+<input type="file" id="image-input" class="native-file-input" accept="image/*">
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
 <dialog class="dialog" id="publish-dialog">

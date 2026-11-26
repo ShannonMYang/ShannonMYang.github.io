@@ -17,7 +17,7 @@ echo "→ 编译 Swift 外壳"
 mkdir -p .tmp/swift-module-cache
 export CLANG_MODULE_CACHE_PATH="$PWD/.tmp/swift-module-cache"
 swiftc -O -swift-version 5 -module-cache-path "$PWD/.tmp/swift-module-cache" \
-  -framework Cocoa -framework WebKit \
+  -framework Cocoa -framework WebKit -framework UniformTypeIdentifiers \
   studio/mac/main.swift \
   -o "$BUNDLE/Contents/MacOS/$BIN_NAME"
 

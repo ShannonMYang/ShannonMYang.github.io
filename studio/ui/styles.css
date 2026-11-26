@@ -307,6 +307,13 @@ p {
   font-size: 12px;
 }
 
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .btn kbd {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -1102,6 +1109,17 @@ html[data-theme="dark"] .draft-badge {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+/* 文件选择框必须留在布局里，WKWebView 才能弹出原生面板 */
+.native-file-input {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ---------- dialogs ---------- */

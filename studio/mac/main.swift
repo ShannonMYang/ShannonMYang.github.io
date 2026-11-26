@@ -1,5 +1,6 @@
 import Cocoa
 import WebKit
+import UniformTypeIdentifiers
 
 /// 土禾灶台 · 写作台 —— macOS 原生窗口外壳
 /// 复用本地 Node 写作台（studio/server.mjs），WebKit 只负责显示。
@@ -257,6 +258,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, 
     // MARK: - WKNavigationDelegate
 
     // MARK: - WKUIDelegate / bridge
+
+    /// WKWebView 不会自动弹出文件选择框，需要原生 NSOpenPanel
+    func webView(
+        _ webView: WKWebView,
+        runOpenPanelWith parameters: WKOpenPanelParameters,
+        initiatedByFrame frame: WKFrameInfo,
+        completionHandler: @escaping ([URL]?) -> Void
+    ) {
+        let panel = NSOpenPanel()
+        panel.title = "选择图片"
+        panel.message = "选择要上传到文章里的图片"
+        panel.prompt = "选择"
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = parameters.allowsMultipleSelection
+        panel.allowedContentTypes = [.image]
+        panel.begin { response in
+            if response == .OK, !panel.urls.isEmpty {
+                completionHandler(panel.urls)
+            } else {
+                completionHandler(nil)
+            }
+        }
+    }
 
     func webView(
         _ webView: WKWebView,
