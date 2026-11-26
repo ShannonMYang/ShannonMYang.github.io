@@ -156,7 +156,7 @@ function hero(site, stats) {
     </div>
     <div class="hero__art">
       <div class="hero__book">
-        <span class="hero__book-line">${escapeHtml(site.hero?.vertical || '')}</span>
+        <span class="hero__book-line">${String(site.hero?.vertical || '').split('|').map((line) => escapeHtml(line)).join('<br>')}</span>
         <span class="hero__book-mark">土禾</span>
         <span class="hero__book-caption">${escapeHtml(site.hero?.motto || '')}</span>
       </div>

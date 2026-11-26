@@ -35,8 +35,9 @@ navigation:
 
 hero:
   eyebrow: SINCE 2018 · 记录与思考
-  vertical: 会当水击三千里
-  motto: 温故而知新，可以为师矣
+  # 竖排题字：用 | 分隔会排成两列
+  vertical: "山高万仞，|只登一步"
+  motto: 彰往而察来
   description: 这里存放开发路上踩过的坑、读过的书、做过的菜，以及一些没有结论的念头。慢慢写，常常看。
 
 footer:
