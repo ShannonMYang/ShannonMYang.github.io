@@ -5,10 +5,33 @@
   <id>https://shannonmyang.github.io/</id>
   <link href="https://shannonmyang.github.io/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://shannonmyang.github.io/" rel="alternate" type="text/html"/>
-  <updated>2026-11-26T04:00:00.000Z</updated>
+  <updated>2026-11-28T04:00:00.000Z</updated>
   <generator uri="https://github.com/ShannonMYang/ShannonMYang.github.io">tuhe-shop</generator>
   <author><name>ShannonMYang</name></author>
   <rights>© 2018–2026 ShannonMYang</rights>
+  <entry>
+    <title>方向正确，效益翻倍</title>
+    <link href="https://shannonmyang.github.io/post/post-2026-11-28-4wqg/"/>
+    <id>https://shannonmyang.github.io/post/post-2026-11-28-4wqg/</id>
+    <published>2026-11-28T04:00:00.000Z</published>
+    <updated>2026-11-28T04:00:00.000Z</updated>
+    <author><name>ShannonMYang</name></author>
+    <category term="杂谈"/>
+    <summary type="html">方向正确，效益翻倍。</summary>
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;记于&lt;/strong&gt;&lt;code&gt;2026年11月28日&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;常言道，「&lt;em&gt;方向不对，努力白费&lt;/em&gt;」。&lt;/p&gt;
+&lt;p&gt;就目前这将近一年的时间里，在工作上的投入和收获，从我个人的体会来讲，则是「&lt;em&gt;方向对了，收益翻倍&lt;/em&gt;」。&lt;/p&gt;
+&lt;p&gt;抖音上有个很火的up主叫童锦程，江湖人称：&lt;strong&gt;江南第一深情&lt;/strong&gt;。之前刷到一个切片，是他讲了个故事，说的蛮好。故事大概是说，「有一个人采访电梯里三个人是怎么样上楼到达100层。第一个人说因为我健身健的好。第二个说因为我看书看的多。第三个说的最直接——因为我在这部电梯里。」&lt;/p&gt;
+&lt;p&gt;人生很多时候就是在找这部电梯。时代红利带飞，那是一部大电梯。没有时代红利时，还有行业红利这部小电梯。说到底是方向的正确与否。&lt;/p&gt;
+&lt;p&gt;时代红利、行业红利，其实也不是每个人都能吃到的。所以，才有了那句「&lt;em&gt;选择大于努力&lt;/em&gt;」。&lt;/p&gt;
+&lt;p&gt;25年的年末最后几天，手上有两份&lt;code&gt;Offer&lt;/code&gt;进入决赛圈。一个是做工业级&lt;code&gt;macOS App&lt;/code&gt;，一个是做程序化广告平台&lt;code&gt;SDK&lt;/code&gt;及衍生品&lt;code&gt;App&lt;/code&gt;。前者是我熟悉的苹果生态内的软件开发，但是相当于从移动设备软件开发转向了桌面设备软件开发，称得上是熟悉又陌生。后者是我有涉猎过但说不上很多的方向，以前是集成方，要转变为开放方，同样是熟悉又陌生。&lt;/p&gt;
+&lt;p&gt;我如何抉择呢？当然是根据&lt;code&gt;市场经济&lt;/code&gt;来判定。工业级软件，付费层面是公司级别的，单价高而用户量少。而消费级软件则是单价低而量大。结合当前的经济形势，走低价量大的策略显然属于更优解。而且程序化广告，在移动互联网崛起之后，更是一个大趋势。&lt;/p&gt;
+&lt;p&gt;比起之前的工作时长，甚至工作内容，差别不算大，毕竟都是写代码、设计架构、优化性能。但和之前也算是不同的方向。整体感觉自身的技能更专精，对于设计模式和架构的理解，也更深刻。对于业务也有了更专业向的思考。不再像之前那样，为了开发App而开发App，业务大相径庭，尤其是AI出来之后，很多App的业务已经被AI替代掉。&lt;/p&gt;
+&lt;p&gt;所以，方向反而是我们需要更多思考的存在。就像邓小平当年改革开放时思考中国的未来。也像你指挥AI干活时，想让它往哪个方向实现你要的东西。&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>是啊，慌啥子嘛</title>
     <link href="https://shannonmyang.github.io/post/post-2026-11-26-njmn/"/>
@@ -2888,54 +2911,6 @@ Adding a new Swift file and a Brigde header:&lt;/p&gt;
 };
 &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;&lt;hr&gt;
 &lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/hhoo3344521/article/details/89094756&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;ext-link&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>如何在 Vim/Vi 中保存文件并退出编辑器</title>
-    <link href="https://shannonmyang.github.io/note/gh-20/"/>
-    <id>https://shannonmyang.github.io/note/gh-20/</id>
-    <published>2021-05-10T01:24:39.000Z</published>
-    <updated>2021-05-10T01:24:39.000Z</updated>
-    <author><name>ShannonMYang</name></author>
-    <category term="macOS"/>
-    <summary type="html">------ Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。 Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。 本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。 ------ Vi…</summary>
-    <content type="html">&lt;figure class=&quot;prose-figure&quot;&gt;&lt;img class=&quot;prose-img&quot; src=&quot;/post-images/issues/gh-20-1.png&quot; alt=&quot;Vim Save and Quit&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; referrerpolicy=&quot;no-referrer&quot;&gt;&lt;figcaption&gt;Vim Save and Quit&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;hr&gt;
-&lt;p&gt;Vim 是许多在命令行上花费大量时间的用户的首选文本编辑器。与其他编辑器不同，Vim 具有几种操作模式，这对于新用户来说可能有点吓人。&lt;/p&gt;
-&lt;p&gt;Vim 或其早期版本 Vi 预装在 macOS 和几乎所有 Linux 发行版中。当您遇到无法使用自己喜欢的编辑器的情况时，了解 Vim 的基础知识将对您有所帮助。&lt;/p&gt;
-&lt;p&gt;本篇笔记介绍了如何在 Vim / Vi 中保存文件并退出编辑器。&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;vim-模式&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#vim-模式&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;Vim 模式&lt;/h2&gt;&lt;p&gt;启动 Vim 编辑器时，您处于正常模式。在这种模式下，您可以使用 vim 命令并浏览文件。&lt;/p&gt;
-&lt;p&gt;要输入文字，您需要按 &lt;code&gt;i&lt;/code&gt; 键进入插入模式。使用此模式，您可以像在常规&lt;a href=&quot;https://www.myfreax.com/how-to-use-nano-text-editor/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;ext-link&quot;&gt;文本编辑器&lt;/a&gt;中一样插入和删除字符。&lt;/p&gt;
-&lt;p&gt;要从其他任何模式返回正常模式，只需按 &lt;code&gt;Esc&lt;/code&gt; 键。&lt;/p&gt;
-&lt;h2 id=&quot;在-vim-vi-中打开文件&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#在-vim-vi-中打开文件&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;在 Vim / Vi 中打开文件&lt;/h2&gt;&lt;p&gt;要使用 Vim 打开文件，请键入 &lt;code&gt;vim&lt;/code&gt;，然后输入要编辑或创建的文件的名称：&lt;/p&gt;
-&lt;figure class=&quot;code-block&quot;&gt;&lt;figcaption class=&quot;code-block__bar&quot;&gt;&lt;span class=&quot;code-block__lang&quot;&gt;Shell&lt;/span&gt;&lt;button class=&quot;code-block__copy&quot; type=&quot;button&quot; data-copy-code&gt;复制&lt;/button&gt;&lt;/figcaption&gt;&lt;pre class=&quot;code-block__pre&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;hljs&quot;&gt;vim file.text
-&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;&lt;p&gt;另一种打开文件的方法是启动编辑器，然后键入&lt;code&gt;:e file_name&lt;/code&gt;，其中 &lt;code&gt;file_name&lt;/code&gt; 是要打开的文件的名称。&lt;/p&gt;
-&lt;h2 id=&quot;在-vim-vi-中保存文件&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#在-vim-vi-中保存文件&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;在 Vim / Vi 中保存文件&lt;/h2&gt;&lt;p&gt;在 Vim 中保存文件的命令是&lt;code&gt;:w&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;要保存文件而不退出编辑器，请按 &lt;code&gt;Esc&lt;/code&gt;，键入&lt;code&gt;:w&lt;/code&gt;，然后按 &lt;code&gt;Enter&lt;/code&gt;，切换回普通模式。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;按 &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;类型&lt;code&gt;:w&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;按 &lt;code&gt;Enter&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;还有一个更新命令&lt;code&gt;:up&lt;/code&gt;，该命令仅在未保存更改的情况下才将缓冲区写入文件。&lt;/p&gt;
-&lt;p&gt;要使用其他名称保存文件，请键入&lt;code&gt;:w new_filename&lt;/code&gt; 并点击 &lt;code&gt;Enter&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;保存文件并退出-vim-vi&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#保存文件并退出-vim-vi&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;保存文件并退出 Vim / Vi&lt;/h2&gt;&lt;p&gt;在 Vim 中保存文件并退出编辑器的命令是&lt;code&gt;:wq&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;要保存文件并同时退出编辑器，请按 &lt;code&gt;Esc&lt;/code&gt; 切换到普通模式，键入&lt;code&gt;:wq&lt;/code&gt; 并按 &lt;code&gt;Enter&lt;/code&gt;。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;按 &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;类型&lt;code&gt;:wq&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;按 &lt;code&gt;Enter&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;另一个保存文件并退出 Vim 的命令是&lt;code&gt;:x&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;这两个命令之间的区别是&lt;code&gt;:x&lt;/code&gt; 仅在未保存更改时才将缓冲区写入文件，而&lt;code&gt;:wq&lt;/code&gt; 总是将缓冲区写入文件并更新文件修改时间。&lt;/p&gt;
-&lt;h2 id=&quot;退出-vim-vi-而不保存文件&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#退出-vim-vi-而不保存文件&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;退出 Vim / Vi 而不保存文件&lt;/h2&gt;&lt;p&gt;要退出编辑器而不保存更改，请按 &lt;code&gt;Esc&lt;/code&gt;，键入&lt;code&gt;:q!&lt;/code&gt;，然后按 &lt;code&gt;Enter&lt;/code&gt;，切换到普通模式。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;按 &lt;code&gt;Esc&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;键入&lt;code&gt;:q!&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;按 &lt;code&gt;Enter&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;结论&quot; class=&quot;prose-h prose-h2&quot;&gt;&lt;a class=&quot;h-anchor&quot; href=&quot;#结论&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;#&lt;/a&gt;结论&lt;/h2&gt;&lt;p&gt;在本篇笔记中，展示了如何在 Vim 中保存文件并退出编辑器。如果你不熟悉 Vim，可以访问&lt;a href=&quot;https://www.openvim.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;ext-link&quot;&gt; Open Vim &lt;/a&gt;网站，你可以在此通过交互式教程练习 Vim。&lt;/p&gt;
 </content>
   </entry>
 </feed>
